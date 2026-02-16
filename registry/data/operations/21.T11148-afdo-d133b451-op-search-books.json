@@ -1,0 +1,65 @@
+{
+  "pid": "21.T11148/afdo-d133b451-op-search-books",
+  "name": "search_books",
+  "description": "Search for books",
+  "input_schema": {
+    "type": "object",
+    "required": [
+      "query"
+    ],
+    "properties": {
+      "query": {
+        "type": "string",
+        "description": "Book title, author, or subject",
+        "format_requirements": {
+          "rules": [
+            "Extract book title, author name, or subject",
+            "Remove conversational words (books about, find me)",
+            "Preserve exact titles and author names",
+            "For subjects, use broad categories"
+          ],
+          "transformation_examples": [
+            {
+              "user_query": "books about coffee",
+              "correct_query": "coffee",
+              "reasoning": "Remove 'books about', keep subject"
+            },
+            {
+              "user_query": "1984 by George Orwell",
+              "correct_query": "1984 Orwell",
+              "reasoning": "Keep title and author, remove 'by'"
+            },
+            {
+              "user_query": "find me books by Asimov",
+              "correct_query": "Asimov",
+              "reasoning": "Extract author name only"
+            }
+          ]
+        }
+      },
+      "limit": {
+        "type": "integer",
+        "default": 5,
+        "minimum": 1,
+        "maximum": 20
+      }
+    }
+  },
+  "output_schema": {
+    "type": "object",
+    "required": [
+      "books",
+      "count"
+    ],
+    "properties": {
+      "books": {
+        "type": "array"
+      },
+      "count": {
+        "type": "integer"
+      }
+    }
+  },
+  "semantics": null,
+  "created_at": "2026-02-14T22:04:47.774052Z"
+}

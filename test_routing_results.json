@@ -1,0 +1,172 @@
+{
+  "timestamp": "2026-02-16T21:19:49.203144",
+  "total_tests": 15,
+  "correct_routes": 0,
+  "results": [
+    {
+      "id": "test_001",
+      "query": "The 2022 Nature paper on quantum supremacy claims their system is 1000x faster than classical computers. Is this true?",
+      "category": "paper_claim_verification",
+      "expected_agent": "Fact Checker",
+      "actual_agent": "ERROR",
+      "match": false,
+      "reason": "Verification of claim from research paper",
+      "status": "error",
+      "error": "Server error '500 Internal Server Error' for url 'http://localhost:8001/doip/extend/receive_user_input'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500"
+    },
+    {
+      "id": "test_002",
+      "query": "Who is the president of Algeria?",
+      "category": "factual_retrieval",
+      "expected_agent": "Wikipedia",
+      "actual_agent": "ERROR",
+      "match": false,
+      "reason": "Simple factual retrieval about current leader",
+      "status": "error",
+      "error": "Server error '500 Internal Server Error' for url 'http://localhost:8001/doip/extend/receive_user_input'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500"
+    },
+    {
+      "id": "test_003",
+      "query": "Is Tunis the capital of Algeria?",
+      "category": "fact_verification",
+      "expected_agent": "Fact Checker",
+      "actual_agent": "ERROR",
+      "match": false,
+      "reason": "Verification query ('is X Y?')",
+      "status": "error",
+      "error": "Server error '500 Internal Server Error' for url 'http://localhost:8001/doip/extend/receive_user_input'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500"
+    },
+    {
+      "id": "test_004",
+      "query": "Find recent papers on machine learning",
+      "category": "paper_search",
+      "expected_agent": "ArXiv",
+      "actual_agent": "ERROR",
+      "match": false,
+      "reason": "Direct paper search request",
+      "status": "error",
+      "error": "Server error '500 Internal Server Error' for url 'http://localhost:8001/doip/extend/receive_user_input'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500"
+    },
+    {
+      "id": "test_005",
+      "query": "A recent study claims coffee reduces heart disease. Is this supported by evidence?",
+      "category": "study_claim_verification",
+      "expected_agent": "Fact Checker",
+      "actual_agent": "ERROR",
+      "match": false,
+      "reason": "Verification of study claim with evidence assessment",
+      "status": "error",
+      "error": "Server error '500 Internal Server Error' for url 'http://localhost:8001/doip/extend/receive_user_input'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500"
+    },
+    {
+      "id": "test_006",
+      "query": "What is quantum computing?",
+      "category": "definition",
+      "expected_agent": "Wikipedia",
+      "actual_agent": "ERROR",
+      "match": false,
+      "reason": "Definition/explanation request",
+      "status": "error",
+      "error": "Server error '500 Internal Server Error' for url 'http://localhost:8001/doip/extend/receive_user_input'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500"
+    },
+    {
+      "id": "test_007",
+      "query": "Compare the economic policies of France and Germany",
+      "category": "comparison_synthesis",
+      "expected_agent": "LLM Consultant",
+      "actual_agent": "ERROR",
+      "match": false,
+      "reason": "Comparison and synthesis task",
+      "status": "error",
+      "error": "Server error '500 Internal Server Error' for url 'http://localhost:8001/doip/extend/receive_user_input'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500"
+    },
+    {
+      "id": "test_008",
+      "query": "Did the moon landing happen in 1969?",
+      "category": "historical_verification",
+      "expected_agent": "Fact Checker",
+      "actual_agent": "ERROR",
+      "match": false,
+      "reason": "Historical fact verification",
+      "status": "error",
+      "error": "Server error '500 Internal Server Error' for url 'http://localhost:8001/doip/extend/receive_user_input'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500"
+    },
+    {
+      "id": "test_009",
+      "query": "What are the symptoms of diabetes?",
+      "category": "medical_info",
+      "expected_agent": "Wikipedia",
+      "actual_agent": "ERROR",
+      "match": false,
+      "reason": "Medical information retrieval",
+      "status": "error",
+      "error": "Server error '500 Internal Server Error' for url 'http://localhost:8001/doip/extend/receive_user_input'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500"
+    },
+    {
+      "id": "test_010",
+      "query": "The article claims climate change is accelerating. Verify this claim.",
+      "category": "article_claim_verification",
+      "expected_agent": "Fact Checker",
+      "actual_agent": "ERROR",
+      "match": false,
+      "reason": "Explicit verification request about article claim",
+      "status": "error",
+      "error": "Server error '500 Internal Server Error' for url 'http://localhost:8001/doip/extend/receive_user_input'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500"
+    },
+    {
+      "id": "test_011",
+      "query": "Show me papers about neural networks published in 2023",
+      "category": "paper_search",
+      "expected_agent": "ArXiv",
+      "actual_agent": "ERROR",
+      "match": false,
+      "reason": "Specific paper search with date constraint",
+      "status": "error",
+      "error": "Server error '500 Internal Server Error' for url 'http://localhost:8001/doip/extend/receive_user_input'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500"
+    },
+    {
+      "id": "test_012",
+      "query": "Is it true that Einstein failed math in school?",
+      "category": "myth_verification",
+      "expected_agent": "Fact Checker",
+      "actual_agent": "ERROR",
+      "match": false,
+      "reason": "Verification of common claim/myth",
+      "status": "error",
+      "error": "Server error '500 Internal Server Error' for url 'http://localhost:8001/doip/extend/receive_user_input'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500"
+    },
+    {
+      "id": "test_013",
+      "query": "What is the population of Tokyo?",
+      "category": "statistical_retrieval",
+      "expected_agent": "Wikipedia",
+      "actual_agent": "ERROR",
+      "match": false,
+      "reason": "Statistical fact retrieval",
+      "status": "error",
+      "error": "Server error '500 Internal Server Error' for url 'http://localhost:8001/doip/extend/receive_user_input'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500"
+    },
+    {
+      "id": "test_014",
+      "query": "The research paper by Smith et al. reports a 95% accuracy rate. Can this be verified?",
+      "category": "research_finding_verification",
+      "expected_agent": "Fact Checker",
+      "actual_agent": "ERROR",
+      "match": false,
+      "reason": "Verification of specific research finding",
+      "status": "error",
+      "error": "Server error '500 Internal Server Error' for url 'http://localhost:8001/doip/extend/receive_user_input'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500"
+    },
+    {
+      "id": "test_015",
+      "query": "Explain the concept of entropy in thermodynamics",
+      "category": "explanation",
+      "expected_agent": "LLM Consultant",
+      "actual_agent": "ERROR",
+      "match": false,
+      "reason": "Explanation/teaching task requiring synthesis",
+      "status": "error",
+      "error": "Server error '500 Internal Server Error' for url 'http://localhost:8001/doip/extend/receive_user_input'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500"
+    }
+  ]
+}

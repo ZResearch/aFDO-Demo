@@ -1,0 +1,107 @@
+{
+  "pid": "21.T11148/afdo-923f3f6e-op-assess-fairness",
+  "name": "assess_fairness",
+  "description": "Operation: assess_fairness",
+  "input_schema": {
+    "type": "object",
+    "required": [
+      "metadata"
+    ],
+    "properties": {
+      "metadata": {
+        "type": "object",
+        "properties": {
+          "pid": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "authors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "keywords": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "license": {
+            "type": "string"
+          },
+          "provenance": {
+            "type": "object"
+          }
+        }
+      },
+      "context": {
+        "type": "object",
+        "properties": {
+          "domain": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "output_schema": {
+    "type": "object",
+    "required": [
+      "overall_score",
+      "compliance_level"
+    ],
+    "properties": {
+      "overall_score": {
+        "type": "number",
+        "minimum": 0.0,
+        "maximum": 1.0
+      },
+      "findable_score": {
+        "type": "number",
+        "minimum": 0.0,
+        "maximum": 1.0
+      },
+      "accessible_score": {
+        "type": "number",
+        "minimum": 0.0,
+        "maximum": 1.0
+      },
+      "interoperable_score": {
+        "type": "number",
+        "minimum": 0.0,
+        "maximum": 1.0
+      },
+      "reusable_score": {
+        "type": "number",
+        "minimum": 0.0,
+        "maximum": 1.0
+      },
+      "compliance_level": {
+        "type": "string",
+        "enum": [
+          "Low",
+          "Medium",
+          "High",
+          "Excellent"
+        ]
+      },
+      "suggestions": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "assessed_by": {
+        "type": "string"
+      },
+      "assessment_method": {
+        "type": "string"
+      }
+    }
+  },
+  "semantics": null,
+  "created_at": "2026-02-14T22:04:26.881457Z"
+}

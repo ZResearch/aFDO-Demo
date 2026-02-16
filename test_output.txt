@@ -1,0 +1,210 @@
+================================================================================
+ROUTING TEST SUITE
+================================================================================
+
+Loaded 15 test queries
+
+[test_001] Testing: The 2022 Nature paper on quantum supremacy claims their system is 1000x faster t...
+   ✗ ERROR: 
+
+[test_002] Testing: Who is the president of Algeria?...
+   ✗ ERROR: 
+
+[test_003] Testing: Is Tunis the capital of Algeria?...
+   ✗ ERROR: 
+
+[test_004] Testing: Find recent papers on machine learning...
+   ✗ ERROR: Server error '500 Internal Server Error' for url 'http://localhost:8001/doip/extend/receive_user_input'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500
+
+[test_005] Testing: A recent study claims coffee reduces heart disease. Is this supported by evidenc...
+   ✗ Expected: Fact Checker | Got: LLM Consultant
+
+[test_006] Testing: What is quantum computing?...
+   ✗ Expected: Wikipedia | Got: LLM Consultant
+
+[test_007] Testing: Compare the economic policies of France and Germany...
+   ✓ Expected: LLM Consultant | Got: LLM Consultant
+
+[test_008] Testing: Did the moon landing happen in 1969?...
+   ✗ ERROR: Server error '500 Internal Server Error' for url 'http://localhost:8001/doip/extend/receive_user_input'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500
+
+[test_009] Testing: What are the symptoms of diabetes?...
+   ✗ ERROR: Server error '500 Internal Server Error' for url 'http://localhost:8001/doip/extend/receive_user_input'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500
+
+[test_010] Testing: The article claims climate change is accelerating. Verify this claim....
+   ✗ ERROR: Server error '500 Internal Server Error' for url 'http://localhost:8001/doip/extend/receive_user_input'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500
+
+[test_011] Testing: Show me papers about neural networks published in 2023...
+   ✗ ERROR: Server error '500 Internal Server Error' for url 'http://localhost:8001/doip/extend/receive_user_input'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500
+
+[test_012] Testing: Is it true that Einstein failed math in school?...
+   ✗ ERROR: Server error '500 Internal Server Error' for url 'http://localhost:8001/doip/extend/receive_user_input'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500
+
+[test_013] Testing: What is the population of Tokyo?...
+   ✗ ERROR: Server error '500 Internal Server Error' for url 'http://localhost:8001/doip/extend/receive_user_input'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500
+
+[test_014] Testing: The research paper by Smith et al. reports a 95% accuracy rate. Can this be veri...
+   ✗ ERROR: Server error '500 Internal Server Error' for url 'http://localhost:8001/doip/extend/receive_user_input'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500
+
+[test_015] Testing: Explain the concept of entropy in thermodynamics...
+   ✗ ERROR: Server error '500 Internal Server Error' for url 'http://localhost:8001/doip/extend/receive_user_input'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500
+
+================================================================================
+ROUTING TEST REPORT
+Generated: 2026-02-16 20:39:18
+================================================================================
+
+📊 SUMMARY
+   Total tests: 15
+   Correct routes: 1 (6.7%)
+   Incorrect routes: 2
+   Errors: 12
+
+📋 BY CATEGORY
+   article_claim_verification: 0/1 (0%)
+   comparison_synthesis: 1/1 (100%)
+   definition: 0/1 (0%)
+   explanation: 0/1 (0%)
+   fact_verification: 0/1 (0%)
+   factual_retrieval: 0/1 (0%)
+   historical_verification: 0/1 (0%)
+   medical_info: 0/1 (0%)
+   myth_verification: 0/1 (0%)
+   paper_claim_verification: 0/1 (0%)
+   paper_search: 0/2 (0%)
+   research_finding_verification: 0/1 (0%)
+   statistical_retrieval: 0/1 (0%)
+   study_claim_verification: 0/1 (0%)
+
+📝 DETAILED RESULTS
+
+[test_001] ✗ paper_claim_verification
+   Query: The 2022 Nature paper on quantum supremacy claims their system is 1000x faster than classical comput
+   Expected: Fact Checker
+   Actual: ERROR
+   Reason: Verification of claim from research paper
+   Error: 
+
+[test_002] ✗ factual_retrieval
+   Query: Who is the president of Algeria?
+   Expected: Wikipedia
+   Actual: ERROR
+   Reason: Simple factual retrieval about current leader
+   Error: 
+
+[test_003] ✗ fact_verification
+   Query: Is Tunis the capital of Algeria?
+   Expected: Fact Checker
+   Actual: ERROR
+   Reason: Verification query ('is X Y?')
+   Error: 
+
+[test_004] ✗ paper_search
+   Query: Find recent papers on machine learning
+   Expected: ArXiv
+   Actual: ERROR
+   Reason: Direct paper search request
+   Error: Server error '500 Internal Server Error' for url 'http://localhost:8001/doip/extend/receive_user_input'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500
+
+[test_005] ✗ study_claim_verification
+   Query: A recent study claims coffee reduces heart disease. Is this supported by evidence?
+   Expected: Fact Checker
+   Actual: LLM Consultant
+   Reason: Verification of study claim with evidence assessment
+
+[test_006] ✗ definition
+   Query: What is quantum computing?
+   Expected: Wikipedia
+   Actual: LLM Consultant
+   Reason: Definition/explanation request
+
+[test_007] ✓ comparison_synthesis
+   Query: Compare the economic policies of France and Germany
+   Expected: LLM Consultant
+   Actual: LLM Consultant
+
+[test_008] ✗ historical_verification
+   Query: Did the moon landing happen in 1969?
+   Expected: Fact Checker
+   Actual: ERROR
+   Reason: Historical fact verification
+   Error: Server error '500 Internal Server Error' for url 'http://localhost:8001/doip/extend/receive_user_input'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500
+
+[test_009] ✗ medical_info
+   Query: What are the symptoms of diabetes?
+   Expected: Wikipedia
+   Actual: ERROR
+   Reason: Medical information retrieval
+   Error: Server error '500 Internal Server Error' for url 'http://localhost:8001/doip/extend/receive_user_input'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500
+
+[test_010] ✗ article_claim_verification
+   Query: The article claims climate change is accelerating. Verify this claim.
+   Expected: Fact Checker
+   Actual: ERROR
+   Reason: Explicit verification request about article claim
+   Error: Server error '500 Internal Server Error' for url 'http://localhost:8001/doip/extend/receive_user_input'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500
+
+[test_011] ✗ paper_search
+   Query: Show me papers about neural networks published in 2023
+   Expected: ArXiv
+   Actual: ERROR
+   Reason: Specific paper search with date constraint
+   Error: Server error '500 Internal Server Error' for url 'http://localhost:8001/doip/extend/receive_user_input'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500
+
+[test_012] ✗ myth_verification
+   Query: Is it true that Einstein failed math in school?
+   Expected: Fact Checker
+   Actual: ERROR
+   Reason: Verification of common claim/myth
+   Error: Server error '500 Internal Server Error' for url 'http://localhost:8001/doip/extend/receive_user_input'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500
+
+[test_013] ✗ statistical_retrieval
+   Query: What is the population of Tokyo?
+   Expected: Wikipedia
+   Actual: ERROR
+   Reason: Statistical fact retrieval
+   Error: Server error '500 Internal Server Error' for url 'http://localhost:8001/doip/extend/receive_user_input'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500
+
+[test_014] ✗ research_finding_verification
+   Query: The research paper by Smith et al. reports a 95% accuracy rate. Can this be verified?
+   Expected: Fact Checker
+   Actual: ERROR
+   Reason: Verification of specific research finding
+   Error: Server error '500 Internal Server Error' for url 'http://localhost:8001/doip/extend/receive_user_input'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500
+
+[test_015] ✗ explanation
+   Query: Explain the concept of entropy in thermodynamics
+   Expected: LLM Consultant
+   Actual: ERROR
+   Reason: Explanation/teaching task requiring synthesis
+   Error: Server error '500 Internal Server Error' for url 'http://localhost:8001/doip/extend/receive_user_input'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500
+
+💡 RECOMMENDATIONS
+   • Fact Checker description needs improvement:
+     1 queries incorrectly routed to other agents
+     Categories affected: study_claim_verification
+   • Wikipedia description needs improvement:
+     1 queries incorrectly routed to other agents
+     Categories affected: definition
+
+================================================================================
+
+📄 Detailed results saved to: test_routing_results.json

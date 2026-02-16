@@ -1,0 +1,95 @@
+{
+  "pid": "21.T11148/afdo-metadata-fact-checker-agent",
+  "associated_fdo": "21.T11148/afdo-fact-checker-agent",
+  "content": {
+    "description": "Multi-source fact verification through policy-driven delegation",
+    "version": "1.0.0",
+    "agent_role": "composite_agent",
+    "specialization": "fact_verification",
+    "verification_approach": "multi_source_triangulation",
+    "capabilities": {
+      "verify_fact": {
+        "description": "Verify factual claims with confidence scoring",
+        "multi_source": true,
+        "synthesis": true,
+        "estimated_duration": "3-8s",
+        "estimated_cost": "$0.05-0.15 (depends on sources consulted)"
+      },
+      "cross_validate": {
+        "description": "Cross-validate information across multiple sources",
+        "multi_source": true,
+        "estimated_duration": "3-8s",
+        "estimated_cost": "$0.05-0.15"
+      },
+      "check_claim": {
+        "description": "Quick claim verification",
+        "multi_source": true,
+        "estimated_duration": "2-5s",
+        "estimated_cost": "$0.03-0.10"
+      }
+    },
+    "delegation_strategy": "policy_driven_multi_source",
+    "policy_file": "agents/fact_checker/policy.json",
+    "schema_version": "1.0.0",
+    "provenance": {
+      "creation_method": "automated_registration",
+      "framework": "aFDO_marketplace_v1.0",
+      "registration_timestamp": "2026-02-16T21:47:25.404435Z",
+      "framework_version": "1.0.0"
+    },
+    "technical_details": {
+      "port": 8013,
+      "base_url": "http://localhost:8013",
+      "operations_count": 5,
+      "has_marketplace_features": true,
+      "has_llm": false,
+      "base_cost": 0.05
+    },
+    "semantic_links": [
+      {
+        "relation": "implements",
+        "target": "21.T11148/profile-ai-agent-v1"
+      },
+      {
+        "relation": "type_of",
+        "target": "21.T11148/type-fact-checker-v1"
+      },
+      {
+        "relation": "registered_in",
+        "target": "21.T11148/registry-system-001"
+      }
+    ],
+    "compliance": {
+      "FDO_compliant": true,
+      "FAIR_enabled": true,
+      "DOIP_protocol": "2.0",
+      "supports_marketplace": true
+    },
+    "discovery": {
+      "operations": [
+        "receive_query",
+        "verify_fact",
+        "cross_validate",
+        "check_claim",
+        "get_description"
+      ],
+      "specialization": "fact_verification",
+      "reputation": 0.85
+    }
+  },
+  "created_at": "2026-02-16T21:47:25.404446Z",
+  "updated_at": "2026-02-16T21:47:25.404447Z",
+  "schema_version": "1.0.0",
+  "created_by": "21.T11148/afdo-fact-checker-agent",
+  "provenance": {
+    "registration_method": "self_registration",
+    "framework": "aFDO_marketplace_v1.0"
+  },
+  "semantic_links": [
+    {
+      "relation": "describes",
+      "target": "21.T11148/afdo-fact-checker-agent"
+    }
+  ],
+  "license": "research-use"
+}

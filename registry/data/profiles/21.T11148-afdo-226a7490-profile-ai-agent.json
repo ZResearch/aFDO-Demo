@@ -1,0 +1,16 @@
+{
+  "pid": "21.T11148/afdo-226a7490-profile-ai-agent",
+  "name": "ai_agent_v1",
+  "description": "Standard AI agent profile",
+  "required_attributes": [
+    "pid",
+    "operations",
+    "reputation",
+    "cost"
+  ],
+  "optional_attributes": [
+    "specialization",
+    "llm_model"
+  ],
+  "created_at": "2026-02-12T09:11:32.668867Z"
+}

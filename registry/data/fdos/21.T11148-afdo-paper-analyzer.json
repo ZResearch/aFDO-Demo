@@ -1,0 +1,225 @@
+{
+  "pid": "21.T11148/afdo-paper-analyzer",
+  "fdo_type_pid": "21.T11148/type-workflow-coordinator-v1",
+  "fdo_profile_pid": "21.T11148/profile-ai-agent-v1",
+  "operation_pids": [
+    "21.T11148/afdo-9eb7158b-op-analyze-paper",
+    "21.T11148/afdo-c599580c-op-analyze-paper-budget",
+    "21.T11148/afdo-ca9ec136-op-extract-key-findings",
+    "21.T11148/afdo-2384577b-op-assess-methodology",
+    "21.T11148/afdo-af69573b-op-check-reproducibility",
+    "21.T11148/afdo-e3542cec-op-get-description"
+  ],
+  "metadata_pointer": "21.T11148/afdo-metadata-paper-analyzer",
+  "self_description": {
+    "agent_info": {
+      "name": "Paper Analyzer Agent",
+      "version": "1.0.0",
+      "agent_type": "composite",
+      "description": "Coordinates research paper analysis workflow using marketplace services"
+    },
+    "capabilities": {
+      "analyze_paper_budget": {
+        "operation_type": "synthesis",
+        "input_schema": {
+          "type": "object",
+          "required": [
+            "pdf_data",
+            "budget"
+          ],
+          "properties": {
+            "pdf_data": {
+              "type": "string",
+              "format": "base64",
+              "contentEncoding": "base64"
+            },
+            "budget": {
+              "type": "number",
+              "minimum": 0.0
+            },
+            "selection_policy": {
+              "type": "string",
+              "enum": [
+                "cheapest",
+                "fastest",
+                "balanced",
+                "premium"
+              ],
+              "default": "balanced"
+            }
+          }
+        },
+        "output_schema": {
+          "type": "object",
+          "required": [
+            "analysis",
+            "fair_assessment",
+            "cost_breakdown"
+          ],
+          "properties": {
+            "analysis": {
+              "type": "object",
+              "properties": {
+                "summary": {
+                  "type": "string"
+                },
+                "key_findings": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "methodology": {
+                  "type": "string"
+                },
+                "contributions": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "fair_assessment": {
+              "type": "object",
+              "properties": {
+                "overall_score": {
+                  "type": "number"
+                },
+                "findable_score": {
+                  "type": "number"
+                },
+                "accessible_score": {
+                  "type": "number"
+                },
+                "interoperable_score": {
+                  "type": "number"
+                },
+                "reusable_score": {
+                  "type": "number"
+                }
+              }
+            },
+            "cost_breakdown": {
+              "type": "object",
+              "properties": {
+                "total_cost": {
+                  "type": "number"
+                },
+                "services_used": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "service_pid": {
+                        "type": "string"
+                      },
+                      "operation": {
+                        "type": "string"
+                      },
+                      "cost": {
+                        "type": "number"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "constraints": {
+          "max_input_size": 52428800,
+          "timeout_seconds": 300,
+          "rate_limit": 10
+        },
+        "examples": [
+          {
+            "input": {
+              "pdf_data": "JVBERi0xLjQK...",
+              "budget": 1.0,
+              "selection_policy": "balanced"
+            },
+            "output": {
+              "analysis": {
+                "summary": "This paper presents...",
+                "key_findings": [
+                  "Finding 1",
+                  "Finding 2"
+                ],
+                "methodology": "Experimental study",
+                "contributions": [
+                  "Novel algorithm",
+                  "Benchmark dataset"
+                ]
+              },
+              "fair_assessment": {
+                "overall_score": 0.85,
+                "findable_score": 0.9,
+                "accessible_score": 0.8,
+                "interoperable_score": 0.85,
+                "reusable_score": 0.85
+              },
+              "cost_breakdown": {
+                "total_cost": 0.45,
+                "services_used": [
+                  {
+                    "service_pid": "21.T11148/afdo-pdf-parser",
+                    "operation": "extract_text",
+                    "cost": 0.05
+                  },
+                  {
+                    "service_pid": "21.T11148/afdo-llm-service",
+                    "operation": "analyze_text",
+                    "cost": 0.35
+                  },
+                  {
+                    "service_pid": "21.T11148/afdo-fair-assessor",
+                    "operation": "assess_fairness",
+                    "cost": 0.05
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    },
+    "technical_spec": {
+      "runtime": "Python 3.10",
+      "dependencies": [
+        "openai==1.12.0",
+        "anthropic==0.18.1"
+      ],
+      "resource_requirements": {
+        "memory_mb": 512,
+        "cpu_cores": 1.0
+      }
+    },
+    "agent_attributes": {
+      "has_llm": true,
+      "autonomy_level": "composite",
+      "decision_policy": "autonomous",
+      "can_delegate": true
+    }
+  },
+  "activity_log": {
+    "calls_made": [],
+    "calls_received": []
+  },
+  "kernel_attributes": {
+    "name": "Paper Analyzer",
+    "port": 8003,
+    "reputation": 0.85,
+    "cost": 0.05,
+    "status": "active",
+    "has_llm": true,
+    "llm_model": "gpt-4o",
+    "specialization": "research_papers",
+    "selection_policy": "balanced"
+  },
+  "created_at": "2026-02-16T19:50:59.185581Z",
+  "updated_at": "2026-02-16T21:23:22.006736Z",
+  "status": "inactive",
+  "last_heartbeat": 1771275239.9292018,
+  "inactive_since": 1771277001.9953969
+}

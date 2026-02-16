@@ -1,0 +1,38 @@
+{
+  "pid": "21.T11148/afdo-51444d8d-op-plan-workflow",
+  "name": "plan_workflow",
+  "description": "Operation: plan_workflow",
+  "input_schema": {
+    "type": "object",
+    "required": [
+      "query"
+    ],
+    "properties": {
+      "query": {
+        "type": "string"
+      }
+    }
+  },
+  "output_schema": {
+    "type": "object",
+    "required": [
+      "workflow",
+      "planner"
+    ],
+    "properties": {
+      "workflow": {
+        "type": "object",
+        "properties": {
+          "steps": {
+            "type": "array"
+          }
+        }
+      },
+      "planner": {
+        "type": "string"
+      }
+    }
+  },
+  "semantics": null,
+  "created_at": "2026-02-14T22:05:01.759402Z"
+}

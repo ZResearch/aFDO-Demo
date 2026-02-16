@@ -1,0 +1,101 @@
+{
+  "policy_id": "wikipedia_agent_policy",
+  "policy_version": "1.0.0",
+  "description": "Policy for Wikipedia Agent - handles article lookups, delegates complex research",
+  "default_action": "handle_alone",
+
+  "rules": [
+    {
+      "rule_id": "rule_00_delegate_synthesis_queries",
+      "description": "Delegate synthesis/comparison queries to LLM via semantic discovery",
+      "priority": 11,
+      "conditions": {
+        "operation": ["receive_query"],
+        "query_requires_synthesis": true
+      },
+      "action": {
+        "type": "semantic_discovery",
+        "reasoning": "Query requires synthesis, comparison, or reasoning beyond Wikipedia's factual data. Delegating to LLM for intelligent processing.",
+        "parameters": {
+          "discovery_query": {
+            "use_semantic_matching": true,
+            "min_similarity": 0.3,
+            "selection_criteria": "balanced"
+          }
+        }
+      }
+    },
+
+    {
+      "rule_id": "rule_01_handle_article_lookup",
+      "description": "Handle Wikipedia article lookups directly",
+      "priority": 10,
+      "conditions": {
+        "operation": ["get_article_summary", "search_wikipedia", "receive_query"],
+        "has_capability": true
+      },
+      "action": {
+        "type": "handle_alone",
+        "reasoning": "Wikipedia article lookups are my core capability"
+      }
+    },
+
+    {
+      "rule_id": "rule_02_complex_need_workflow",
+      "description": "Complex tasks need dynamically generated workflow",
+      "priority": 9,
+      "conditions": {
+        "complexity": "complex"
+      },
+      "action": {
+        "type": "consult_for_workflow",
+        "reasoning": "Task too complex - need consultant to generate workflow",
+        "parameters": {
+          "consultant_query": {
+            "operations": ["generate_workflow", "plan_task"],
+            "selection_criteria": "balanced"
+          }
+        },
+        "fallback": {
+          "type": "handle_alone",
+          "parameters": {
+            "do_best_effort": true
+          }
+        }
+      }
+    },
+
+    {
+      "rule_id": "rule_03_moderate_capable",
+      "description": "Can handle moderate complexity",
+      "priority": 8,
+      "conditions": {
+        "has_capability": true,
+        "complexity": "moderate"
+      },
+      "action": {
+        "type": "handle_alone",
+        "reasoning": "Moderate complexity within my capabilities"
+      }
+    },
+
+    {
+      "rule_id": "rule_04_not_capable_find_helper",
+      "description": "For operations I can't do, find helper",
+      "priority": 7,
+      "conditions": {
+        "has_capability": false,
+        "complexity": "simple"
+      },
+      "action": {
+        "type": "query_registry_for_helper",
+        "reasoning": "Operation outside my capabilities - find specific helper",
+        "parameters": {
+          "registry_query": {
+            "operation": "from_request"
+          }
+        }
+      }
+    }
+  ]
+}

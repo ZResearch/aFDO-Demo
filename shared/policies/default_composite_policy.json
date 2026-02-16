@@ -1,0 +1,51 @@
+{
+  "policy_id": "default_composite_agent_policy",
+  "policy_version": "1.0.0",
+  "description": "Default policy for composite/planning agents",
+  "default_action": "collaborate",
+
+  "rules": [
+    {
+      "rule_id": "simple_direct",
+      "priority": 10,
+      "conditions": {
+        "has_capability": true,
+        "complexity": "simple"
+      },
+      "action": {
+        "type": "handle_alone",
+        "reasoning": "Simple task - handle directly"
+      }
+    },
+    {
+      "rule_id": "moderate_collaborate",
+      "priority": 9,
+      "conditions": {
+        "complexity": "moderate"
+      },
+      "action": {
+        "type": "collaborate",
+        "reasoning": "Moderate complexity - discover helpers and plan",
+        "parameters": {
+          "discovery_strategy": "comprehensive",
+          "planning_mode": "adaptive"
+        }
+      }
+    },
+    {
+      "rule_id": "complex_full_marketplace",
+      "priority": 8,
+      "conditions": {
+        "complexity": "complex"
+      },
+      "action": {
+        "type": "collaborate",
+        "reasoning": "Complex task - use full marketplace capabilities",
+        "parameters": {
+          "discovery_strategy": "exhaustive",
+          "planning_mode": "sophisticated"
+        }
+      }
+    }
+  ]
+}

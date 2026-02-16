@@ -1,0 +1,356 @@
+{
+  "protocol_name": "cost_negotiation_protocol",
+  "version": "1.0.0",
+  "description": "Recursive cost negotiation between aFDOs with budget approval",
+
+  "message_types": {
+    "estimate_request": {
+      "description": "Request cost estimate for a task",
+      "fields": {
+        "message_id": {
+          "type": "string",
+          "required": true,
+          "description": "Unique message identifier"
+        },
+        "caller_pid": {
+          "type": "string",
+          "required": true,
+          "description": "PID of requesting aFDO"
+        },
+        "operation": {
+          "type": "string",
+          "required": true,
+          "description": "Operation to estimate"
+        },
+        "parameters": {
+          "type": "object",
+          "required": true,
+          "description": "Operation parameters"
+        },
+        "budget_limit": {
+          "type": "number",
+          "required": false,
+          "description": "Maximum budget caller is willing to spend"
+        },
+        "quality_preference": {
+          "type": "string",
+          "enum": ["speed", "balanced", "quality"],
+          "required": false,
+          "default": "balanced"
+        },
+        "deadline": {
+          "type": "string",
+          "format": "iso8601",
+          "required": false,
+          "description": "Deadline for task completion"
+        }
+      }
+    },
+
+    "estimate_response": {
+      "description": "Cost estimate response",
+      "fields": {
+        "message_id": {
+          "type": "string",
+          "required": true,
+          "description": "Reference to request message_id"
+        },
+        "responder_pid": {
+          "type": "string",
+          "required": true
+        },
+        "estimated_cost": {
+          "type": "number",
+          "required": true,
+          "description": "Total estimated cost"
+        },
+        "estimated_time": {
+          "type": "number",
+          "required": true,
+          "description": "Estimated time in seconds"
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "required": true,
+          "description": "Confidence level (0-1)"
+        },
+        "breakdown": {
+          "type": "array",
+          "required": true,
+          "description": "Cost breakdown by component",
+          "items": {
+            "type": "object",
+            "properties": {
+              "component": "string",
+              "agent_pid": "string",
+              "cost": "number",
+              "description": "string"
+            }
+          }
+        },
+        "alternatives": {
+          "type": "array",
+          "required": false,
+          "description": "Alternative execution strategies",
+          "items": {
+            "type": "object",
+            "properties": {
+              "strategy_name": "string",
+              "estimated_cost": "number",
+              "estimated_time": "number",
+              "trade_offs": "string"
+            }
+          }
+        }
+      }
+    },
+
+    "approval_decision": {
+      "description": "Approve or reject the estimate",
+      "fields": {
+        "message_id": {
+          "type": "string",
+          "required": true
+        },
+        "estimate_message_id": {
+          "type": "string",
+          "required": true,
+          "description": "Reference to estimate being approved/rejected"
+        },
+        "approved": {
+          "type": "boolean",
+          "required": true
+        },
+        "allocated_budget": {
+          "type": "number",
+          "required": true,
+          "description": "Budget allocated for execution"
+        },
+        "execution_id": {
+          "type": "string",
+          "required": false,
+          "description": "Unique execution identifier (if approved)"
+        },
+        "reason": {
+          "type": "string",
+          "required": false,
+          "description": "Reason for rejection (if rejected)"
+        },
+        "constraints": {
+          "type": "object",
+          "required": false,
+          "description": "Additional constraints on execution"
+        }
+      }
+    },
+
+    "execution_request": {
+      "description": "Execute approved task",
+      "fields": {
+        "message_id": {
+          "type": "string",
+          "required": true
+        },
+        "execution_id": {
+          "type": "string",
+          "required": true,
+          "description": "From approval_decision"
+        },
+        "operation": {
+          "type": "string",
+          "required": true
+        },
+        "parameters": {
+          "type": "object",
+          "required": true
+        },
+        "allocated_budget": {
+          "type": "number",
+          "required": true
+        }
+      }
+    },
+
+    "execution_result": {
+      "description": "Result of execution",
+      "fields": {
+        "message_id": {
+          "type": "string",
+          "required": true
+        },
+        "execution_id": {
+          "type": "string",
+          "required": true
+        },
+        "status": {
+          "type": "string",
+          "enum": ["success", "failed", "partial"],
+          "required": true
+        },
+        "result": {
+          "type": "object",
+          "required": true,
+          "description": "Operation result"
+        },
+        "actual_cost": {
+          "type": "number",
+          "required": true,
+          "description": "Actual cost incurred"
+        },
+        "breakdown": {
+          "type": "array",
+          "required": true,
+          "description": "Actual cost breakdown"
+        },
+        "error": {
+          "type": "string",
+          "required": false,
+          "description": "Error message if status=failed"
+        }
+      }
+    },
+
+    "cost_escalation_request": {
+      "description": "Request additional budget during execution",
+      "fields": {
+        "message_id": {
+          "type": "string",
+          "required": true
+        },
+        "execution_id": {
+          "type": "string",
+          "required": true
+        },
+        "original_estimate": {
+          "type": "number",
+          "required": true
+        },
+        "new_estimate": {
+          "type": "number",
+          "required": true
+        },
+        "reason": {
+          "type": "string",
+          "required": true,
+          "description": "Why cost increased"
+        },
+        "progress": {
+          "type": "object",
+          "required": true,
+          "description": "Current progress and what remains",
+          "properties": {
+            "completed_steps": "array",
+            "remaining_steps": "array",
+            "spent_so_far": "number"
+          }
+        },
+        "alternatives": {
+          "type": "array",
+          "required": false,
+          "description": "Alternative ways to complete within budget"
+        }
+      }
+    },
+
+    "escalation_decision": {
+      "description": "Response to cost escalation",
+      "fields": {
+        "message_id": {
+          "type": "string",
+          "required": true
+        },
+        "escalation_message_id": {
+          "type": "string",
+          "required": true
+        },
+        "approved": {
+          "type": "boolean",
+          "required": true
+        },
+        "new_budget": {
+          "type": "number",
+          "required": false,
+          "description": "New budget if approved"
+        },
+        "action": {
+          "type": "string",
+          "enum": ["continue", "abort", "revise"],
+          "required": true
+        },
+        "revision_instructions": {
+          "type": "string",
+          "required": false,
+          "description": "If action=revise, how to revise"
+        }
+      }
+    }
+  },
+
+  "state_machine": {
+    "states": [
+      "idle",
+      "estimating",
+      "awaiting_approval",
+      "approved",
+      "executing",
+      "escalation_requested",
+      "completed",
+      "failed",
+      "cancelled"
+    ],
+    "transitions": [
+      {
+        "from": "idle",
+        "to": "estimating",
+        "trigger": "estimate_request"
+      },
+      {
+        "from": "estimating",
+        "to": "awaiting_approval",
+        "trigger": "estimate_response"
+      },
+      {
+        "from": "awaiting_approval",
+        "to": "approved",
+        "trigger": "approval_decision (approved=true)"
+      },
+      {
+        "from": "awaiting_approval",
+        "to": "cancelled",
+        "trigger": "approval_decision (approved=false)"
+      },
+      {
+        "from": "approved",
+        "to": "executing",
+        "trigger": "execution_request"
+      },
+      {
+        "from": "executing",
+        "to": "escalation_requested",
+        "trigger": "cost_escalation_request"
+      },
+      {
+        "from": "escalation_requested",
+        "to": "executing",
+        "trigger": "escalation_decision (approved=true)"
+      },
+      {
+        "from": "escalation_requested",
+        "to": "failed",
+        "trigger": "escalation_decision (approved=false, action=abort)"
+      },
+      {
+        "from": "executing",
+        "to": "completed",
+        "trigger": "execution_result (status=success)"
+      },
+      {
+        "from": "executing",
+        "to": "failed",
+        "trigger": "execution_result (status=failed)"
+      }
+    ]
+  }
+}

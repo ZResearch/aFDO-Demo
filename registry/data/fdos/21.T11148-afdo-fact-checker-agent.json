@@ -1,0 +1,260 @@
+{
+  "pid": "21.T11148/afdo-fact-checker-agent",
+  "fdo_type_pid": "21.T11148/type-fact-checker-v1",
+  "fdo_profile_pid": "21.T11148/profile-ai-agent-v1",
+  "operation_pids": [
+    "21.T11148/afdo-c286a58a-op-receive-query",
+    "21.T11148/afdo-64f813d1-op-verify-fact",
+    "21.T11148/afdo-dd2746c5-op-cross-validate",
+    "21.T11148/afdo-b75b9978-op-check-claim",
+    "21.T11148/afdo-e3542cec-op-get-description"
+  ],
+  "metadata_pointer": "21.T11148/afdo-metadata-fact-checker-agent",
+  "self_description": {
+    "agent_info": {
+      "name": "Fact Checker Agent",
+      "version": "1.0.0",
+      "agent_type": "composite",
+      "description": "Multi-source fact verification and claim validation agent. Specialized in verifying factual statements, checking if claims are true, validating assertions, confirming information accuracy, and answering 'is X true?' type questions. Uses multiple independent sources to cross-reference facts and provide confidence-scored verification. Best for queries like: 'is X Y?', 'did X happen?', 'was X the Y?', 'verify that X', 'check if X is true', 'confirm whether X'. All delegation behavior is policy-driven without hardcoded logic."
+    },
+    "capabilities": {
+      "receive_query": {
+        "operation_type": "assessment",
+        "description": "Verifies factual claims, statements, and assertions by consulting multiple independent sources. Specializes in validating claims from scientific publications, research papers, academic studies, journal articles, and news reports. Answers verification questions like 'is X Y?', 'is it true that X?', 'did X happen?', 'the paper/study/article/research claims X, is this correct?', 'does the scientific evidence support X?', 'verify this claim from the publication', 'are the research findings accurate?'. Uses multi-source triangulation across research databases, encyclopedias, scientific papers, and authoritative sources to provide confidence-scored verification with evidence from multiple independent sources.",
+        "input_schema": {
+          "type": "object",
+          "required": [
+            "query"
+          ],
+          "properties": {
+            "query": {
+              "type": "string",
+              "description": "Natural language query requiring fact verification"
+            }
+          }
+        },
+        "output_schema": {
+          "type": "object",
+          "properties": {
+            "answer": {
+              "type": "string",
+              "description": "Synthesized answer with verification status"
+            },
+            "verified": {
+              "type": "boolean"
+            },
+            "confidence": {
+              "type": "number"
+            },
+            "sources": {
+              "type": "array"
+            }
+          }
+        }
+      },
+      "verify_fact": {
+        "operation_type": "assessment",
+        "description": "Verify if a factual claim or statement is true by consulting multiple independent sources. Use this for 'is X true?' questions, claim validation, fact-checking, and confirming whether statements are accurate. Returns verified status with confidence score.",
+        "input_schema": {
+          "type": "object",
+          "required": [
+            "claim"
+          ],
+          "properties": {
+            "claim": {
+              "type": "string",
+              "description": "The factual claim to verify"
+            },
+            "confidence_threshold": {
+              "type": "number",
+              "default": 0.7,
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "description": "Minimum confidence required for verification"
+            },
+            "max_sources": {
+              "type": "integer",
+              "default": 5,
+              "minimum": 2,
+              "maximum": 10,
+              "description": "Maximum number of sources to consult"
+            }
+          }
+        },
+        "output_schema": {
+          "type": "object",
+          "required": [
+            "claim",
+            "verified",
+            "confidence",
+            "evidence"
+          ],
+          "properties": {
+            "claim": {
+              "type": "string",
+              "description": "The original claim"
+            },
+            "verified": {
+              "type": "boolean",
+              "description": "Whether the claim was verified"
+            },
+            "confidence": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "description": "Confidence score (0-1)"
+            },
+            "evidence": {
+              "type": "array",
+              "description": "Evidence gathered from sources",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "source": {
+                    "type": "string"
+                  },
+                  "source_pid": {
+                    "type": "string"
+                  },
+                  "data": {
+                    "type": "object"
+                  },
+                  "supports_claim": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            },
+            "synthesis": {
+              "type": "string",
+              "description": "Synthesized verification explanation"
+            },
+            "sources_consulted": {
+              "type": "integer",
+              "description": "Number of sources successfully consulted"
+            }
+          }
+        },
+        "constraints": {
+          "timeout_seconds": 30,
+          "rate_limit": 10
+        }
+      },
+      "cross_validate": {
+        "operation_type": "assessment",
+        "description": "Cross-validate information by comparing data from multiple specified sources. Checks consistency and agreement across sources to assess information reliability.",
+        "input_schema": {
+          "type": "object",
+          "required": [
+            "claim",
+            "sources"
+          ],
+          "properties": {
+            "claim": {
+              "type": "string",
+              "description": "Claim to cross-validate"
+            },
+            "sources": {
+              "type": "array",
+              "description": "Preferred sources to use",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "output_schema": {
+          "type": "object",
+          "required": [
+            "claim",
+            "validated",
+            "consistency_score"
+          ],
+          "properties": {
+            "claim": {
+              "type": "string"
+            },
+            "validated": {
+              "type": "boolean"
+            },
+            "consistency_score": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0
+            },
+            "source_results": {
+              "type": "array"
+            }
+          }
+        }
+      },
+      "check_claim": {
+        "operation_type": "assessment",
+        "description": "Quick claim verification for simple factual statements. Faster than full verification but less comprehensive. Use for straightforward 'is X Y?' questions that need quick validation.",
+        "input_schema": {
+          "type": "object",
+          "required": [
+            "claim"
+          ],
+          "properties": {
+            "claim": {
+              "type": "string",
+              "description": "Claim to quickly check"
+            }
+          }
+        },
+        "output_schema": {
+          "type": "object",
+          "required": [
+            "claim",
+            "likely_true",
+            "confidence"
+          ],
+          "properties": {
+            "claim": {
+              "type": "string"
+            },
+            "likely_true": {
+              "type": "boolean"
+            },
+            "confidence": {
+              "type": "number"
+            }
+          }
+        }
+      }
+    },
+    "technical_spec": {
+      "runtime": "Python 3.10",
+      "dependencies": [],
+      "resource_requirements": {
+        "memory_mb": 256,
+        "cpu_cores": 0.5
+      }
+    },
+    "agent_attributes": {
+      "has_llm": false,
+      "autonomy_level": "composite",
+      "can_delegate": true,
+      "delegation_strategy": "multi_source_policy_driven"
+    }
+  },
+  "activity_log": {
+    "calls_made": [],
+    "calls_received": []
+  },
+  "kernel_attributes": {
+    "name": "Fact Checker Agent",
+    "port": 8013,
+    "reputation": 0.85,
+    "cost": 0.05,
+    "status": "active",
+    "has_llm": false,
+    "specialization": "fact_verification"
+  },
+  "created_at": "2026-02-16T21:58:35.660661Z",
+  "updated_at": "2026-02-16T21:58:35.660668Z",
+  "status": "active",
+  "last_heartbeat": null,
+  "inactive_since": null
+}

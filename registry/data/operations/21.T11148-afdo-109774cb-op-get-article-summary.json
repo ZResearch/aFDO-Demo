@@ -1,0 +1,86 @@
+{
+  "pid": "21.T11148/afdo-109774cb-op-get-article-summary",
+  "name": "get_article_summary",
+  "description": "Fetch summary of a Wikipedia article",
+  "input_schema": {
+    "type": "object",
+    "required": [
+      "topic"
+    ],
+    "properties": {
+      "topic": {
+        "type": "string",
+        "description": "Wikipedia article title",
+        "format_requirements": {
+          "rules": [
+            "Use proper Wikipedia article title format",
+            "Remove temporal modifiers (latest, current, recent, newest)",
+            "Use title case for proper nouns",
+            "Be specific - use actual entity/person name if known",
+            "Match standard Wikipedia naming conventions"
+          ],
+          "transformation_examples": [
+            {
+              "user_query": "what is the latest president of Algeria",
+              "correct_topic": "President of Algeria",
+              "reasoning": "Remove 'latest', use proper title 'President of Algeria'"
+            },
+            {
+              "user_query": "who is the current CEO of Apple",
+              "correct_topic": "Tim Cook",
+              "reasoning": "Current CEO is Tim Cook - use person name"
+            },
+            {
+              "user_query": "tell me about coffee",
+              "correct_topic": "Coffee",
+              "reasoning": "Simple topic - capitalize"
+            },
+            {
+              "user_query": "recent developments in AI",
+              "correct_topic": "Artificial intelligence",
+              "reasoning": "Remove 'recent developments', use standard term"
+            }
+          ],
+          "common_mistakes": [
+            {
+              "wrong": "latest president of Algeria",
+              "correct": "President of Algeria",
+              "issue": "Contains temporal word 'latest'"
+            },
+            {
+              "wrong": "coffee",
+              "correct": "Coffee",
+              "issue": "Wikipedia uses title case"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "output_schema": {
+    "type": "object",
+    "required": [
+      "title",
+      "summary"
+    ],
+    "properties": {
+      "title": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "url": {
+        "type": "string"
+      },
+      "source": {
+        "type": "string"
+      },
+      "extracted_by": {
+        "type": "string"
+      }
+    }
+  },
+  "semantics": null,
+  "created_at": "2026-02-14T22:04:33.733978Z"
+}

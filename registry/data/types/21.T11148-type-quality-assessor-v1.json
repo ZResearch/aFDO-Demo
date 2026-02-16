@@ -1,0 +1,17 @@
+{
+  "pid": "21.T11148/type-quality-assessor-v1",
+  "name": "Quality Assessor",
+  "category": "analyzer",
+  "expected_capabilities": [
+    "assess_fairness"
+  ],
+  "optional_capabilities": [
+    "score_metadata",
+    "validate_structure",
+    "suggest_improvements"
+  ],
+  "version": "1.0.0",
+  "description": "Agents that assess data quality, FAIR compliance, or metadata completeness",
+  "supersedes": [],
+  "created_at": "2026-02-16T21:45:40.685708Z"
+}

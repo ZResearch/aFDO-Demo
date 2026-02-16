@@ -1,0 +1,82 @@
+{
+  "policy_id": "openlibrary_agent_policy",
+  "policy_version": "1.0.0",
+  "description": "Policy for Open Library Agent - searches books and references",
+  "default_action": "handle_alone",
+
+  "rules": [
+    {
+      "rule_id": "rule_00_delegate_synthesis_queries",
+      "description": "Delegate synthesis/comparison queries to LLM via semantic discovery",
+      "priority": 11,
+      "conditions": {
+        "operation": ["receive_query"],
+        "query_requires_synthesis": true
+      },
+      "action": {
+        "type": "semantic_discovery",
+        "reasoning": "Query requires synthesis or analysis beyond book lookup. Delegating to LLM for intelligent processing.",
+        "parameters": {
+          "discovery_query": {
+            "use_semantic_matching": true,
+            "min_similarity": 0.3,
+            "selection_criteria": "balanced"
+          }
+        }
+      }
+    },
+
+    {
+      "rule_id": "rule_01_handle_book_search",
+      "description": "Handle book searches directly",
+      "priority": 10,
+      "conditions": {
+        "operation": ["search_books", "get_book_info", "find_references", "receive_query"],
+        "has_capability": true
+      },
+      "action": {
+        "type": "handle_alone",
+        "reasoning": "Book searches are my core capability"
+      }
+    },
+
+    {
+      "rule_id": "rule_02_complex_need_workflow",
+      "description": "Complex tasks need workflow",
+      "priority": 9,
+      "conditions": {
+        "complexity": "complex"
+      },
+      "action": {
+        "type": "consult_for_workflow",
+        "reasoning": "Complex task requiring coordination",
+        "parameters": {
+          "consultant_query": {
+            "operations": ["generate_workflow", "plan_task"]
+          }
+        },
+        "fallback": {
+          "type": "handle_alone"
+        }
+      }
+    },
+
+    {
+      "rule_id": "rule_03_not_capable_delegate",
+      "description": "Delegate operations outside capability",
+      "priority": 5,
+      "conditions": {
+        "has_capability": false
+      },
+      "action": {
+        "type": "query_registry_for_helper",
+        "reasoning": "Operation outside my capabilities",
+        "parameters": {
+          "registry_query": {
+            "operation": "from_request"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,196 @@
+{
+  "pid": "21.T11148/afdo-metadata-paper-analyzer",
+  "associated_fdo": "21.T11148/afdo-paper-analyzer",
+  "content": {
+    "description": "Autonomous composite agent for research paper analysis",
+    "version": "2.0.0",
+    "agent_role": "composite_agent",
+    "decision_policy": "autonomous",
+    "specialization": "research_papers",
+    "model": "gpt-4o",
+    "capabilities": {
+      "analyze_paper": {
+        "description": "Comprehensive paper analysis including methodology, findings, and FAIR compliance",
+        "input_schema": {
+          "pdf_data": "base64 encoded PDF content (optional if text provided)",
+          "text": "extracted text (optional if pdf_data provided)",
+          "metadata": "dict with paper metadata (optional)"
+        },
+        "output_schema": {
+          "methodology": "detailed methodology analysis",
+          "key_findings": "extracted main findings",
+          "reproducibility_score": "float 0-1",
+          "fair_assessment": "FAIR compliance scores",
+          "cost_breakdown": "dict of service costs"
+        },
+        "estimated_duration": "15-30s",
+        "estimated_cost": "$0.30-0.60",
+        "requires_llm": true
+      },
+      "analyze_paper_budget": {
+        "description": "Budget-aware comprehensive paper analysis with cost control",
+        "input_schema": {
+          "pdf_data": "base64 encoded PDF content",
+          "budget": "float maximum cost allowed",
+          "priority": "string (speed/balanced/quality)"
+        },
+        "output_schema": {
+          "analysis": "complete paper analysis dict",
+          "budget_used": "float actual cost",
+          "budget_remaining": "float",
+          "services_used": "list of PIDs"
+        },
+        "estimated_duration": "15-30s",
+        "estimated_cost": "up to budget limit",
+        "requires_llm": true
+      },
+      "extract_key_findings": {
+        "description": "Extract and summarize main findings from paper",
+        "input_schema": {
+          "text": "paper text content"
+        },
+        "output_schema": {
+          "findings": "list of key findings",
+          "summary": "brief summary"
+        },
+        "estimated_duration": "5-10s",
+        "estimated_cost": "$0.10-0.20"
+      },
+      "assess_methodology": {
+        "description": "Evaluate research methodology quality",
+        "input_schema": {
+          "text": "paper text content"
+        },
+        "output_schema": {
+          "methodology_type": "string",
+          "rigor_score": "float 0-1",
+          "strengths": "list",
+          "weaknesses": "list"
+        },
+        "estimated_duration": "5-10s",
+        "estimated_cost": "$0.10-0.20"
+      },
+      "check_reproducibility": {
+        "description": "Assess reproducibility of research",
+        "input_schema": {
+          "text": "paper text content"
+        },
+        "output_schema": {
+          "reproducibility_score": "float 0-1",
+          "data_availability": "boolean",
+          "code_availability": "boolean",
+          "documentation_quality": "string"
+        },
+        "estimated_duration": "5-10s",
+        "estimated_cost": "$0.10-0.20"
+      }
+    },
+    "dependencies": {
+      "required_services": [
+        {
+          "type": "document_processor",
+          "operation": "extract_text",
+          "for": "PDF parsing"
+        },
+        {
+          "type": "compliance_checker",
+          "operation": "assess_fairness",
+          "for": "FAIR assessment"
+        },
+        {
+          "type": "llm_service",
+          "operation": "summarize",
+          "for": "synthesis"
+        }
+      ],
+      "optional_services": [
+        {
+          "type": "creator",
+          "operation": "improve_agent",
+          "for": "self-improvement"
+        }
+      ]
+    },
+    "performance_characteristics": {
+      "typical_latency": "15-30s",
+      "max_concurrent_requests": 10,
+      "failure_recovery": "automatic with alternative providers",
+      "budget_control": "strict enforcement with cost tracking"
+    },
+    "marketplace_features": {
+      "budget_aware": true,
+      "failure_recovery": true,
+      "policy_based_selection": true,
+      "cost_tracking": true
+    },
+    "coordinates_with": [
+      "document_processor",
+      "compliance_checker",
+      "llm_service"
+    ],
+    "llm_capable": true,
+    "can_self_improve": true,
+    "schema_version": "1.0.0",
+    "provenance": {
+      "creation_method": "automated_registration",
+      "framework": "aFDO_marketplace_v1.0",
+      "registration_timestamp": "2026-02-16T19:50:59.160398Z",
+      "framework_version": "1.0.0"
+    },
+    "technical_details": {
+      "port": 8003,
+      "base_url": "http://localhost:8003",
+      "operations_count": 6,
+      "has_marketplace_features": true,
+      "has_llm": true,
+      "base_cost": 0.05
+    },
+    "semantic_links": [
+      {
+        "relation": "implements",
+        "target": "21.T11148/profile-ai-agent-v1"
+      },
+      {
+        "relation": "type_of",
+        "target": "21.T11148/type-workflow-coordinator-v1"
+      },
+      {
+        "relation": "registered_in",
+        "target": "21.T11148/registry-system-001"
+      }
+    ],
+    "compliance": {
+      "FDO_compliant": true,
+      "FAIR_enabled": true,
+      "DOIP_protocol": "2.0",
+      "supports_marketplace": true
+    },
+    "discovery": {
+      "operations": [
+        "analyze_paper",
+        "analyze_paper_budget",
+        "extract_key_findings",
+        "assess_methodology",
+        "check_reproducibility",
+        "get_description"
+      ],
+      "specialization": "research_papers",
+      "reputation": 0.85
+    }
+  },
+  "created_at": "2026-02-16T19:50:59.160411Z",
+  "updated_at": "2026-02-16T19:50:59.160413Z",
+  "schema_version": "1.0.0",
+  "created_by": "21.T11148/afdo-paper-analyzer",
+  "provenance": {
+    "registration_method": "self_registration",
+    "framework": "aFDO_marketplace_v1.0"
+  },
+  "semantic_links": [
+    {
+      "relation": "describes",
+      "target": "21.T11148/afdo-paper-analyzer"
+    }
+  ],
+  "license": "research-use"
+}

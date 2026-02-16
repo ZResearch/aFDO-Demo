@@ -1,0 +1,49 @@
+{
+  "pid": "21.T11148/afdo-a31427d7-op-extract-first-page",
+  "name": "extract_first_page",
+  "description": "Operation: extract_first_page",
+  "input_schema": {
+    "type": "object",
+    "required": [
+      "pdf_data"
+    ],
+    "properties": {
+      "pdf_data": {
+        "type": "string",
+        "format": "base64",
+        "contentEncoding": "base64"
+      },
+      "max_chars": {
+        "type": "integer",
+        "default": 2000,
+        "minimum": 100,
+        "maximum": 10000
+      }
+    }
+  },
+  "output_schema": {
+    "type": "object",
+    "required": [
+      "first_page_text",
+      "char_count",
+      "truncated"
+    ],
+    "properties": {
+      "first_page_text": {
+        "type": "string"
+      },
+      "char_count": {
+        "type": "integer",
+        "minimum": 0
+      },
+      "truncated": {
+        "type": "boolean"
+      },
+      "extracted_by": {
+        "type": "string"
+      }
+    }
+  },
+  "semantics": null,
+  "created_at": "2026-02-14T22:04:20.067059Z"
+}

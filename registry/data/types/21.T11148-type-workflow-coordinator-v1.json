@@ -1,0 +1,11 @@
+{
+  "pid": "21.T11148/type-workflow-coordinator-v1",
+  "name": "Workflow Coordinator",
+  "category": "coordinator",
+  "expected_capabilities": [],
+  "optional_capabilities": [],
+  "version": "1.0.0",
+  "description": "Composite agents that coordinate multi-step workflows by discovering and hiring services",
+  "supersedes": [],
+  "created_at": "2026-02-16T21:45:40.685711Z"
+}

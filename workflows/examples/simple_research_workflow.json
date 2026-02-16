@@ -1,0 +1,92 @@
+{
+  "workflow_id": "wf_simple_research_001",
+  "name": "Simple Research Workflow",
+  "description": "Fetch facts from Wikipedia and synthesize answer",
+  "created_by": "system",
+  "created_at": "2026-02-12T00:00:00Z",
+  "status": "draft",
+
+  "input_schema": {
+    "type": "object",
+    "required": ["question"],
+    "properties": {
+      "question": {
+        "type": "string",
+        "description": "Research question to answer"
+      }
+    }
+  },
+
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "answer": {"type": "string"},
+      "sources": {"type": "array"}
+    }
+  },
+
+  "steps": [
+    {
+      "step_id": "step_01_extract_topic",
+      "name": "Extract Topic",
+      "description": "Extract main topic from question",
+      "operation": "extract_topic",
+      "executor": "self",
+      "depends_on": [],
+      "input_mapping": {
+        "question": "workflow.input.question"
+      },
+      "on_failure": "abort"
+    },
+
+    {
+      "step_id": "step_02_fetch_facts",
+      "name": "Fetch Facts",
+      "description": "Fetch facts from Wikipedia",
+      "operation": "get_article_summary",
+      "executor": "discover",
+      "discovery_query": {
+        "operation": "get_article_summary",
+        "selection_criteria": "cheapest"
+      },
+      "depends_on": ["step_01_extract_topic"],
+      "input_mapping": {
+        "topic": "step_01_extract_topic.result.topic"
+      },
+      "on_failure": "abort",
+      "timeout": 30
+    },
+
+    {
+      "step_id": "step_03_synthesize",
+      "name": "Synthesize Answer",
+      "description": "Synthesize facts into answer",
+      "operation": "synthesize_text",
+      "executor": "discover",
+      "discovery_query": {
+        "operation": "synthesize_text",
+        "selection_criteria": "balanced"
+      },
+      "depends_on": ["step_02_fetch_facts"],
+      "input_mapping": {
+        "sources": ["step_02_fetch_facts.result"],
+        "question": "workflow.input.question"
+      },
+      "on_failure": "fallback",
+      "fallback_step": "step_04_simple_concat"
+    },
+
+    {
+      "step_id": "step_04_simple_concat",
+      "name": "Simple Concatenation (Fallback)",
+      "description": "Simple concatenation if synthesis fails",
+      "operation": "concatenate_results",
+      "executor": "self",
+      "depends_on": [],
+      "input_mapping": {
+        "sources": ["step_02_fetch_facts.result"]
+      },
+      "on_failure": "abort"
+    }
+  ]
+}

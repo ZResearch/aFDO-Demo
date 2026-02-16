@@ -1,0 +1,15 @@
+{
+  "pid": "21.T11148/type-data-source-v1",
+  "name": "Data Source",
+  "category": "data_provider",
+  "expected_capabilities": [],
+  "optional_capabilities": [
+    "search",
+    "get_data",
+    "query"
+  ],
+  "version": "1.0.0",
+  "description": "Agents that fetch data from external APIs (Wikipedia, ArXiv, databases, etc.)",
+  "supersedes": [],
+  "created_at": "2026-02-16T21:45:40.685721Z"
+}

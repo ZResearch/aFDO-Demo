@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>aFDO Chat Interface</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 800px;
+            height: 90vh;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .status {
+            padding: 10px 20px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+            font-size: 12px;
+            color: #6c757d;
+        }
+
+        .status.connected {
+            color: #28a745;
+        }
+
+        .chat-area {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background: #f8f9fa;
+        }
+
+        .message {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .message.user {
+            flex-direction: row-reverse;
+        }
+
+        .message-content {
+            max-width: 70%;
+            padding: 12px 16px;
+            border-radius: 12px;
+            line-height: 1.5;
+        }
+
+        .message.user .message-content {
+            background: #667eea;
+            color: white;
+        }
+
+        .message.assistant .message-content {
+            background: white;
+            color: #333;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .message.system .message-content {
+            background: #fff3cd;
+            color: #856404;
+            max-width: 100%;
+            font-size: 13px;
+        }
+
+        .input-area {
+            padding: 20px;
+            background: white;
+            border-top: 1px solid #dee2e6;
+        }
+
+        .input-form {
+            display: flex;
+            gap: 10px;
+        }
+
+        #user-input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid #dee2e6;
+            border-radius: 25px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        #user-input:focus {
+            border-color: #667eea;
+        }
+
+        #send-btn {
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        #send-btn:hover {
+            transform: scale(1.05);
+        }
+
+        #send-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 10px;
+            color: #6c757d;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        .agent-info {
+            font-size: 11px;
+            color: #6c757d;
+            margin-top: 5px;
+            font-style: italic;
+        }
+
+        .trace-info {
+            margin-top: 10px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-left: 3px solid #667eea;
+            border-radius: 5px;
+            font-size: 12px;
+        }
+
+        .trace-info .trace-header {
+            font-weight: 600;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .trace-info .trace-detail {
+            color: #6c757d;
+            margin: 3px 0;
+        }
+
+        .trace-info .trace-agents {
+            color: #28a745;
+            font-weight: 500;
+        }
+
+        .trace-link {
+            display: inline-block;
+            margin-top: 5px;
+            color: #667eea;
+            text-decoration: none;
+            font-size: 11px;
+        }
+
+        .trace-link:hover {
+            text-decoration: underline;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            overflow: auto;
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 0;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 900px;
+            max-height: 80vh;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px 10px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-body {
+            padding: 20px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .close-btn {
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0;
+            line-height: 1;
+        }
+
+        .close-btn:hover {
+            opacity: 0.8;
+        }
+
+        .trace-step {
+            margin: 15px 0;
+            padding: 12px;
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            border-radius: 5px;
+            font-size: 13px;
+        }
+
+        .trace-step-header {
+            font-weight: 600;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .trace-step-detail {
+            color: #6c757d;
+            margin: 3px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+        }
+
+        .trace-summary {
+            background: #e7f3ff;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .trace-summary h3 {
+            margin: 0 0 10px 0;
+            color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🤖 Autonomous FAIR Digital Objects</h1>
+            <p>IJCAI 2026 Demo - Multi-Agent Research Assistant</p>
+        </div>
+
+        <div class="status" id="status">
+            Connecting...
+        </div>
+
+        <div class="chat-area" id="chat-area">
+            <div class="message system">
+                <div class="message-content">
+                    <strong>✓ Connected to Chat UI (v2.0)</strong><br><br>
+                    Welcome to the autonomous aFDO marketplace! Type your message below and check the browser console (F12) for debug info.
+                </div>
+            </div>
+        </div>
+
+        <div class="loading" id="loading">
+            <div>🔄 Processing your request...</div>
+        </div>
+
+        <div class="input-area">
+            <form class="input-form" id="chat-form">
+                <input
+                    type="text"
+                    id="user-input"
+                    placeholder="Type your message here..."
+                    autocomplete="off"
+                >
+                <button type="submit" id="send-btn">Send</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Trace Modal -->
+    <div id="traceModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🔍 Execution Trace</h2>
+                <button class="close-btn" onclick="closeTraceModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="traceModalBody">
+                Loading trace...
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const chatArea = document.getElementById('chat-area');
+        const userInput = document.getElementById('user-input');
+        const sendBtn = document.getElementById('send-btn');
+        const chatForm = document.getElementById('chat-form');
+        const status = document.getElementById('status');
+        const loading = document.getElementById('loading');
+        const traceModal = document.getElementById('traceModal');
+        const traceModalBody = document.getElementById('traceModalBody');
+
+        // Modal functions
+        function openTraceModal(traceFile) {
+            const fileName = traceFile.split('/').pop();
+            traceModal.style.display = 'block';
+            traceModalBody.innerHTML = '<p style="text-align:center; color:#6c757d;">Loading trace...</p>';
+
+            fetch(`http://localhost:8001/trace/${fileName}`)
+                .then(res => res.json())
+                .then(trace => {
+                    displayTrace(trace);
+                })
+                .catch(err => {
+                    traceModalBody.innerHTML = `<p style="color:#dc3545;">Failed to load trace: ${err.message}</p>`;
+                });
+        }
+
+        function closeTraceModal() {
+            traceModal.style.display = 'none';
+        }
+
+        function renderEvents(events, childTraces, indentLevel = 0) {
+            /**
+             * Recursively render events with nested child traces.
+             * When a DELEGATE event is found, inject the child trace events after it.
+             */
+            let html = '';
+            const indent = indentLevel * 30; // 30px per level
+
+            events.forEach((event, index) => {
+                const duration = event.duration_ms ? `${event.duration_ms}ms` : '';
+                const cost = event.cost ? `$${event.cost.toFixed(4)}` : '';
+                const timing = (duration || cost) ? ` (${[duration, cost].filter(x => x).join(' | ')})` : '';
+
+                // Format input data summary
+                let inputSummary = '';
+                if (event.input_data && Object.keys(event.input_data).length > 0) {
+                    const inputStr = JSON.stringify(event.input_data, null, 0);
+                    inputSummary = inputStr.length > 100 ? inputStr.substring(0, 100) + '...' : inputStr;
+                }
+
+                // Format output data summary
+                let outputSummary = '';
+                if (event.output_data && Object.keys(event.output_data).length > 0) {
+                    const outputStr = JSON.stringify(event.output_data, null, 0);
+                    outputSummary = outputStr.length > 100 ? outputStr.substring(0, 100) + '...' : outputStr;
+                }
+
+                html += `
+                    <div class="trace-step" style="margin-left: ${indent}px;">
+                        <div class="trace-step-header">
+                            [${event.step_number}] ${event.agent_name} → ${event.action_type.toUpperCase()}${timing}
+                        </div>
+                        <div class="trace-step-detail">Operation: ${event.operation}</div>
+                        ${event.notes ? `<div class="trace-step-detail">Notes: ${event.notes}</div>` : ''}
+                        ${inputSummary ? `<div class="trace-step-detail" style="color: #666;">Input: ${inputSummary}</div>` : ''}
+                        ${outputSummary ? `<div class="trace-step-detail" style="color: #666;">Output: ${outputSummary}</div>` : ''}
+                    </div>
+                `;
+
+                // If this is a DELEGATE event, check if we have a child trace for it
+                if (event.action_type === 'delegate' && event.delegated_to && childTraces) {
+                    // Find child trace where the first event matches this delegation
+                    const childTrace = childTraces.find(ct => {
+                        const childSummary = ct.summary || {};
+                        // Match by checking if the delegated agent is in the child's agents
+                        const childAgents = childSummary.agents_involved || [];
+                        return childAgents.includes(event.delegated_to);
+                    });
+
+                    if (childTrace) {
+                        // Render child trace events with increased indentation
+                        const childEvents = childTrace.events || [];
+                        const grandchildTraces = childTrace.child_traces || [];
+                        html += renderEvents(childEvents, grandchildTraces, indentLevel + 1);
+                    }
+                }
+            });
+
+            return html;
+        }
+
+        function displayTrace(trace) {
+            const summary = trace.summary || {};
+            const events = trace.events || [];
+            const childTraces = trace.child_traces || [];
+
+            let html = `
+                <div class="trace-summary">
+                    <h3>Summary</h3>
+                    <p><strong>Query:</strong> ${summary.user_query || 'N/A'}</p>
+                    <p><strong>Request ID:</strong> ${summary.request_id || 'N/A'}</p>
+                    <p><strong>Status:</strong> ${summary.status || 'N/A'}</p>
+                    <p><strong>Duration:</strong> ${summary.total_duration_ms || 0}ms</p>
+                    <p><strong>Cost:</strong> $${(summary.total_cost || 0).toFixed(4)}</p>
+                    <p><strong>Agents:</strong> ${(summary.agents_involved || []).join(', ')}</p>
+                </div>
+                <h3 style="margin-bottom: 15px;">Execution Steps</h3>
+            `;
+
+            // Render all events with nested child traces
+            html += renderEvents(events, childTraces, 0);
+
+            traceModalBody.innerHTML = html;
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            if (event.target === traceModal) {
+                closeTraceModal();
+            }
+        };
+
+        // Check connection
+        fetch('http://localhost:8001/')
+            .then(res => res.json())
+            .then(data => {
+                status.textContent = `✓ Connected to ${data.name}`;
+                status.classList.add('connected');
+            })
+            .catch(err => {
+                status.textContent = '✗ Connection failed';
+            });
+
+        function addMessage(content, type = 'user', agentInfo = null, traceData = null) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${type}`;
+
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'message-content';
+            contentDiv.innerHTML = content.replace(/\n/g, '<br>');
+
+            if (agentInfo) {
+                const infoDiv = document.createElement('div');
+                infoDiv.className = 'agent-info';
+                infoDiv.textContent = agentInfo;
+                contentDiv.appendChild(infoDiv);
+            }
+
+            // Add trace information if available
+            if (traceData && traceData.summary) {
+                const traceDiv = document.createElement('div');
+                traceDiv.className = 'trace-info';
+
+                const summary = traceData.summary;
+                const agents = summary.agents_involved || [];
+                const duration = summary.total_duration_ms || 0;
+                const cost = summary.total_cost || 0;
+
+                traceDiv.innerHTML = `
+                    <div class="trace-header">🔍 Execution Trace</div>
+                    <div class="trace-detail">
+                        <span class="trace-agents">Agents: ${agents.join(' → ')}</span>
+                    </div>
+                    <div class="trace-detail">
+                        Duration: ${duration}ms | Cost: $${cost.toFixed(4)}
+                    </div>
+                    ${traceData.trace_file ? `
+                        <a href="#" class="trace-link" onclick="openTraceModal('${traceData.trace_file}'); return false;">
+                            📄 View full trace
+                        </a>
+                    ` : ''}
+                `;
+
+                contentDiv.appendChild(traceDiv);
+            }
+
+            messageDiv.appendChild(contentDiv);
+            chatArea.appendChild(messageDiv);
+            chatArea.scrollTop = chatArea.scrollHeight;
+        }
+
+        chatForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const message = userInput.value.trim();
+            if (!message) return;
+
+            // Display user message
+            addMessage(message, 'user');
+            userInput.value = '';
+            sendBtn.disabled = true;
+            loading.classList.add('active');
+
+            try {
+                // Send to Chat UI agent
+                const response = await fetch('http://localhost:8001/doip/extend/receive_user_input', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        protocol_version: '2.0',
+                        authentication: { caller_pid: 'web-user' },
+                        parameters: { message: message }
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.status === 'success') {
+                    const data = result.data;
+                    console.log('Received data:', data);
+                    console.log('data.message:', data.message);
+                    console.log('data.response:', data.response);
+                    console.log('data._trace:', data._trace);
+
+                    const reply = data.response || data.message || data.final_result || 'Processing complete.';
+                    console.log('Final reply:', reply);
+                    const agentInfo = data.handler ? `via ${data.handler}` : null;
+                    const traceData = data._trace || null;
+
+                    addMessage(reply, 'assistant', agentInfo, traceData);
+                } else {
+                    addMessage('Sorry, I encountered an error processing your request.', 'system');
+                }
+
+            } catch (error) {
+                console.error('Error:', error);
+                addMessage('Connection error. Please check if all agents are running.', 'system');
+            } finally {
+                loading.classList.remove('active');
+                sendBtn.disabled = false;
+                userInput.focus();
+            }
+        });
+
+        // Auto-focus input
+        userInput.focus();
+    </script>
+</body>
+</html>

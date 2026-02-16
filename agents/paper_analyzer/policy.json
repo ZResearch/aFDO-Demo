@@ -1,0 +1,103 @@
+{
+  "policy_id": "paper_analyzer_policy",
+  "policy_version": "1.0.0",
+  "description": "Policy for Paper Analyzer - autonomous composite agent for research paper analysis",
+  "default_action": "collaborate",
+
+  "rules": [
+    {
+      "rule_id": "rule_01_simple_extraction",
+      "description": "Simple extractions I can do with my LLM",
+      "priority": 10,
+      "conditions": {
+        "operation": ["extract_key_findings"],
+        "has_capability": true,
+        "complexity": "simple"
+      },
+      "action": {
+        "type": "handle_alone",
+        "reasoning": "Key findings extraction is within my LLM capabilities"
+      }
+    },
+
+    {
+      "rule_id": "rule_02_full_analysis_complex",
+      "description": "Full paper analysis requires multiple services",
+      "priority": 9,
+      "conditions": {
+        "operation": ["analyze_paper", "analyze_paper_budget"],
+        "complexity": "complex"
+      },
+      "action": {
+        "type": "collaborate",
+        "reasoning": "Full analysis requires PDF parsing, FAIR assessment, and synthesis",
+        "parameters": {
+          "discovery_strategy": "comprehensive",
+          "planning_mode": "adaptive",
+          "cost_optimization": true,
+          "required_services": ["pdf_parser", "fair_assessor", "llm_endpoint"]
+        }
+      }
+    },
+
+    {
+      "rule_id": "rule_03_methodology_assessment",
+      "description": "Methodology assessment with optional helper",
+      "priority": 8,
+      "conditions": {
+        "operation": ["assess_methodology"],
+        "complexity": "moderate"
+      },
+      "action": {
+        "type": "collaborate",
+        "reasoning": "May need domain-specific helpers for methodology assessment",
+        "parameters": {
+          "discovery_strategy": "targeted",
+          "planning_mode": "simple"
+        }
+      }
+    },
+
+    {
+      "rule_id": "rule_04_reproducibility_check",
+      "description": "Reproducibility checking requires FAIR assessor",
+      "priority": 7,
+      "conditions": {
+        "operation": ["check_reproducibility"]
+      },
+      "action": {
+        "type": "query_registry_for_helper",
+        "reasoning": "Reproducibility checking best done by FAIR assessor",
+        "parameters": {
+          "registry_query": {
+            "operations": ["assess_fair_compliance", "check_reproducibility"]
+          },
+          "selection_criteria": "balanced"
+        },
+        "fallback": {
+          "type": "handle_alone",
+          "parameters": {
+            "warning": "No FAIR assessor available, using basic LLM check"
+          }
+        }
+      }
+    },
+
+    {
+      "rule_id": "rule_05_budget_sufficient",
+      "description": "Sufficient budget - balanced approach",
+      "priority": 5,
+      "conditions": {
+        "budget_threshold": 0.5
+      },
+      "action": {
+        "type": "collaborate",
+        "reasoning": "Sufficient budget available - use balanced approach",
+        "parameters": {
+          "discovery_strategy": "comprehensive",
+          "selection_criteria": "balanced"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,209 @@
+{
+  "protocol_name": "workflow_protocol",
+  "version": "1.0.0",
+  "description": "Data-driven workflow execution for aFDOs",
+
+  "workflow_schema": {
+    "workflow_id": {
+      "type": "string",
+      "required": true,
+      "description": "Unique workflow identifier"
+    },
+    "name": {
+      "type": "string",
+      "required": true,
+      "description": "Human-readable workflow name"
+    },
+    "description": {
+      "type": "string",
+      "required": false
+    },
+    "created_by": {
+      "type": "string",
+      "required": true,
+      "description": "PID of aFDO that created workflow"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "iso8601",
+      "required": true
+    },
+    "status": {
+      "type": "string",
+      "enum": ["draft", "estimated", "approved", "executing", "completed", "failed", "cancelled"],
+      "required": true
+    },
+    "input_schema": {
+      "type": "object",
+      "required": true,
+      "description": "Schema for workflow inputs",
+      "properties": {
+        "type": "object",
+        "required": "array of required field names",
+        "properties": "object mapping field names to schemas"
+      }
+    },
+    "output_schema": {
+      "type": "object",
+      "required": true,
+      "description": "Schema for workflow outputs"
+    },
+    "steps": {
+      "type": "array",
+      "required": true,
+      "minItems": 1,
+      "description": "Workflow steps",
+      "items": {
+        "type": "object",
+        "properties": {
+          "step_id": {
+            "type": "string",
+            "required": true,
+            "description": "Unique step identifier within workflow"
+          },
+          "name": {
+            "type": "string",
+            "required": true
+          },
+          "description": {
+            "type": "string",
+            "required": false
+          },
+          "operation": {
+            "type": "string",
+            "required": true,
+            "description": "Operation to perform"
+          },
+          "executor": {
+            "type": "string",
+            "enum": ["self", "discover", "specific"],
+            "required": true,
+            "description": "Who executes this step"
+          },
+          "executor_pid": {
+            "type": "string",
+            "required": false,
+            "description": "Specific aFDO PID (if executor=specific)"
+          },
+          "discovery_query": {
+            "type": "object",
+            "required": false,
+            "description": "How to discover executor (if executor=discover)",
+            "properties": {
+              "operation": "string",
+              "selection_criteria": "string (cheapest|fastest|balanced|best_reputation)"
+            }
+          },
+          "depends_on": {
+            "type": "array",
+            "required": false,
+            "default": [],
+            "description": "Array of step_ids this step depends on"
+          },
+          "input_mapping": {
+            "type": "object",
+            "required": true,
+            "description": "Map step inputs from workflow context",
+            "additionalProperties": {
+              "type": "string",
+              "description": "Path in workflow context (e.g., 'workflow.input.query' or 'step_01.result.data')"
+            }
+          },
+          "output_mapping": {
+            "type": "object",
+            "required": false,
+            "description": "Map step outputs to workflow context"
+          },
+          "on_failure": {
+            "type": "string",
+            "enum": ["abort", "continue", "retry", "fallback"],
+            "default": "abort",
+            "required": false
+          },
+          "fallback_step": {
+            "type": "string",
+            "required": false,
+            "description": "Step to execute if this fails (if on_failure=fallback)"
+          },
+          "max_retries": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 5,
+            "default": 0,
+            "required": false
+          },
+          "timeout": {
+            "type": "integer",
+            "minimum": 1,
+            "required": false,
+            "description": "Timeout in seconds"
+          },
+          "cost_limit": {
+            "type": "number",
+            "required": false,
+            "description": "Maximum cost for this step"
+          }
+        }
+      }
+    },
+    "execution_log": {
+      "type": "array",
+      "required": false,
+      "description": "Log of step executions",
+      "items": {
+        "type": "object",
+        "properties": {
+          "step_id": "string",
+          "executor_pid": "string",
+          "started_at": "iso8601",
+          "completed_at": "iso8601",
+          "status": "string (success|failed|skipped)",
+          "cost": "number",
+          "result": "object",
+          "error": "string"
+        }
+      }
+    },
+    "cost_summary": {
+      "type": "object",
+      "required": false,
+      "properties": {
+        "estimated": "number",
+        "actual": "number",
+        "breakdown": "array"
+      }
+    }
+  },
+
+  "execution_context_schema": {
+    "description": "Runtime context during workflow execution",
+    "properties": {
+      "workflow": {
+        "description": "Workflow metadata",
+        "properties": {
+          "id": "string",
+          "input": "object (workflow input data)"
+        }
+      },
+      "steps": {
+        "description": "Results from completed steps",
+        "additionalProperties": {
+          "description": "Key is step_id",
+          "properties": {
+            "result": "object (step result)",
+            "cost": "number",
+            "duration": "number"
+          }
+        }
+      },
+      "budget": {
+        "description": "Budget tracking",
+        "properties": {
+          "total": "number",
+          "spent": "number",
+          "remaining": "number"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "pid": "21.T11148/afdo-aa92132c-op-analyze-query-intent",
+  "name": "analyze_query_intent",
+  "description": "Analyzes user queries to understand intent and generate abstract capability descriptions. Transforms natural language questions into structured descriptions of required agent capabilities suitable for semantic matching.",
+  "input_schema": {
+    "type": "object",
+    "required": [
+      "query"
+    ],
+    "properties": {
+      "query": {
+        "type": "string",
+        "description": "Raw user query to analyze"
+      }
+    }
+  },
+  "output_schema": {
+    "type": "object",
+    "required": [
+      "capability_description"
+    ],
+    "properties": {
+      "capability_description": {
+        "type": "string",
+        "description": "Abstract description of agent capabilities needed to handle this query"
+      },
+      "query_type": {
+        "type": "string",
+        "description": "Type of query (factual, research, synthesis, etc.)"
+      },
+      "key_requirements": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "List of key capability requirements"
+      }
+    }
+  },
+  "semantics": null,
+  "created_at": "2026-02-16T21:24:51.800441Z"
+}

@@ -1,0 +1,18 @@
+{
+  "pid": "21.T11148/type-document-processor-v1",
+  "name": "Document Processor",
+  "category": "data_processor",
+  "expected_capabilities": [
+    "extract_text"
+  ],
+  "optional_capabilities": [
+    "extract_metadata",
+    "extract_images",
+    "extract_tables",
+    "extract_first_page"
+  ],
+  "version": "1.0.0",
+  "description": "Agents that process documents (PDF, Word, etc.) to extract content",
+  "supersedes": [],
+  "created_at": "2026-02-16T21:45:40.685680Z"
+}

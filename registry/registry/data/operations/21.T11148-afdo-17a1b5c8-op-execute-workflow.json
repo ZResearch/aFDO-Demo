@@ -1,0 +1,9 @@
+{
+  "pid": "21.T11148/afdo-17a1b5c8-op-execute-workflow",
+  "name": "execute_workflow",
+  "description": "Operation: execute_workflow",
+  "input_schema": {},
+  "output_schema": {},
+  "semantics": null,
+  "created_at": "2026-02-16T21:16:35.119158Z"
+}

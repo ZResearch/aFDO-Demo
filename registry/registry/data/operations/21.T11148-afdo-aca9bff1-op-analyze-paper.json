@@ -1,0 +1,9 @@
+{
+  "pid": "21.T11148/afdo-aca9bff1-op-analyze-paper",
+  "name": "analyze_paper",
+  "description": "Operation: analyze_paper",
+  "input_schema": {},
+  "output_schema": {},
+  "semantics": null,
+  "created_at": "2026-02-16T21:16:28.299172Z"
+}

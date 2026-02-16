@@ -1,0 +1,9 @@
+{
+  "pid": "21.T11148/afdo-542f2273-op-generate-text",
+  "name": "generate_text",
+  "description": "Operation: generate_text",
+  "input_schema": {},
+  "output_schema": {},
+  "semantics": null,
+  "created_at": "2026-02-14T22:04:06.309272Z"
+}

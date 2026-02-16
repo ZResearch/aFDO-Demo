@@ -1,0 +1,98 @@
+{
+  "policy_id": "chat_ui_policy",
+  "policy_version": "5.0.0",
+  "description": "Chat UI policy - autonomous delegation for factual queries",
+  "default_action": "handle_alone",
+
+  "rules": [
+    {
+      "rule_id": "rule_01_greetings",
+      "description": "Handle simple greetings directly",
+      "priority": 10,
+      "conditions": {
+        "operation": ["receive_user_input"],
+        "message_pattern": "^(hi|hello|hey|greetings|good morning|good afternoon)$"
+      },
+      "action": {
+        "type": "handle_alone",
+        "reasoning": "Simple greetings - no delegation needed"
+      }
+    },
+
+    {
+      "rule_id": "rule_02_capability_queries",
+      "description": "Handle capability queries directly",
+      "priority": 9,
+      "conditions": {
+        "operation": ["receive_user_input"],
+        "message_pattern": "(what can you do|what do you do|help|capabilities)"
+      },
+      "action": {
+        "type": "handle_alone",
+        "reasoning": "Capability queries - I know my own capabilities"
+      }
+    },
+
+    {
+      "rule_id": "rule_03_all_queries_two_step_discovery",
+      "description": "Two-step discovery: analyze query intent, then find executor",
+      "priority": 1,
+      "conditions": {
+        "operation": ["receive_user_input"]
+      },
+      "action": {
+        "type": "sequence",
+        "reasoning": "Use LLM to analyze query intent, then find appropriate executor via semantic discovery",
+        "parameters": {
+          "steps": [
+            {
+              "name": "step1_analyze_query",
+              "action": "semantic_discovery",
+              "capability_query": "Ability to analyze user queries, understand intent, extract meaning from natural language questions, determine what kind of information or service is needed, and generate detailed capability descriptions for routing queries to specialized agents",
+              "call_operation": "analyze_query_intent",
+              "input": {
+                "query": "${user_query}"
+              },
+              "output_variable": "capability_description"
+            },
+            {
+              "name": "step2_find_executor",
+              "action": "semantic_discovery",
+              "capability_query": "${capability_description}",
+              "call_operation": "receive_query",
+              "input": {
+                "query": "${user_query}"
+              }
+            }
+          ]
+        }
+      }
+    },
+
+    {
+      "rule_id": "rule_07_display_message",
+      "description": "Display messages directly",
+      "priority": 10,
+      "conditions": {
+        "operation": ["display_message"]
+      },
+      "action": {
+        "type": "handle_alone",
+        "reasoning": "Displaying messages is my core responsibility"
+      }
+    },
+
+    {
+      "rule_id": "rule_08_workflow_execution",
+      "description": "Workflow execution",
+      "priority": 10,
+      "conditions": {
+        "operation": ["execute_workflow", "estimate_workflow_cost"]
+      },
+      "action": {
+        "type": "handle_alone",
+        "reasoning": "Workflow execution is handled internally with marketplace coordination"
+      }
+    }
+  ]
+}

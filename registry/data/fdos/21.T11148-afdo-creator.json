@@ -1,0 +1,151 @@
+{
+  "pid": "21.T11148/afdo-creator",
+  "fdo_type_pid": "21.T11148/type-agent-creator-v1",
+  "fdo_profile_pid": "21.T11148/profile-ai-agent-v1",
+  "operation_pids": [
+    "21.T11148/afdo-f7ab9ba9-op-create-afdo",
+    "21.T11148/afdo-d1a2d0b7-op-fork-afdo",
+    "21.T11148/afdo-aabe823f-op-register-operation",
+    "21.T11148/afdo-53bdea7c-op-validate-specification",
+    "21.T11148/afdo-e3542cec-op-get-description"
+  ],
+  "metadata_pointer": "21.T11148/afdo-metadata-creator",
+  "self_description": {
+    "agent_info": {
+      "name": "Creator Agent",
+      "version": "1.0.0",
+      "agent_type": "infrastructure",
+      "description": "Meta-agent that creates and registers new aFDOs"
+    },
+    "capabilities": {
+      "create_afdo": {
+        "operation_type": "synthesis",
+        "input_schema": {
+          "type": "object",
+          "required": [
+            "specification"
+          ],
+          "properties": {
+            "specification": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "fdo_type": {
+                  "type": "string"
+                },
+                "operations": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "port": {
+                  "type": "integer"
+                }
+              }
+            },
+            "metadata": {
+              "type": "object"
+            }
+          }
+        },
+        "output_schema": {
+          "type": "object",
+          "required": [
+            "success",
+            "pid"
+          ],
+          "properties": {
+            "success": {
+              "type": "boolean"
+            },
+            "pid": {
+              "type": "string"
+            },
+            "message": {
+              "type": "string"
+            }
+          }
+        },
+        "constraints": {
+          "timeout_seconds": 60,
+          "rate_limit": 10
+        },
+        "examples": []
+      },
+      "validate_specification": {
+        "operation_type": "assessment",
+        "input_schema": {
+          "type": "object",
+          "required": [
+            "specification"
+          ],
+          "properties": {
+            "specification": {
+              "type": "object"
+            }
+          }
+        },
+        "output_schema": {
+          "type": "object",
+          "required": [
+            "valid"
+          ],
+          "properties": {
+            "valid": {
+              "type": "boolean"
+            },
+            "error": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "validated_by": {
+              "type": "string"
+            }
+          }
+        },
+        "constraints": {
+          "timeout_seconds": 10,
+          "rate_limit": 100
+        },
+        "examples": []
+      }
+    },
+    "technical_spec": {
+      "runtime": "Python 3.10",
+      "dependencies": [],
+      "resource_requirements": {
+        "memory_mb": 128,
+        "cpu_cores": 0.25
+      }
+    },
+    "agent_attributes": {
+      "has_llm": false,
+      "autonomy_level": "task",
+      "decision_policy": "hardcoded",
+      "can_delegate": false
+    }
+  },
+  "activity_log": {
+    "calls_made": [],
+    "calls_received": []
+  },
+  "kernel_attributes": {
+    "name": "Creator",
+    "port": 8006,
+    "reputation": 0.85,
+    "cost": 0.0,
+    "status": "active",
+    "has_llm": false,
+    "is_meta_agent": true
+  },
+  "created_at": "2026-02-16T19:49:56.429115Z",
+  "updated_at": "2026-02-16T21:23:22.014575Z",
+  "status": "inactive",
+  "last_heartbeat": 1771275237.286842,
+  "inactive_since": 1771277001.9953969
+}

@@ -1,0 +1,51 @@
+{
+  "pid": "21.T11148/afdo-dd2746c5-op-cross-validate",
+  "name": "cross_validate",
+  "description": "Cross-validate information by comparing data from multiple specified sources. Checks consistency and agreement across sources to assess information reliability.",
+  "input_schema": {
+    "type": "object",
+    "required": [
+      "claim",
+      "sources"
+    ],
+    "properties": {
+      "claim": {
+        "type": "string",
+        "description": "Claim to cross-validate"
+      },
+      "sources": {
+        "type": "array",
+        "description": "Preferred sources to use",
+        "items": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "output_schema": {
+    "type": "object",
+    "required": [
+      "claim",
+      "validated",
+      "consistency_score"
+    ],
+    "properties": {
+      "claim": {
+        "type": "string"
+      },
+      "validated": {
+        "type": "boolean"
+      },
+      "consistency_score": {
+        "type": "number",
+        "minimum": 0.0,
+        "maximum": 1.0
+      },
+      "source_results": {
+        "type": "array"
+      }
+    }
+  },
+  "semantics": null,
+  "created_at": "2026-02-15T22:31:53.452953Z"
+}

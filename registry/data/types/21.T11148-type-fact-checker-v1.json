@@ -1,0 +1,17 @@
+{
+  "pid": "21.T11148/type-fact-checker-v1",
+  "name": "Fact Checker",
+  "category": "coordinator",
+  "expected_capabilities": [
+    "verify_fact"
+  ],
+  "optional_capabilities": [
+    "cross_validate",
+    "check_claim",
+    "assess_credibility"
+  ],
+  "version": "1.0.0",
+  "description": "Agents that verify factual claims through multi-source validation and evidence synthesis",
+  "supersedes": [],
+  "created_at": "2026-02-16T21:45:40.685723Z"
+}

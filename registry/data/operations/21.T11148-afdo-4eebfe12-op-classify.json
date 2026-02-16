@@ -1,0 +1,9 @@
+{
+  "pid": "21.T11148/afdo-4eebfe12-op-classify",
+  "name": "classify",
+  "description": "Operation: classify",
+  "input_schema": {},
+  "output_schema": {},
+  "semantics": null,
+  "created_at": "2026-02-14T22:04:06.323553Z"
+}

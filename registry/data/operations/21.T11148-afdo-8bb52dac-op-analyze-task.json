@@ -1,0 +1,32 @@
+{
+  "pid": "21.T11148/afdo-8bb52dac-op-analyze-task",
+  "name": "analyze_task",
+  "description": "Operation: analyze_task",
+  "input_schema": {
+    "type": "object",
+    "required": [
+      "task"
+    ],
+    "properties": {
+      "task": {
+        "type": "string"
+      }
+    }
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "complexity": {
+        "type": "string"
+      },
+      "requirements": {
+        "type": "array"
+      },
+      "suggested_approach": {
+        "type": "string"
+      }
+    }
+  },
+  "semantics": null,
+  "created_at": "2026-02-14T22:05:15.774135Z"
+}

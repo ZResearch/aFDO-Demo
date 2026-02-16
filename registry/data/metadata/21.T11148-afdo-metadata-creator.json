@@ -1,0 +1,83 @@
+{
+  "pid": "21.T11148/afdo-metadata-creator",
+  "associated_fdo": "21.T11148/afdo-creator",
+  "content": {
+    "description": "Meta-agent that creates and registers new aFDOs",
+    "version": "1.0.0",
+    "agent_type": "meta_agent",
+    "privileges": [
+      "create_fdo_records",
+      "create_metadata_records",
+      "register_operations",
+      "maintain_provenance"
+    ],
+    "capabilities": {
+      "create_afdo": "Create new aFDO from specification",
+      "fork_afdo": "Fork existing aFDO to improved version",
+      "register_operation": "Register new operation in registry",
+      "validate_specification": "Validate aFDO specification before creation"
+    },
+    "llm_capable": false,
+    "schema_version": "1.0.0",
+    "provenance": {
+      "creation_method": "automated_registration",
+      "framework": "aFDO_marketplace_v1.0",
+      "registration_timestamp": "2026-02-16T19:49:56.412230Z",
+      "framework_version": "1.0.0"
+    },
+    "technical_details": {
+      "port": 8006,
+      "base_url": "http://localhost:8006",
+      "operations_count": 5,
+      "has_marketplace_features": true,
+      "has_llm": false,
+      "base_cost": 0.0
+    },
+    "semantic_links": [
+      {
+        "relation": "implements",
+        "target": "21.T11148/profile-ai-agent-v1"
+      },
+      {
+        "relation": "type_of",
+        "target": "21.T11148/type-agent-creator-v1"
+      },
+      {
+        "relation": "registered_in",
+        "target": "21.T11148/registry-system-001"
+      }
+    ],
+    "compliance": {
+      "FDO_compliant": true,
+      "FAIR_enabled": true,
+      "DOIP_protocol": "2.0",
+      "supports_marketplace": true
+    },
+    "discovery": {
+      "operations": [
+        "create_afdo",
+        "fork_afdo",
+        "register_operation",
+        "validate_specification",
+        "get_description"
+      ],
+      "specialization": null,
+      "reputation": 0.85
+    }
+  },
+  "created_at": "2026-02-16T19:49:56.412238Z",
+  "updated_at": "2026-02-16T19:49:56.412239Z",
+  "schema_version": "1.0.0",
+  "created_by": "21.T11148/afdo-creator",
+  "provenance": {
+    "registration_method": "self_registration",
+    "framework": "aFDO_marketplace_v1.0"
+  },
+  "semantic_links": [
+    {
+      "relation": "describes",
+      "target": "21.T11148/afdo-creator"
+    }
+  ],
+  "license": "research-use"
+}

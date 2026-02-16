@@ -1,0 +1,116 @@
+{
+  "pid": "21.T11148/afdo-metadata-llm-endpoint-gpt-4-mini",
+  "associated_fdo": "21.T11148/afdo-llm-endpoint-gpt-4-mini",
+  "content": {
+    "description": "Cost-effective LLM service specialized for scientific text analysis",
+    "version": "2.0.0",
+    "agent_role": "llm_service",
+    "model": "gpt-4o-mini",
+    "provider": "OpenAI",
+    "cost_per_1k_tokens": 0.005,
+    "specialization": "scientific_text",
+    "capabilities": {
+      "generate_text": {
+        "description": "Generate scientific text",
+        "estimated_duration": "1-8s",
+        "estimated_cost": "$0.005 per 1K tokens"
+      },
+      "summarize": {
+        "description": "Summarize research papers and sections",
+        "estimated_duration": "2-12s",
+        "estimated_cost": "$0.01-0.05"
+      },
+      "extract_entities": {
+        "description": "Extract scientific entities (methods, datasets, metrics)",
+        "estimated_duration": "1-6s",
+        "estimated_cost": "$0.005-0.02"
+      },
+      "analyze_scientific_text": {
+        "description": "Analyze methodology, findings, and scientific quality",
+        "input_schema": {
+          "text": "scientific text to analyze",
+          "focus": "string (methodology/findings/quality)"
+        },
+        "output_schema": {
+          "analysis": "structured analysis dict",
+          "cost": "float"
+        },
+        "estimated_duration": "3-15s",
+        "estimated_cost": "$0.01-0.08"
+      }
+    },
+    "performance_characteristics": {
+      "typical_latency": "1-8s",
+      "cost_advantage": "6x cheaper than GPT-4",
+      "quality_tradeoff": "suitable for most scientific tasks"
+    },
+    "recommended_for": [
+      "research paper processing",
+      "scientific entity extraction",
+      "methodology analysis",
+      "cost-sensitive workflows"
+    ],
+    "llm_capable": true,
+    "schema_version": "1.0.0",
+    "provenance": {
+      "creation_method": "automated_registration",
+      "framework": "aFDO_marketplace_v1.0",
+      "registration_timestamp": "2026-02-16T19:50:10.752375Z",
+      "framework_version": "1.0.0"
+    },
+    "technical_details": {
+      "port": 8008,
+      "base_url": "http://localhost:8008",
+      "operations_count": 5,
+      "has_marketplace_features": true,
+      "has_llm": true,
+      "base_cost": 0.005
+    },
+    "semantic_links": [
+      {
+        "relation": "implements",
+        "target": "21.T11148/profile-ai-agent-v1"
+      },
+      {
+        "relation": "type_of",
+        "target": "21.T11148/type-llm-service-v1"
+      },
+      {
+        "relation": "registered_in",
+        "target": "21.T11148/registry-system-001"
+      }
+    ],
+    "compliance": {
+      "FDO_compliant": true,
+      "FAIR_enabled": true,
+      "DOIP_protocol": "2.0",
+      "supports_marketplace": true
+    },
+    "discovery": {
+      "operations": [
+        "generate_text",
+        "summarize",
+        "extract_entities",
+        "analyze_scientific_text",
+        "get_description"
+      ],
+      "specialization": "scientific_text",
+      "reputation": 0.85
+    }
+  },
+  "created_at": "2026-02-16T19:50:10.752385Z",
+  "updated_at": "2026-02-16T19:50:10.752386Z",
+  "schema_version": "1.0.0",
+  "created_by": "21.T11148/afdo-llm-endpoint-gpt-4-mini",
+  "provenance": {
+    "registration_method": "self_registration",
+    "framework": "aFDO_marketplace_v1.0"
+  },
+  "semantic_links": [
+    {
+      "relation": "describes",
+      "target": "21.T11148/afdo-llm-endpoint-gpt-4-mini"
+    }
+  ],
+  "license": "research-use"
+}

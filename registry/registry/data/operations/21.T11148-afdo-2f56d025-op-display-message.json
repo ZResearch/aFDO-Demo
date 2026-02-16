@@ -1,0 +1,9 @@
+{
+  "pid": "21.T11148/afdo-2f56d025-op-display-message",
+  "name": "display_message",
+  "description": "Operation: display_message",
+  "input_schema": {},
+  "output_schema": {},
+  "semantics": null,
+  "created_at": "2026-02-16T21:16:42.051410Z"
+}

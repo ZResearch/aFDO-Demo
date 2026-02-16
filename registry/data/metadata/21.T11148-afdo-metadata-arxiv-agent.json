@@ -1,0 +1,72 @@
+{
+  "pid": "21.T11148/afdo-metadata-arxiv-agent",
+  "associated_fdo": "21.T11148/afdo-arxiv-agent",
+  "content": {
+    "description": "Searches and retrieves the latest research papers, scientific publications, academic papers, pre-prints, scholarly articles, and technical reports from arXiv repository. Specializes in machine learning papers, AI research, deep learning publications, neural networks, LLM research, multi-agent systems, and computer science papers. Best for queries about recent papers, latest research, new publications, and cutting-edge scientific work.",
+    "version": "1.0.0",
+    "agent_role": "data_source",
+    "api_source": "ArXiv API",
+    "requires_auth": false,
+    "schema_version": "1.0.0",
+    "provenance": {
+      "creation_method": "automated_registration",
+      "framework": "aFDO_marketplace_v1.0",
+      "registration_timestamp": "2026-02-16T19:50:38.113274Z",
+      "framework_version": "1.0.0"
+    },
+    "technical_details": {
+      "port": 8011,
+      "base_url": "https://export.arxiv.org/api/query",
+      "operations_count": 5,
+      "has_marketplace_features": true,
+      "has_llm": false,
+      "base_cost": 0.02
+    },
+    "semantic_links": [
+      {
+        "relation": "implements",
+        "target": "21.T11148/profile-ai-agent-v1"
+      },
+      {
+        "relation": "type_of",
+        "target": "21.T11148/type-data-source-v1"
+      },
+      {
+        "relation": "registered_in",
+        "target": "21.T11148/registry-system-001"
+      }
+    ],
+    "compliance": {
+      "FDO_compliant": true,
+      "FAIR_enabled": true,
+      "DOIP_protocol": "2.0",
+      "supports_marketplace": true
+    },
+    "discovery": {
+      "operations": [
+        "receive_query",
+        "search_papers",
+        "get_paper_abstract",
+        "find_research",
+        "get_description"
+      ],
+      "specialization": "scientific_research",
+      "reputation": 0.85
+    }
+  },
+  "created_at": "2026-02-16T19:50:38.113284Z",
+  "updated_at": "2026-02-16T19:50:38.113286Z",
+  "schema_version": "1.0.0",
+  "created_by": "21.T11148/afdo-arxiv-agent",
+  "provenance": {
+    "registration_method": "self_registration",
+    "framework": "aFDO_marketplace_v1.0"
+  },
+  "semantic_links": [
+    {
+      "relation": "describes",
+      "target": "21.T11148/afdo-arxiv-agent"
+    }
+  ],
+  "license": "research-use"
+}

@@ -1,0 +1,56 @@
+{
+  "pid": "21.T11148/afdo-f7ab9ba9-op-create-afdo",
+  "name": "create_afdo",
+  "description": "Operation: create_afdo",
+  "input_schema": {
+    "type": "object",
+    "required": [
+      "specification"
+    ],
+    "properties": {
+      "specification": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "fdo_type": {
+            "type": "string"
+          },
+          "operations": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "port": {
+            "type": "integer"
+          }
+        }
+      },
+      "metadata": {
+        "type": "object"
+      }
+    }
+  },
+  "output_schema": {
+    "type": "object",
+    "required": [
+      "success",
+      "pid"
+    ],
+    "properties": {
+      "success": {
+        "type": "boolean"
+      },
+      "pid": {
+        "type": "string"
+      },
+      "message": {
+        "type": "string"
+      }
+    }
+  },
+  "semantics": null,
+  "created_at": "2026-02-14T22:03:59.047902Z"
+}

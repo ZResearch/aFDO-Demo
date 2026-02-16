@@ -1,0 +1,236 @@
+{
+  "pid": "21.T11148/afdo-wikipedia-agent",
+  "fdo_type_pid": "21.T11148/type-data-source-v1",
+  "fdo_profile_pid": "21.T11148/profile-ai-agent-v1",
+  "operation_pids": [
+    "21.T11148/afdo-c286a58a-op-receive-query",
+    "21.T11148/afdo-109774cb-op-get-article-summary",
+    "21.T11148/afdo-22da9d71-op-search-wikipedia",
+    "21.T11148/afdo-9912125f-op-get-facts",
+    "21.T11148/afdo-e3542cec-op-get-description"
+  ],
+  "metadata_pointer": "21.T11148/afdo-metadata-wikipedia-agent",
+  "self_description": {
+    "agent_info": {
+      "name": "Wikipedia Agent",
+      "version": "1.0.0",
+      "agent_type": "task",
+      "description": "Provides encyclopedic knowledge, general facts, biographies, historical information, definitions, summaries about people, places, events, organizations, and concepts from Wikipedia. Best for queries about who someone is, what something is, when events happened, where places are located, general knowledge questions, factual information, and background information. NOT suitable for latest research papers or cutting-edge scientific publications."
+    },
+    "capabilities": {
+      "get_article_summary": {
+        "operation_type": "data_extraction",
+        "description": "Fetch summary of a Wikipedia article",
+        "input_schema": {
+          "type": "object",
+          "required": [
+            "topic"
+          ],
+          "properties": {
+            "topic": {
+              "type": "string",
+              "description": "Wikipedia article title",
+              "format_requirements": {
+                "rules": [
+                  "Use proper Wikipedia article title format",
+                  "Remove temporal modifiers (latest, current, recent, newest)",
+                  "Use title case for proper nouns",
+                  "Be specific - use actual entity/person name if known",
+                  "Match standard Wikipedia naming conventions"
+                ],
+                "transformation_examples": [
+                  {
+                    "user_query": "what is the latest president of Algeria",
+                    "correct_topic": "President of Algeria",
+                    "reasoning": "Remove 'latest', use proper title 'President of Algeria'"
+                  },
+                  {
+                    "user_query": "who is the current CEO of Apple",
+                    "correct_topic": "Tim Cook",
+                    "reasoning": "Current CEO is Tim Cook - use person name"
+                  },
+                  {
+                    "user_query": "tell me about coffee",
+                    "correct_topic": "Coffee",
+                    "reasoning": "Simple topic - capitalize"
+                  },
+                  {
+                    "user_query": "recent developments in AI",
+                    "correct_topic": "Artificial intelligence",
+                    "reasoning": "Remove 'recent developments', use standard term"
+                  }
+                ],
+                "common_mistakes": [
+                  {
+                    "wrong": "latest president of Algeria",
+                    "correct": "President of Algeria",
+                    "issue": "Contains temporal word 'latest'"
+                  },
+                  {
+                    "wrong": "coffee",
+                    "correct": "Coffee",
+                    "issue": "Wikipedia uses title case"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "output_schema": {
+          "type": "object",
+          "required": [
+            "title",
+            "summary"
+          ],
+          "properties": {
+            "title": {
+              "type": "string"
+            },
+            "summary": {
+              "type": "string"
+            },
+            "url": {
+              "type": "string"
+            },
+            "source": {
+              "type": "string"
+            },
+            "extracted_by": {
+              "type": "string"
+            }
+          }
+        },
+        "side_effects": [],
+        "idempotent": true
+      },
+      "receive_query": {
+        "operation_type": "query_processing",
+        "description": "Primary source for answering factual questions, definitions, and explanations. Specializes in 'who is', 'what is', 'where is', 'when did', 'how many' questions. Provides encyclopedic information about: people (presidents, leaders, politicians, historical figures, biographies), places (countries, cities, geography), organizations, events, concepts, definitions, scientific terms, medical conditions, historical facts, current statistics, population data. Retrieves reliable factual summaries from Wikipedia encyclopedia. Use this for any factual lookup, definition request, or encyclopedic information retrieval.",
+        "input_schema": {
+          "type": "object",
+          "required": [
+            "query"
+          ],
+          "properties": {
+            "query": {
+              "type": "string",
+              "description": "Raw user query about factual information (no transformation needed)"
+            }
+          }
+        },
+        "output_schema": {
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string"
+            },
+            "summary": {
+              "type": "string"
+            },
+            "url": {
+              "type": "string"
+            },
+            "source": {
+              "type": "string"
+            },
+            "query": {
+              "type": "string"
+            }
+          }
+        },
+        "side_effects": [],
+        "idempotent": true
+      },
+      "search_wikipedia": {
+        "operation_type": "query_processing",
+        "description": "Search for Wikipedia articles",
+        "input_schema": {
+          "type": "object",
+          "required": [
+            "query"
+          ],
+          "properties": {
+            "query": {
+              "type": "string",
+              "description": "Search query for Wikipedia",
+              "format_requirements": {
+                "rules": [
+                  "Can be more flexible than article titles",
+                  "Use natural search terms",
+                  "Remove question words (what, who, where)",
+                  "Keep key content words"
+                ],
+                "transformation_examples": [
+                  {
+                    "user_query": "what is quantum computing",
+                    "correct_query": "quantum computing",
+                    "reasoning": "Remove 'what is', keep core topic"
+                  }
+                ]
+              }
+            },
+            "limit": {
+              "type": "integer",
+              "default": 5,
+              "minimum": 1,
+              "maximum": 10
+            }
+          }
+        },
+        "output_schema": {
+          "type": "object",
+          "required": [
+            "results"
+          ],
+          "properties": {
+            "results": {
+              "type": "array"
+            },
+            "count": {
+              "type": "integer"
+            },
+            "query": {
+              "type": "string"
+            }
+          }
+        },
+        "side_effects": [],
+        "idempotent": true
+      }
+    },
+    "technical_spec": {
+      "runtime": "Python 3.10",
+      "dependencies": [
+        "httpx==0.27.0"
+      ],
+      "resource_requirements": {
+        "memory_mb": 128,
+        "cpu_cores": 0.25
+      }
+    },
+    "agent_attributes": {
+      "has_llm": false,
+      "autonomy_level": "task",
+      "decision_policy": "autonomous",
+      "can_delegate": true
+    }
+  },
+  "activity_log": {
+    "calls_made": [],
+    "calls_received": []
+  },
+  "kernel_attributes": {
+    "name": "Wikipedia Agent",
+    "port": 8010,
+    "reputation": 0.85,
+    "cost": 0.01,
+    "status": "active",
+    "has_llm": false,
+    "specialization": "general_knowledge"
+  },
+  "created_at": "2026-02-16T21:58:35.568522Z",
+  "updated_at": "2026-02-16T21:58:35.568529Z",
+  "status": "active",
+  "last_heartbeat": null,
+  "inactive_since": null
+}

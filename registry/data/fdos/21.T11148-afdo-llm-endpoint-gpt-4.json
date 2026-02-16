@@ -1,0 +1,147 @@
+{
+  "pid": "21.T11148/afdo-llm-endpoint-gpt-4",
+  "fdo_type_pid": "21.T11148/type-llm-service-v1",
+  "fdo_profile_pid": "21.T11148/profile-ai-agent-v1",
+  "operation_pids": [
+    "21.T11148/afdo-542f2273-op-generate-text",
+    "21.T11148/afdo-ca5c125c-op-summarize",
+    "21.T11148/afdo-6c1857b7-op-extract-entities",
+    "21.T11148/afdo-4eebfe12-op-classify",
+    "21.T11148/afdo-e3542cec-op-get-description"
+  ],
+  "metadata_pointer": "21.T11148/afdo-metadata-llm-endpoint-gpt-4",
+  "self_description": {
+    "agent_info": {
+      "name": "LLM Endpoint GPT-4 Agent",
+      "version": "1.0.0",
+      "agent_type": "task",
+      "description": "General-purpose LLM service using GPT-4"
+    },
+    "capabilities": {
+      "summarize": {
+        "operation_type": "synthesis",
+        "input_schema": {
+          "type": "object",
+          "required": [
+            "text"
+          ],
+          "properties": {
+            "text": {
+              "type": "string"
+            },
+            "max_length": {
+              "type": "integer",
+              "default": 200,
+              "minimum": 50,
+              "maximum": 1000
+            }
+          }
+        },
+        "output_schema": {
+          "type": "object",
+          "required": [
+            "summary",
+            "cost"
+          ],
+          "properties": {
+            "summary": {
+              "type": "string"
+            },
+            "compression_ratio": {
+              "type": "number"
+            },
+            "cost": {
+              "type": "number"
+            }
+          }
+        },
+        "constraints": {
+          "max_input_size": 32000,
+          "timeout_seconds": 60,
+          "rate_limit": 50
+        },
+        "examples": []
+      },
+      "generate_text": {
+        "operation_type": "synthesis",
+        "input_schema": {
+          "type": "object",
+          "required": [
+            "prompt"
+          ],
+          "properties": {
+            "prompt": {
+              "type": "string"
+            },
+            "max_tokens": {
+              "type": "integer",
+              "default": 500,
+              "minimum": 1,
+              "maximum": 4000
+            }
+          }
+        },
+        "output_schema": {
+          "type": "object",
+          "required": [
+            "text",
+            "tokens_used",
+            "cost"
+          ],
+          "properties": {
+            "text": {
+              "type": "string"
+            },
+            "tokens_used": {
+              "type": "integer"
+            },
+            "cost": {
+              "type": "number"
+            }
+          }
+        },
+        "constraints": {
+          "max_input_size": 8000,
+          "timeout_seconds": 60,
+          "rate_limit": 50
+        },
+        "examples": []
+      }
+    },
+    "technical_spec": {
+      "runtime": "Python 3.10",
+      "dependencies": [
+        "openai==1.12.0",
+        "tiktoken==0.5.2"
+      ],
+      "resource_requirements": {
+        "memory_mb": 256,
+        "cpu_cores": 0.5
+      }
+    },
+    "agent_attributes": {
+      "has_llm": true,
+      "autonomy_level": "task",
+      "decision_policy": "hardcoded",
+      "can_delegate": false
+    }
+  },
+  "activity_log": {
+    "calls_made": [],
+    "calls_received": []
+  },
+  "kernel_attributes": {
+    "name": "LLM Endpoint GPT-4",
+    "port": 8007,
+    "reputation": 0.85,
+    "cost": 0.03,
+    "status": "active",
+    "has_llm": true,
+    "llm_model": "mistral:7b"
+  },
+  "created_at": "2026-02-16T19:50:03.772593Z",
+  "updated_at": "2026-02-16T21:23:22.001009Z",
+  "status": "inactive",
+  "last_heartbeat": 1771275242.2442105,
+  "inactive_since": 1771277001.9953969
+}

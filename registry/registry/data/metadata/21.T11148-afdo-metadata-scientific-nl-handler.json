@@ -1,0 +1,146 @@
+{
+  "pid": "21.T11148/afdo-metadata-scientific-nl-handler",
+  "associated_fdo": "21.T11148/afdo-scientific-nl-handler",
+  "content": {
+    "description": "Composite agent for scientific research queries using natural language",
+    "version": "2.0.0",
+    "agent_role": "composite_agent",
+    "specialization": "scientific_research",
+    "model": "gpt-4o",
+    "capabilities": {
+      "interpret_natural_language": {
+        "description": "Parse and understand scientific queries with context extraction",
+        "input_schema": {
+          "query": "natural language query string"
+        },
+        "output_schema": {
+          "query": "original query",
+          "interpretation": "LLM interpretation",
+          "workflow_plan": "planned execution steps",
+          "handler": "this agent's PID"
+        },
+        "estimated_duration": "2-5s",
+        "estimated_cost": "$0.05-0.10",
+        "requires_llm": true
+      },
+      "plan_workflow": {
+        "description": "Plan multi-agent execution workflows for complex queries",
+        "input_schema": {
+          "query": "natural language query"
+        },
+        "output_schema": {
+          "workflow": "dict with steps and agents",
+          "planner": "this agent's PID"
+        },
+        "estimated_duration": "2-5s",
+        "estimated_cost": "$0.05-0.10"
+      },
+      "execute_workflow": {
+        "description": "Execute planned workflows and synthesize results",
+        "input_schema": {
+          "query": "natural language query",
+          "data": "dict with context data (optional)"
+        },
+        "output_schema": {
+          "query": "original query",
+          "interpretation": "query understanding",
+          "workflow_executed": "executed workflow",
+          "steps_completed": "list of completed steps",
+          "final_result": "synthesized result string"
+        },
+        "estimated_duration": "10-60s",
+        "estimated_cost": "$0.20-1.00"
+      }
+    },
+    "dependencies": {
+      "required_services": [
+        {
+          "type": "document_processor",
+          "operation": "extract_text",
+          "for": "PDF extraction"
+        },
+        {
+          "type": "compliance_checker",
+          "operation": "assess_fairness",
+          "for": "FAIR checks"
+        },
+        {
+          "type": "llm_service",
+          "operation": "analyze_scientific_text",
+          "for": "analysis"
+        }
+      ]
+    },
+    "performance_characteristics": {
+      "typical_latency": "10-60s depending on workflow",
+      "max_concurrent_requests": 5,
+      "supports_streaming": false
+    },
+    "coordinates_with": [
+      "document_processor",
+      "compliance_checker",
+      "llm_service"
+    ],
+    "llm_capable": true,
+    "schema_version": "1.0.0",
+    "provenance": {
+      "creation_method": "automated_registration",
+      "framework": "aFDO_marketplace_v1.0",
+      "registration_timestamp": "2026-02-16T21:16:35.125651Z",
+      "framework_version": "1.0.0"
+    },
+    "technical_details": {
+      "port": 8002,
+      "base_url": "http://localhost:8002",
+      "operations_count": 4,
+      "has_marketplace_features": true,
+      "has_llm": true,
+      "base_cost": 0.05
+    },
+    "semantic_links": [
+      {
+        "relation": "implements",
+        "target": "21.T11148/profile-ai-agent-v1"
+      },
+      {
+        "relation": "type_of",
+        "target": "21.T11148/type-user-interface-v1"
+      },
+      {
+        "relation": "registered_in",
+        "target": "21.T11148/registry-system-001"
+      }
+    ],
+    "compliance": {
+      "FDO_compliant": true,
+      "FAIR_enabled": true,
+      "DOIP_protocol": "2.0",
+      "supports_marketplace": true
+    },
+    "discovery": {
+      "operations": [
+        "interpret_natural_language",
+        "plan_workflow",
+        "execute_workflow",
+        "get_description"
+      ],
+      "specialization": "scientific_research",
+      "reputation": 0.85
+    }
+  },
+  "created_at": "2026-02-16T21:16:35.125662Z",
+  "updated_at": "2026-02-16T21:16:35.125663Z",
+  "schema_version": "1.0.0",
+  "created_by": "21.T11148/afdo-scientific-nl-handler",
+  "provenance": {
+    "registration_method": "self_registration",
+    "framework": "aFDO_marketplace_v1.0"
+  },
+  "semantic_links": [
+    {
+      "relation": "describes",
+      "target": "21.T11148/afdo-scientific-nl-handler"
+    }
+  ],
+  "license": "research-use"
+}

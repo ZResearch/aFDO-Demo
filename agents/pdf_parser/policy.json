@@ -1,0 +1,69 @@
+{
+  "policy_id": "pdf_parser_policy",
+  "policy_version": "1.0.0",
+  "description": "Policy for PDF Parser Agent - specialized task agent for PDF text extraction",
+  "default_action": "handle_alone",
+
+  "rules": [
+    {
+      "rule_id": "rule_01_core_operations",
+      "description": "PDF parsing is my core competency - always handle directly",
+      "priority": 10,
+      "conditions": {
+        "operation": ["parse_pdf", "extract_text", "get_pdf_info"],
+        "has_capability": true
+      },
+      "action": {
+        "type": "handle_alone",
+        "reasoning": "PDF operations are my core capability - no need for external help"
+      }
+    },
+
+    {
+      "rule_id": "rule_02_simple_within_capability",
+      "description": "Any simple task within my capabilities",
+      "priority": 9,
+      "conditions": {
+        "has_capability": true,
+        "complexity": "simple"
+      },
+      "action": {
+        "type": "handle_alone",
+        "reasoning": "Simple tasks within my capabilities require no delegation"
+      }
+    },
+
+    {
+      "rule_id": "rule_03_moderate_within_capability",
+      "description": "Moderate complexity within my capabilities",
+      "priority": 8,
+      "conditions": {
+        "has_capability": true,
+        "complexity": "moderate"
+      },
+      "action": {
+        "type": "handle_alone",
+        "reasoning": "Moderate tasks within my capabilities - I can handle them"
+      }
+    },
+
+    {
+      "rule_id": "rule_04_outside_capability",
+      "description": "Tasks outside my PDF expertise need helpers",
+      "priority": 5,
+      "conditions": {
+        "has_capability": false
+      },
+      "action": {
+        "type": "query_registry_for_helper",
+        "reasoning": "Task outside my PDF parsing expertise - find appropriate helper",
+        "parameters": {
+          "registry_query": {
+            "operation": "from_request"
+          },
+          "selection_criteria": "fastest"
+        }
+      }
+    }
+  ]
+}

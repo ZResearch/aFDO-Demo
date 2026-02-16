@@ -1,0 +1,32 @@
+{
+  "pid": "21.T11148/afdo-3dc65c90-op-get-book-info",
+  "name": "get_book_info",
+  "description": "Operation: get_book_info",
+  "input_schema": {
+    "type": "object",
+    "required": [
+      "work_id"
+    ],
+    "properties": {
+      "work_id": {
+        "type": "string"
+      }
+    }
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "title": {
+        "type": "string"
+      },
+      "description": {
+        "type": "string"
+      },
+      "subjects": {
+        "type": "array"
+      }
+    }
+  },
+  "semantics": null,
+  "created_at": "2026-02-14T22:04:47.779462Z"
+}

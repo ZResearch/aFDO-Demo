@@ -1,0 +1,893 @@
+{
+  "pid": "21.T11148/afdo-arxiv-agent",
+  "fdo_type_pid": "21.T11148/type-data-source-v1",
+  "fdo_profile_pid": "21.T11148/profile-ai-agent-v1",
+  "operation_pids": [
+    "21.T11148/afdo-c286a58a-op-receive-query",
+    "21.T11148/afdo-5131f3d9-op-search-papers",
+    "21.T11148/afdo-f97e077f-op-get-paper-abstract",
+    "21.T11148/afdo-5f60c4ec-op-find-research",
+    "21.T11148/afdo-e3542cec-op-get-description"
+  ],
+  "metadata_pointer": "21.T11148/afdo-metadata-arxiv-agent",
+  "self_description": {
+    "agent_info": {
+      "name": "ArXiv Agent",
+      "version": "1.0.0",
+      "agent_type": "task",
+      "description": "Searches and retrieves the latest research papers, scientific publications, academic papers, pre-prints, scholarly articles, and technical reports from arXiv repository. Specializes in machine learning papers, AI research, deep learning publications, neural networks, LLM research, multi-agent systems, and computer science papers. Best for queries about recent papers, latest research, new publications, and cutting-edge scientific work."
+    },
+    "capabilities": {
+      "search_papers": {
+        "operation_type": "data_extraction",
+        "description": "Search for scientific papers on ArXiv",
+        "input_schema": {
+          "type": "object",
+          "required": [
+            "query"
+          ],
+          "properties": {
+            "query": {
+              "type": "string",
+              "description": "Research keywords for ArXiv search",
+              "format_requirements": {
+                "rules": [
+                  "Extract research keywords and technical terms",
+                  "Remove conversational phrases (recent, papers about, studies on)",
+                  "Use standard academic terminology",
+                  "Keep field-specific terms intact",
+                  "Combine related terms appropriately"
+                ],
+                "transformation_examples": [
+                  {
+                    "user_query": "recent advances in quantum computing",
+                    "correct_query": "quantum computing",
+                    "reasoning": "Remove 'recent advances', keep technical term"
+                  },
+                  {
+                    "user_query": "papers about neural networks",
+                    "correct_query": "neural networks",
+                    "reasoning": "Remove 'papers about', keep research term"
+                  },
+                  {
+                    "user_query": "machine learning research",
+                    "correct_query": "machine learning",
+                    "reasoning": "Remove generic 'research', keep technical term"
+                  }
+                ]
+              }
+            },
+            "max_results": {
+              "type": "integer",
+              "default": 5,
+              "minimum": 1,
+              "maximum": 20
+            }
+          }
+        },
+        "output_schema": {
+          "type": "object",
+          "required": [
+            "papers",
+            "count"
+          ],
+          "properties": {
+            "papers": {
+              "type": "array"
+            },
+            "count": {
+              "type": "integer"
+            },
+            "query": {
+              "type": "string"
+            }
+          }
+        },
+        "side_effects": [],
+        "idempotent": true
+      },
+      "get_paper_abstract": {
+        "operation_type": "data_extraction",
+        "input_schema": {
+          "type": "object",
+          "required": [
+            "arxiv_id"
+          ],
+          "properties": {
+            "arxiv_id": {
+              "type": "string"
+            }
+          }
+        },
+        "output_schema": {
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string"
+            },
+            "abstract": {
+              "type": "string"
+            },
+            "authors": {
+              "type": "array"
+            }
+          }
+        },
+        "side_effects": [],
+        "idempotent": true
+      },
+      "receive_query": {
+        "operation_type": "query_processing",
+        "description": "Universal entry point - receives raw user queries about research papers, analyzes them, searches for papers, and can cascade delegation to other agents (like LLM Consultant) for synthesis if needed. Handles queries about latest papers, breakthroughs, research trends, paper comparisons, etc.",
+        "input_schema": {
+          "type": "object",
+          "required": [
+            "query"
+          ],
+          "properties": {
+            "query": {
+              "type": "string",
+              "description": "Raw user query about research papers (no transformation needed)"
+            }
+          }
+        },
+        "output_schema": {
+          "type": "object",
+          "properties": {
+            "papers": {
+              "type": "array"
+            },
+            "answer": {
+              "type": "string"
+            },
+            "source": {
+              "type": "string"
+            },
+            "cascade_path": {
+              "type": "string"
+            }
+          }
+        },
+        "side_effects": [
+          "may_delegate_to_llm"
+        ],
+        "idempotent": true
+      }
+    },
+    "technical_spec": {
+      "runtime": "Python 3.10",
+      "dependencies": [
+        "httpx==0.27.0"
+      ],
+      "resource_requirements": {
+        "memory_mb": 128,
+        "cpu_cores": 0.25
+      }
+    },
+    "agent_attributes": {
+      "has_llm": false,
+      "autonomy_level": "task",
+      "decision_policy": "autonomous",
+      "can_delegate": true
+    }
+  },
+  "activity_log": {
+    "calls_made": [],
+    "calls_received": [
+      {
+        "timestamp": "2026-02-16T20:32:42.710683Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.07
+      },
+      {
+        "timestamp": "2026-02-16T20:32:45.511661Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.07
+      },
+      {
+        "timestamp": "2026-02-16T20:32:49.179545Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.07
+      },
+      {
+        "timestamp": "2026-02-16T20:32:52.387369Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.07
+      },
+      {
+        "timestamp": "2026-02-16T20:32:54.779966Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.09
+      },
+      {
+        "timestamp": "2026-02-16T20:32:54.871984Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.08
+      },
+      {
+        "timestamp": "2026-02-16T20:32:54.990113Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.09
+      },
+      {
+        "timestamp": "2026-02-16T20:33:00.921482Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.06
+      },
+      {
+        "timestamp": "2026-02-16T20:33:04.891569Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.08
+      },
+      {
+        "timestamp": "2026-02-16T20:33:10.222845Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.08
+      },
+      {
+        "timestamp": "2026-02-16T20:33:11.501922Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.09
+      },
+      {
+        "timestamp": "2026-02-16T20:33:13.108513Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.07
+      },
+      {
+        "timestamp": "2026-02-16T20:33:16.720418Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.06
+      },
+      {
+        "timestamp": "2026-02-16T20:33:18.918764Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.1
+      },
+      {
+        "timestamp": "2026-02-16T20:33:19.989094Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.06
+      },
+      {
+        "timestamp": "2026-02-16T20:33:24.626624Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.09
+      },
+      {
+        "timestamp": "2026-02-16T20:33:26.366323Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.07
+      },
+      {
+        "timestamp": "2026-02-16T20:33:27.966025Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.07
+      },
+      {
+        "timestamp": "2026-02-16T20:33:30.539724Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.09
+      },
+      {
+        "timestamp": "2026-02-16T20:33:33.101073Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.09
+      },
+      {
+        "timestamp": "2026-02-16T20:33:34.498484Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.06
+      },
+      {
+        "timestamp": "2026-02-16T20:33:34.711403Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.07
+      },
+      {
+        "timestamp": "2026-02-16T20:33:38.215382Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.07
+      },
+      {
+        "timestamp": "2026-02-16T20:33:41.066542Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.12
+      },
+      {
+        "timestamp": "2026-02-16T20:33:41.068638Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.06
+      },
+      {
+        "timestamp": "2026-02-16T20:33:41.268449Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.06
+      },
+      {
+        "timestamp": "2026-02-16T20:33:41.668354Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.07
+      },
+      {
+        "timestamp": "2026-02-16T20:33:45.605604Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.08
+      },
+      {
+        "timestamp": "2026-02-16T20:33:47.306729Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.08
+      },
+      {
+        "timestamp": "2026-02-16T20:33:49.253010Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.07
+      },
+      {
+        "timestamp": "2026-02-16T20:33:51.061578Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.08
+      },
+      {
+        "timestamp": "2026-02-16T20:33:52.457671Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.07
+      },
+      {
+        "timestamp": "2026-02-16T20:33:55.155598Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.06
+      },
+      {
+        "timestamp": "2026-02-16T20:33:56.436559Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.08
+      },
+      {
+        "timestamp": "2026-02-16T20:33:56.642442Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.12
+      },
+      {
+        "timestamp": "2026-02-16T20:33:56.647552Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.08
+      },
+      {
+        "timestamp": "2026-02-16T20:33:58.562757Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.06
+      },
+      {
+        "timestamp": "2026-02-16T20:34:03.137513Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.08
+      },
+      {
+        "timestamp": "2026-02-16T20:34:03.779645Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.12
+      },
+      {
+        "timestamp": "2026-02-16T20:34:03.783286Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.06
+      },
+      {
+        "timestamp": "2026-02-16T20:34:06.006475Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.1
+      },
+      {
+        "timestamp": "2026-02-16T20:34:10.520451Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.12
+      },
+      {
+        "timestamp": "2026-02-16T20:34:12.280524Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.07
+      },
+      {
+        "timestamp": "2026-02-16T20:34:14.256223Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.1
+      },
+      {
+        "timestamp": "2026-02-16T20:34:20.101187Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.07
+      },
+      {
+        "timestamp": "2026-02-16T20:34:21.602988Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.18
+      },
+      {
+        "timestamp": "2026-02-16T20:34:21.605875Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.12
+      },
+      {
+        "timestamp": "2026-02-16T20:34:21.614659Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.08
+      },
+      {
+        "timestamp": "2026-02-16T20:34:23.811272Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.07
+      },
+      {
+        "timestamp": "2026-02-16T20:34:28.324867Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.08
+      },
+      {
+        "timestamp": "2026-02-16T20:34:30.788742Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.07
+      },
+      {
+        "timestamp": "2026-02-16T20:34:35.535296Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.07
+      },
+      {
+        "timestamp": "2026-02-16T20:34:36.870319Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.07
+      },
+      {
+        "timestamp": "2026-02-16T20:34:38.644349Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.08
+      },
+      {
+        "timestamp": "2026-02-16T20:34:38.912998Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.12
+      },
+      {
+        "timestamp": "2026-02-16T20:34:38.920993Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.08
+      },
+      {
+        "timestamp": "2026-02-16T20:34:41.398075Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.07
+      },
+      {
+        "timestamp": "2026-02-16T20:34:41.559195Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.06
+      },
+      {
+        "timestamp": "2026-02-16T20:34:43.993225Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.11
+      },
+      {
+        "timestamp": "2026-02-16T20:34:44.174060Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.07
+      },
+      {
+        "timestamp": "2026-02-16T20:34:46.183930Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.07
+      },
+      {
+        "timestamp": "2026-02-16T20:34:47.710602Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.11
+      },
+      {
+        "timestamp": "2026-02-16T20:34:49.068441Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.07
+      },
+      {
+        "timestamp": "2026-02-16T20:34:51.374896Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.07
+      },
+      {
+        "timestamp": "2026-02-16T20:34:53.890888Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.09
+      },
+      {
+        "timestamp": "2026-02-16T20:34:54.004312Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.06
+      },
+      {
+        "timestamp": "2026-02-16T20:34:56.663234Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.06
+      },
+      {
+        "timestamp": "2026-02-16T20:34:58.966501Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.11
+      },
+      {
+        "timestamp": "2026-02-16T20:35:00.962532Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.07
+      },
+      {
+        "timestamp": "2026-02-16T20:35:04.446843Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.08
+      },
+      {
+        "timestamp": "2026-02-16T20:35:08.343788Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.08
+      },
+      {
+        "timestamp": "2026-02-16T20:35:11.040820Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.06
+      },
+      {
+        "timestamp": "2026-02-16T20:35:16.454262Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.1
+      },
+      {
+        "timestamp": "2026-02-16T20:35:20.039406Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.07
+      },
+      {
+        "timestamp": "2026-02-16T20:35:23.772563Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.08
+      },
+      {
+        "timestamp": "2026-02-16T20:35:23.969268Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.07
+      },
+      {
+        "timestamp": "2026-02-16T20:35:27.402082Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.11
+      },
+      {
+        "timestamp": "2026-02-16T20:35:29.078777Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.07
+      },
+      {
+        "timestamp": "2026-02-16T20:35:29.370330Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.09
+      },
+      {
+        "timestamp": "2026-02-16T20:35:33.343121Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.06
+      },
+      {
+        "timestamp": "2026-02-16T20:35:34.857179Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.07
+      },
+      {
+        "timestamp": "2026-02-16T20:35:38.237352Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.09
+      },
+      {
+        "timestamp": "2026-02-16T20:35:38.409533Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.12
+      },
+      {
+        "timestamp": "2026-02-16T20:35:41.353171Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.1
+      },
+      {
+        "timestamp": "2026-02-16T20:35:43.751127Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.07
+      },
+      {
+        "timestamp": "2026-02-16T20:35:46.522714Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.06
+      },
+      {
+        "timestamp": "2026-02-16T20:35:51.821605Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.07
+      },
+      {
+        "timestamp": "2026-02-16T20:35:57.663186Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.08
+      },
+      {
+        "timestamp": "2026-02-16T20:36:02.041953Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.14
+      },
+      {
+        "timestamp": "2026-02-16T20:36:02.043890Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.09
+      },
+      {
+        "timestamp": "2026-02-16T20:36:03.917716Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.08
+      },
+      {
+        "timestamp": "2026-02-16T20:36:07.468044Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.1
+      },
+      {
+        "timestamp": "2026-02-16T20:36:11.791316Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.08
+      },
+      {
+        "timestamp": "2026-02-16T20:36:15.864134Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.07
+      },
+      {
+        "timestamp": "2026-02-16T20:36:22.803605Z",
+        "caller_pid": "21.T11148/afdo-fact-checker-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.08
+      },
+      {
+        "timestamp": "2026-02-16T20:45:39.591240Z",
+        "caller_pid": "21.T11148/afdo-chat-ui",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 1.48
+      },
+      {
+        "timestamp": "2026-02-16T20:47:11.348161Z",
+        "caller_pid": "21.T11148/afdo-chat-ui",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.08
+      },
+      {
+        "timestamp": "2026-02-16T20:47:18.781358Z",
+        "caller_pid": "21.T11148/afdo-chat-ui",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.07
+      },
+      {
+        "timestamp": "2026-02-16T20:47:42.623397Z",
+        "caller_pid": "21.T11148/afdo-chat-ui",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.07
+      },
+      {
+        "timestamp": "2026-02-16T20:47:50.654936Z",
+        "caller_pid": "21.T11148/afdo-chat-ui",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.13
+      }
+    ]
+  },
+  "kernel_attributes": {
+    "name": "ArXiv Agent",
+    "port": 8011,
+    "reputation": 0.85,
+    "cost": 0.02,
+    "status": "active",
+    "has_llm": false,
+    "specialization": "scientific_research"
+  },
+  "created_at": "2026-02-16T19:50:38.130827Z",
+  "updated_at": "2026-02-16T21:23:22.012836Z",
+  "status": "inactive",
+  "last_heartbeat": 1771275249.3580449,
+  "inactive_since": 1771277001.9953969
+}

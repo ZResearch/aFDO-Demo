@@ -1,0 +1,53 @@
+{
+  "pid": "21.T11148/afdo-3c640091-op-suggest-improvements",
+  "name": "suggest_improvements",
+  "description": "Operation: suggest_improvements",
+  "input_schema": {
+    "type": "object",
+    "required": [
+      "metadata"
+    ],
+    "properties": {
+      "metadata": {
+        "type": "object"
+      },
+      "priority": {
+        "type": "string",
+        "enum": [
+          "high",
+          "medium",
+          "low"
+        ],
+        "default": "medium"
+      }
+    }
+  },
+  "output_schema": {
+    "type": "object",
+    "required": [
+      "suggestions"
+    ],
+    "properties": {
+      "suggestions": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "quick_wins": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "long_term": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "semantics": null,
+  "created_at": "2026-02-14T22:04:26.891794Z"
+}

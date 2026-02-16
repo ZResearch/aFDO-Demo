@@ -1,0 +1,567 @@
+{
+  "pid": "21.T11148/afdo-llm-consultant",
+  "fdo_type_pid": "21.T11148/type-data-source-v1",
+  "fdo_profile_pid": "21.T11148/profile-ai-agent-v1",
+  "operation_pids": [
+    "receive_query",
+    "21.T11148/afdo-f9d2d4e1-op-generate-workflow",
+    "21.T11148/afdo-ca5a10af-op-advise-strategy",
+    "21.T11148/afdo-8bb52dac-op-analyze-task",
+    "21.T11148/afdo-df6d4257-op-analyze-query-intent",
+    "21.T11148/afdo-e3542cec-op-get-description"
+  ],
+  "metadata_pointer": "21.T11148/afdo-metadata-llm-consultant",
+  "self_description": {
+    "agent_info": {
+      "name": "LLM Consultant",
+      "version": "1.0.0",
+      "agent_type": "task",
+      "description": "Analyzes, synthesizes, and explains information using LLM. Specializes in understanding user intent, analyzing queries, and transforming natural language questions into abstract capability descriptions for agent matching. Generates workflows dynamically based on task analysis. Best for query intent detection, synthesis, comparison, explanation, and reasoning tasks."
+    },
+    "capabilities": {
+      "generate_workflow": {
+        "operation_type": "query_processing",
+        "input_schema": {
+          "type": "object",
+          "required": [
+            "task_description",
+            "requester_capabilities"
+          ],
+          "properties": {
+            "task_description": {
+              "type": "string",
+              "description": "Description of the task to plan"
+            },
+            "requester_capabilities": {
+              "type": "array",
+              "description": "Operations the requesting agent can perform",
+              "items": {
+                "type": "string"
+              }
+            },
+            "requester_pid": {
+              "type": "string",
+              "description": "PID of requesting agent"
+            },
+            "context": {
+              "type": "object",
+              "description": "Additional context (budget, preferences, etc.)"
+            }
+          }
+        },
+        "output_schema": {
+          "type": "object",
+          "required": [
+            "workflow"
+          ],
+          "properties": {
+            "workflow": {
+              "type": "object",
+              "description": "Generated workflow following workflow_protocol.json schema"
+            },
+            "reasoning": {
+              "type": "string",
+              "description": "Explanation of workflow design"
+            }
+          }
+        },
+        "constraints": {
+          "timeout_seconds": 30,
+          "rate_limit": 20
+        },
+        "examples": []
+      },
+      "receive_query": {
+        "operation_type": "synthesis",
+        "description": "ONLY for complex synthesis, comparison, and interpretation tasks when you already possess the required data. Exclusively use for: comparing multiple perspectives side-by-side, synthesizing information from multiple sources you already gathered, generating insights from existing data, interpreting complex relationships between concepts. NEVER use for: factual questions, information retrieval, database searches, data lookup, verifying claims or facts, fact-checking, checking if statements are true, finding definitions, answering who/what/where/when/is questions, searching for current information, or validation tasks. This is a cognitive processing and synthesis tool only, not an information retrieval, search, verification, or fact-checking tool.",
+        "input_schema": {
+          "type": "object",
+          "required": [
+            "query"
+          ],
+          "properties": {
+            "query": {
+              "type": "string",
+              "description": "Query or request for synthesis/analysis/explanation"
+            }
+          }
+        },
+        "output_schema": {
+          "type": "object",
+          "properties": {
+            "response": {
+              "type": "string"
+            },
+            "source": {
+              "type": "string"
+            }
+          }
+        },
+        "side_effects": [
+          "uses_llm_tokens"
+        ],
+        "idempotent": false
+      },
+      "advise_strategy": {
+        "operation_type": "assessment",
+        "input_schema": {
+          "type": "object",
+          "required": [
+            "situation"
+          ],
+          "properties": {
+            "situation": {
+              "type": "string"
+            }
+          }
+        },
+        "output_schema": {
+          "type": "object",
+          "properties": {
+            "advice": {
+              "type": "string"
+            },
+            "options": {
+              "type": "array"
+            }
+          }
+        },
+        "constraints": {
+          "timeout_seconds": 20
+        },
+        "examples": []
+      },
+      "analyze_task": {
+        "operation_type": "assessment",
+        "input_schema": {
+          "type": "object",
+          "required": [
+            "task"
+          ],
+          "properties": {
+            "task": {
+              "type": "string"
+            }
+          }
+        },
+        "output_schema": {
+          "type": "object",
+          "properties": {
+            "complexity": {
+              "type": "string"
+            },
+            "requirements": {
+              "type": "array"
+            },
+            "suggested_approach": {
+              "type": "string"
+            }
+          }
+        },
+        "constraints": {
+          "timeout_seconds": 15
+        },
+        "examples": []
+      },
+      "analyze_query_intent": {
+        "operation_type": "query_processing",
+        "description": "Analyzes user queries to understand intent and generate abstract capability descriptions. Transforms natural language questions into structured descriptions of required agent capabilities suitable for semantic matching.",
+        "input_schema": {
+          "type": "object",
+          "required": [
+            "query"
+          ],
+          "properties": {
+            "query": {
+              "type": "string",
+              "description": "Raw user query to analyze"
+            }
+          }
+        },
+        "output_schema": {
+          "type": "object",
+          "required": [
+            "capability_description"
+          ],
+          "properties": {
+            "capability_description": {
+              "type": "string",
+              "description": "Abstract description of agent capabilities needed to handle this query"
+            },
+            "query_type": {
+              "type": "string",
+              "description": "Type of query (factual, research, synthesis, etc.)"
+            },
+            "key_requirements": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "List of key capability requirements"
+            }
+          }
+        },
+        "side_effects": [
+          "uses_llm_tokens"
+        ],
+        "idempotent": true,
+        "constraints": {
+          "timeout_seconds": 10
+        },
+        "examples": [
+          {
+            "input": {
+              "query": "who is the president of Algeria"
+            },
+            "output": {
+              "capability_description": "Agent that provides current factual information about world leaders, political positions, government officials, and country-specific information. Should have access to encyclopedic knowledge and be able to answer biographical and political queries.",
+              "query_type": "factual",
+              "key_requirements": [
+                "current information",
+                "political knowledge",
+                "biographical data",
+                "country-specific facts"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "technical_spec": {
+      "runtime": "Python 3.10",
+      "dependencies": [
+        "openai==1.12.0"
+      ],
+      "resource_requirements": {
+        "memory_mb": 256,
+        "cpu_cores": 0.5
+      }
+    },
+    "agent_attributes": {
+      "has_llm": true,
+      "autonomy_level": "task",
+      "decision_policy": "autonomous",
+      "can_delegate": false
+    }
+  },
+  "activity_log": {
+    "calls_made": [],
+    "calls_received": [
+      {
+        "timestamp": "2026-02-16T20:39:00.933803Z",
+        "caller_pid": "21.T11148/afdo-chat-ui",
+        "operation": "analyze_query_intent",
+        "status": "success",
+        "duration": 1.04
+      },
+      {
+        "timestamp": "2026-02-16T20:39:02.896163Z",
+        "caller_pid": "21.T11148/afdo-chat-ui",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 1.49
+      },
+      {
+        "timestamp": "2026-02-16T20:39:04.721658Z",
+        "caller_pid": "21.T11148/afdo-chat-ui",
+        "operation": "analyze_query_intent",
+        "status": "success",
+        "duration": 0.75
+      },
+      {
+        "timestamp": "2026-02-16T20:39:06.027654Z",
+        "caller_pid": "21.T11148/afdo-chat-ui",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.78
+      },
+      {
+        "timestamp": "2026-02-16T20:39:07.872255Z",
+        "caller_pid": "21.T11148/afdo-chat-ui",
+        "operation": "analyze_query_intent",
+        "status": "success",
+        "duration": 0.72
+      },
+      {
+        "timestamp": "2026-02-16T20:39:11.192314Z",
+        "caller_pid": "21.T11148/afdo-chat-ui",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 2.79
+      },
+      {
+        "timestamp": "2026-02-16T20:40:26.718081Z",
+        "caller_pid": "21.T11148/afdo-chat-ui",
+        "operation": "analyze_query_intent",
+        "status": "success",
+        "duration": 0.75
+      },
+      {
+        "timestamp": "2026-02-16T20:40:28.437905Z",
+        "caller_pid": "21.T11148/afdo-chat-ui",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 1.3
+      },
+      {
+        "timestamp": "2026-02-16T20:40:31.648766Z",
+        "caller_pid": "21.T11148/afdo-chat-ui",
+        "operation": "analyze_query_intent",
+        "status": "success",
+        "duration": 0.73
+      },
+      {
+        "timestamp": "2026-02-16T20:40:32.878845Z",
+        "caller_pid": "21.T11148/afdo-chat-ui",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.72
+      },
+      {
+        "timestamp": "2026-02-16T20:40:36.216323Z",
+        "caller_pid": "21.T11148/afdo-chat-ui",
+        "operation": "analyze_query_intent",
+        "status": "success",
+        "duration": 0.83
+      },
+      {
+        "timestamp": "2026-02-16T20:40:38.795958Z",
+        "caller_pid": "21.T11148/afdo-chat-ui",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 2.13
+      },
+      {
+        "timestamp": "2026-02-16T20:45:32.780704Z",
+        "caller_pid": "21.T11148/afdo-chat-ui",
+        "operation": "analyze_query_intent",
+        "status": "success",
+        "duration": 0.86
+      },
+      {
+        "timestamp": "2026-02-16T20:45:33.990591Z",
+        "caller_pid": "21.T11148/afdo-chat-ui",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.78
+      },
+      {
+        "timestamp": "2026-02-16T20:45:37.506940Z",
+        "caller_pid": "21.T11148/afdo-chat-ui",
+        "operation": "analyze_query_intent",
+        "status": "success",
+        "duration": 0.86
+      },
+      {
+        "timestamp": "2026-02-16T20:45:42.977016Z",
+        "caller_pid": "21.T11148/afdo-chat-ui",
+        "operation": "analyze_query_intent",
+        "status": "success",
+        "duration": 0.88
+      },
+      {
+        "timestamp": "2026-02-16T20:45:45.778937Z",
+        "caller_pid": "21.T11148/afdo-chat-ui",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 2.28
+      },
+      {
+        "timestamp": "2026-02-16T20:47:10.698365Z",
+        "caller_pid": "21.T11148/afdo-chat-ui",
+        "operation": "analyze_query_intent",
+        "status": "success",
+        "duration": 1.02
+      },
+      {
+        "timestamp": "2026-02-16T20:47:13.073327Z",
+        "caller_pid": "21.T11148/afdo-chat-ui",
+        "operation": "analyze_query_intent",
+        "status": "success",
+        "duration": 0.69
+      },
+      {
+        "timestamp": "2026-02-16T20:47:14.021482Z",
+        "caller_pid": "21.T11148/afdo-chat-ui",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.35
+      },
+      {
+        "timestamp": "2026-02-16T20:47:15.787867Z",
+        "caller_pid": "21.T11148/afdo-chat-ui",
+        "operation": "analyze_query_intent",
+        "status": "success",
+        "duration": 0.53
+      },
+      {
+        "timestamp": "2026-02-16T20:47:16.492240Z",
+        "caller_pid": "21.T11148/afdo-chat-ui",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.23
+      },
+      {
+        "timestamp": "2026-02-16T20:47:18.253771Z",
+        "caller_pid": "21.T11148/afdo-chat-ui",
+        "operation": "analyze_query_intent",
+        "status": "success",
+        "duration": 0.69
+      },
+      {
+        "timestamp": "2026-02-16T20:47:20.548800Z",
+        "caller_pid": "21.T11148/afdo-chat-ui",
+        "operation": "analyze_query_intent",
+        "status": "success",
+        "duration": 0.76
+      },
+      {
+        "timestamp": "2026-02-16T20:47:22.195626Z",
+        "caller_pid": "21.T11148/afdo-chat-ui",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 1.02
+      },
+      {
+        "timestamp": "2026-02-16T20:47:24.007426Z",
+        "caller_pid": "21.T11148/afdo-chat-ui",
+        "operation": "analyze_query_intent",
+        "status": "success",
+        "duration": 0.76
+      },
+      {
+        "timestamp": "2026-02-16T20:47:25.252545Z",
+        "caller_pid": "21.T11148/afdo-chat-ui",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.8
+      },
+      {
+        "timestamp": "2026-02-16T20:47:27.156352Z",
+        "caller_pid": "21.T11148/afdo-chat-ui",
+        "operation": "analyze_query_intent",
+        "status": "success",
+        "duration": 0.72
+      },
+      {
+        "timestamp": "2026-02-16T20:47:30.448380Z",
+        "caller_pid": "21.T11148/afdo-chat-ui",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 2.76
+      },
+      {
+        "timestamp": "2026-02-16T20:47:32.133501Z",
+        "caller_pid": "21.T11148/afdo-chat-ui",
+        "operation": "analyze_query_intent",
+        "status": "success",
+        "duration": 0.66
+      },
+      {
+        "timestamp": "2026-02-16T20:47:33.041029Z",
+        "caller_pid": "21.T11148/afdo-chat-ui",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.44
+      },
+      {
+        "timestamp": "2026-02-16T20:47:34.845888Z",
+        "caller_pid": "21.T11148/afdo-chat-ui",
+        "operation": "analyze_query_intent",
+        "status": "success",
+        "duration": 0.71
+      },
+      {
+        "timestamp": "2026-02-16T20:47:37.193165Z",
+        "caller_pid": "21.T11148/afdo-chat-ui",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 1.86
+      },
+      {
+        "timestamp": "2026-02-16T20:47:38.888226Z",
+        "caller_pid": "21.T11148/afdo-chat-ui",
+        "operation": "analyze_query_intent",
+        "status": "success",
+        "duration": 0.67
+      },
+      {
+        "timestamp": "2026-02-16T20:47:40.378061Z",
+        "caller_pid": "21.T11148/afdo-chat-ui",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 1.04
+      },
+      {
+        "timestamp": "2026-02-16T20:47:42.056590Z",
+        "caller_pid": "21.T11148/afdo-chat-ui",
+        "operation": "analyze_query_intent",
+        "status": "success",
+        "duration": 0.7
+      },
+      {
+        "timestamp": "2026-02-16T20:47:44.325537Z",
+        "caller_pid": "21.T11148/afdo-chat-ui",
+        "operation": "analyze_query_intent",
+        "status": "success",
+        "duration": 0.65
+      },
+      {
+        "timestamp": "2026-02-16T20:47:45.456271Z",
+        "caller_pid": "21.T11148/afdo-chat-ui",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.72
+      },
+      {
+        "timestamp": "2026-02-16T20:47:47.261015Z",
+        "caller_pid": "21.T11148/afdo-chat-ui",
+        "operation": "analyze_query_intent",
+        "status": "success",
+        "duration": 0.84
+      },
+      {
+        "timestamp": "2026-02-16T20:47:48.139229Z",
+        "caller_pid": "21.T11148/afdo-chat-ui",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.4
+      },
+      {
+        "timestamp": "2026-02-16T20:47:50.047277Z",
+        "caller_pid": "21.T11148/afdo-chat-ui",
+        "operation": "analyze_query_intent",
+        "status": "success",
+        "duration": 0.79
+      },
+      {
+        "timestamp": "2026-02-16T20:47:52.404109Z",
+        "caller_pid": "21.T11148/afdo-chat-ui",
+        "operation": "analyze_query_intent",
+        "status": "success",
+        "duration": 0.76
+      },
+      {
+        "timestamp": "2026-02-16T20:47:53.951283Z",
+        "caller_pid": "21.T11148/afdo-chat-ui",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 1.12
+      }
+    ]
+  },
+  "kernel_attributes": {
+    "name": "LLM Consultant",
+    "port": 8014,
+    "reputation": 0.85,
+    "cost": 0.03,
+    "status": "active",
+    "has_llm": true,
+    "specialization": "workflow_planning"
+  },
+  "created_at": "2026-02-16T20:38:58.877350Z",
+  "updated_at": "2026-02-16T21:23:22.011336Z",
+  "status": "inactive",
+  "last_heartbeat": 1771275241.001634,
+  "inactive_since": 1771277001.9953969
+}

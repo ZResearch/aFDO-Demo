@@ -1,0 +1,133 @@
+{
+  "pid": "21.T11148/afdo-chat-ui",
+  "fdo_type_pid": "21.T11148/type-user-interface-v1",
+  "fdo_profile_pid": "21.T11148/profile-ai-agent-v1",
+  "operation_pids": [
+    "21.T11148/afdo-e3a2fb34-op-display-message",
+    "21.T11148/afdo-0ded096b-op-receive-user-input",
+    "21.T11148/afdo-e9a54547-op-estimate-workflow-cost",
+    "21.T11148/afdo-f052ae96-op-execute-workflow",
+    "21.T11148/afdo-e3542cec-op-get-description"
+  ],
+  "metadata_pointer": "21.T11148/afdo-metadata-chat-ui",
+  "self_description": {
+    "agent_info": {
+      "name": "Chat UI Agent",
+      "version": "1.0.0",
+      "agent_type": "interface",
+      "description": "User interface and orchestration layer that receives user messages and delegates to specialized agents. Does not provide knowledge or data itself - acts as coordinator and router. Should NOT be selected for answering questions - only for receiving initial user input."
+    },
+    "capabilities": {
+      "receive_user_input": {
+        "operation_type": "query_processing",
+        "input_schema": {
+          "type": "object",
+          "required": [
+            "message"
+          ],
+          "properties": {
+            "message": {
+              "type": "string",
+              "minLength": 1
+            },
+            "budget": {
+              "type": "number",
+              "default": 1.0,
+              "minimum": 0.0
+            },
+            "policy": {
+              "type": "string",
+              "enum": [
+                "cheapest",
+                "fastest",
+                "balanced"
+              ],
+              "default": "balanced"
+            },
+            "auto_execute": {
+              "type": "boolean",
+              "default": true
+            }
+          }
+        },
+        "output_schema": {
+          "type": "object",
+          "required": [
+            "status"
+          ],
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": [
+                "success",
+                "insufficient_budget",
+                "error"
+              ]
+            },
+            "message": {
+              "type": "string"
+            },
+            "result": {
+              "type": "object"
+            },
+            "budget_summary": {
+              "type": "object",
+              "properties": {
+                "allocated": {
+                  "type": "number"
+                },
+                "spent": {
+                  "type": "number"
+                },
+                "remaining": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        },
+        "constraints": {
+          "timeout_seconds": 300,
+          "rate_limit": 20
+        },
+        "examples": []
+      }
+    },
+    "technical_spec": {
+      "runtime": "Python 3.10",
+      "dependencies": [
+        "fastapi==0.109.0",
+        "openai==1.12.0"
+      ],
+      "resource_requirements": {
+        "memory_mb": 256,
+        "cpu_cores": 0.5
+      }
+    },
+    "agent_attributes": {
+      "has_llm": true,
+      "autonomy_level": "composite",
+      "decision_policy": "autonomous",
+      "can_delegate": true
+    }
+  },
+  "activity_log": {
+    "calls_made": [],
+    "calls_received": []
+  },
+  "kernel_attributes": {
+    "name": "Chat UI",
+    "port": 8001,
+    "reputation": 0.85,
+    "cost": 0.0,
+    "status": "active",
+    "has_llm": true,
+    "llm_model": "mistral:7b",
+    "selection_policy": "balanced"
+  },
+  "created_at": "2026-02-16T21:58:35.654123Z",
+  "updated_at": "2026-02-16T21:58:35.654128Z",
+  "status": "active",
+  "last_heartbeat": null,
+  "inactive_since": null
+}

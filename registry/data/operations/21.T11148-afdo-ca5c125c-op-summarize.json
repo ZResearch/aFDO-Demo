@@ -1,0 +1,37 @@
+{
+  "pid": "21.T11148/afdo-ca5c125c-op-summarize",
+  "name": "summarize",
+  "description": "Operation: summarize",
+  "input_schema": {
+    "type": "object",
+    "required": [
+      "text"
+    ],
+    "properties": {
+      "text": {
+        "type": "string"
+      },
+      "max_length": {
+        "type": "integer",
+        "default": 200
+      }
+    }
+  },
+  "output_schema": {
+    "type": "object",
+    "required": [
+      "summary",
+      "cost"
+    ],
+    "properties": {
+      "summary": {
+        "type": "string"
+      },
+      "cost": {
+        "type": "number"
+      }
+    }
+  },
+  "semantics": null,
+  "created_at": "2026-02-14T22:04:06.314214Z"
+}

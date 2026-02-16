@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>aFDO Registry Monitor</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: #1a1a2e;
+            color: #eee;
+            overflow: hidden;
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+
+        .graph-area {
+            flex: 1;
+            position: relative;
+        }
+
+        .sidebar {
+            width: 350px;
+            background: #16213e;
+            border-left: 1px solid #0f3460;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        .stats {
+            padding: 15px;
+            background: #0f3460;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .stat {
+            text-align: center;
+            padding: 10px;
+            background: #16213e;
+            border-radius: 8px;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #4ecdc4;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: #aaa;
+            margin-top: 5px;
+        }
+
+        .events {
+            flex: 1;
+            overflow-y: auto;
+            padding: 15px;
+        }
+
+        .event {
+            padding: 10px;
+            margin-bottom: 10px;
+            background: #0f3460;
+            border-radius: 8px;
+            border-left: 3px solid #4ecdc4;
+            font-size: 12px;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .event-time {
+            color: #888;
+            font-size: 10px;
+            margin-bottom: 5px;
+        }
+
+        .event-type {
+            font-weight: bold;
+            color: #4ecdc4;
+            margin-bottom: 5px;
+        }
+
+        .event.discovery-request {
+            border-left-color: #f7b731;
+        }
+
+        .event.call-made {
+            border-left-color: #ff6b6b;
+        }
+
+        .event.fdo-registered {
+            border-left-color: #4ecdc4;
+        }
+
+        .legend {
+            padding: 15px;
+            background: #0f3460;
+            border-top: 1px solid #16213e;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 11px;
+        }
+
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .node {
+            cursor: pointer;
+        }
+
+        .node circle {
+            stroke: #fff;
+            stroke-width: 2px;
+        }
+
+        .node text {
+            font-size: 10px;
+            fill: #eee;
+            text-anchor: middle;
+            pointer-events: none;
+        }
+
+        .link {
+            stroke: #555;
+            stroke-opacity: 0.6;
+        }
+
+        .link.active {
+            stroke: #ff6b6b;
+            stroke-width: 3px;
+            stroke-opacity: 1;
+        }
+
+        .link.discovery {
+            stroke: #f7b731;
+            stroke-dasharray: 5,5;
+            stroke-width: 2px;
+        }
+
+        .connection-status {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px 15px;
+            background: #16213e;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+
+        .connection-status.connected {
+            border: 2px solid #4ecdc4;
+            color: #4ecdc4;
+        }
+
+        .connection-status.disconnected {
+            border: 2px solid #ff6b6b;
+            color: #ff6b6b;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="graph-area">
+            <svg id="network-graph"></svg>
+            <div class="connection-status" id="status">Connecting...</div>
+        </div>
+
+        <div class="sidebar">
+            <div class="header">
+                <h1>🔍 Registry Monitor</h1>
+                <p>Real-time aFDO Network Visualization</p>
+            </div>
+
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-value" id="fdo-count">0</div>
+                    <div class="stat-label">Active FDOs</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value" id="event-count">0</div>
+                    <div class="stat-label">Total Events</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value" id="discovery-count">0</div>
+                    <div class="stat-label">Discoveries</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value" id="call-count">0</div>
+                    <div class="stat-label">Calls Made</div>
+                </div>
+            </div>
+
+            <div class="events" id="event-feed"></div>
+
+            <div class="legend">
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #4ecdc4"></div>
+                    <span>Idle FDO</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #5fff5f"></div>
+                    <span>Active FDO (15s)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #764ba2"></div>
+                    <span>Registry</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #ff6b6b"></div>
+                    <span>FDO Call</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #f7b731"></div>
+                    <span>Registry Discovery</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Network graph visualization
+        const width = window.innerWidth - 350;
+        const height = window.innerHeight;
+
+        const svg = d3.select("#network-graph")
+            .attr("width", width)
+            .attr("height", height);
+
+        const g = svg.append("g");
+
+        // Zoom behavior
+        svg.call(d3.zoom()
+            .extent([[0, 0], [width, height]])
+            .scaleExtent([0.5, 3])
+            .on("zoom", (event) => {
+                g.attr("transform", event.transform);
+            }));
+
+        // Data structures
+        let nodes = [];
+        let links = [];
+        let eventCount = 0;
+        let discoveryCount = 0;
+        let callCount = 0;
+
+        // Add registry node (center)
+        nodes.push({
+            id: "registry",
+            label: "Registry",
+            type: "registry",
+            color: "#764ba2",
+            x: width / 2,
+            y: height / 2
+        });
+
+        // Force simulation with better spacing
+        const simulation = d3.forceSimulation(nodes)
+            .force("link", d3.forceLink(links).id(d => d.id).distance(250))
+            .force("charge", d3.forceManyBody().strength(-800))
+            .force("center", d3.forceCenter(width / 2, height / 2))
+            .force("collision", d3.forceCollide().radius(60));
+
+        // Create link and node groups
+        const linkGroup = g.append("g").attr("class", "links");
+        const nodeGroup = g.append("g").attr("class", "nodes");
+
+        function updateGraph() {
+            // Update links
+            const link = linkGroup.selectAll("line")
+                .data(links, d => d.source.id + "-" + d.target.id);
+
+            link.exit().remove();
+
+            link.enter().append("line")
+                .attr("class", d => `link ${d.type}`)
+                .merge(link)
+                .attr("stroke-width", d => d.type === "active" ? 3 : 1.5);
+
+            // Update nodes
+            const node = nodeGroup.selectAll(".node")
+                .data(nodes, d => d.id);
+
+            node.exit().remove();
+
+            const nodeEnter = node.enter().append("g")
+                .attr("class", "node")
+                .call(d3.drag()
+                    .on("start", dragstarted)
+                    .on("drag", dragged)
+                    .on("end", dragended));
+
+            nodeEnter.append("circle")
+                .attr("r", d => d.type === "registry" ? 30 : 20)
+                .attr("fill", d => d.color);
+
+            nodeEnter.append("text")
+                .attr("dy", 35)
+                .text(d => d.label);
+
+            nodeEnter.merge(node)
+                .select("circle")
+                .attr("fill", d => d.color);
+
+            simulation.nodes(nodes);
+            simulation.force("link").links(links);
+            simulation.alpha(1).restart();  // Full alpha for strong movement
+        }
+
+        simulation.on("tick", () => {
+            linkGroup.selectAll("line")
+                .attr("x1", d => d.source.x)
+                .attr("y1", d => d.source.y)
+                .attr("x2", d => d.target.x)
+                .attr("y2", d => d.target.y);
+
+            nodeGroup.selectAll(".node")
+                .attr("transform", d => `translate(${d.x},${d.y})`);
+        });
+
+        function dragstarted(event, d) {
+            if (!event.active) simulation.alphaTarget(0.3).restart();
+            d.fx = d.x;
+            d.fy = d.y;
+        }
+
+        function dragged(event, d) {
+            d.fx = event.x;
+            d.fy = event.y;
+        }
+
+        function dragended(event, d) {
+            if (!event.active) simulation.alphaTarget(0);
+            d.fx = null;
+            d.fy = null;
+        }
+
+        function setNodeActive(nodeId, duration = 15000) {
+            const node = nodes.find(n => n.id === nodeId);
+            if (node && node.type !== "registry") {
+                node.color = "#5fff5f";
+                updateGraph();
+
+                setTimeout(() => {
+                    node.color = "#4ecdc4";
+                    updateGraph();
+                }, duration);
+            }
+        }
+
+        async function ensureNodeExists(nodeId) {
+            // Check if node already exists
+            if (nodes.find(n => n.id === nodeId)) {
+                return;
+            }
+
+            // Don't create registry duplicates
+            if (nodeId === "registry") {
+                return;
+            }
+
+            // Try to fetch FDO info from registry
+            try {
+                const response = await fetch(`http://localhost:8000/doip/read/fdo/${encodeURIComponent(nodeId)}`);
+                const result = await response.json();
+
+                if (result.status === "success" && result.data) {
+                    const fdoData = result.data;
+                    const kernelAttrs = fdoData.kernel_attributes || {};
+
+                    // Use name from kernel_attributes, fallback to type, then PID
+                    let label = kernelAttrs.name ||
+                                fdoData.fdo_type_pid?.replace(/_/g, ' ') ||
+                                nodeId.split('/').pop().substring(0, 15) + '...';
+
+                    const angle = Math.random() * 2 * Math.PI;
+                    const radius = 250 + Math.random() * 150;
+                    const newNode = {
+                        id: nodeId,
+                        label: label,
+                        type: "fdo",
+                        color: "#4ecdc4",
+                        data: fdoData
+                    };
+                    newNode.x = width / 2 + radius * Math.cos(angle);
+                    newNode.y = height / 2 + radius * Math.sin(angle);
+                    nodes.push(newNode);
+
+                    // Add connection to registry
+                    links.push({
+                        source: "registry",
+                        target: nodeId,
+                        type: "permanent"
+                    });
+
+                    return;
+                }
+            } catch (error) {
+                console.warn(`Could not fetch FDO info for ${nodeId}:`, error);
+            }
+
+            // Fallback: Create placeholder node with PID-based label
+            const angle = Math.random() * 2 * Math.PI;
+            const radius = 250 + Math.random() * 150;
+            const newNode = {
+                id: nodeId,
+                label: nodeId.split('/').pop().substring(0, 15) + '...', // Shortened label
+                type: "fdo",
+                color: "#4ecdc4",
+                data: {}
+            };
+            newNode.x = width / 2 + radius * Math.cos(angle);
+            newNode.y = height / 2 + radius * Math.sin(angle);
+            nodes.push(newNode);
+
+            // Add connection to registry
+            links.push({
+                source: "registry",
+                target: nodeId,
+                type: "permanent"
+            });
+        }
+
+        async function showLink(sourceId, targetId, type = "active", duration = 15000) {
+            // Ensure both nodes exist
+            await ensureNodeExists(sourceId);
+            await ensureNodeExists(targetId);
+
+            const linkId = `${sourceId}-${targetId}`;
+
+            // Remove existing link if present
+            links = links.filter(l => {
+                const existingId = (typeof l.source === 'object' ? l.source.id : l.source) + "-" +
+                                   (typeof l.target === 'object' ? l.target.id : l.target);
+                return existingId !== linkId;
+            });
+
+            // Add new link
+            links.push({
+                source: sourceId,
+                target: targetId,
+                type: type,
+                id: linkId
+            });
+
+            updateGraph();
+
+            // Remove after duration
+            setTimeout(() => {
+                links = links.filter(l => l.id !== linkId);
+                updateGraph();
+            }, duration);
+        }
+
+        function addEvent(event) {
+            eventCount++;
+            document.getElementById("event-count").textContent = eventCount;
+
+            const eventFeed = document.getElementById("event-feed");
+            const eventDiv = document.createElement("div");
+            eventDiv.className = `event ${event.event_type.replace('_', '-')}`;
+
+            const time = new Date(event.timestamp).toLocaleTimeString();
+
+            let content = `<div class="event-time">${time}</div>`;
+            content += `<div class="event-type">${event.event_type.replace('_', ' ').toUpperCase()}</div>`;
+            content += `<div>${formatEventData(event)}</div>`;
+
+            eventDiv.innerHTML = content;
+            eventFeed.insertBefore(eventDiv, eventFeed.firstChild);
+
+            // Keep only last 50 events
+            while (eventFeed.children.length > 50) {
+                eventFeed.removeChild(eventFeed.lastChild);
+            }
+        }
+
+        function formatEventData(event) {
+            const data = event.data;
+
+            switch(event.event_type) {
+                case "fdo_registered":
+                    return `${data.fdo_type} registered at port ${data.port}`;
+                case "discovery_request":
+                    return `Searching for ${data.query_value} (${data.results_count} found)`;
+                case "call_made":
+                    return `${data.caller_pid.split('/').pop()} → ${data.target_pid.split('/').pop()}: ${data.operation}`;
+                default:
+                    return JSON.stringify(data).substring(0, 100);
+            }
+        }
+
+        // Load existing FDOs from registry
+        async function loadExistingFDOs() {
+            try {
+                const response = await fetch('http://localhost:8000/doip/search/fdos');
+                const result = await response.json();
+
+                if (result.status === "success" && Array.isArray(result.data)) {
+                    for (const fdo of result.data) {
+                        const nodeId = fdo.pid;
+
+                        // Skip if node already exists
+                        if (nodes.find(n => n.id === nodeId)) {
+                            continue;
+                        }
+
+                        const kernelAttrs = fdo.kernel_attributes || {};
+
+                        // Use name from kernel_attributes, fallback to type, then PID
+                        let label = kernelAttrs.name ||
+                                    fdo.fdo_type_pid?.replace(/_/g, ' ') ||
+                                    nodeId.split('/').pop().substring(0, 15) + '...';
+
+                        // Position new nodes in a circle around registry with random offset
+                        const angle = Math.random() * 2 * Math.PI;
+                        const radius = 250 + Math.random() * 150;
+                        const newNode = {
+                            id: nodeId,
+                            label: label,
+                            type: "fdo",
+                            color: "#4ecdc4",
+                            data: fdo
+                        };
+                        newNode.x = width / 2 + radius * Math.cos(angle);
+                        newNode.y = height / 2 + radius * Math.sin(angle);
+                        nodes.push(newNode);
+
+                        // Always connected to registry
+                        links.push({
+                            source: "registry",
+                            target: nodeId,
+                            type: "permanent"
+                        });
+                    }
+
+                    updateGraph();
+                    document.getElementById("fdo-count").textContent = nodes.length - 1;
+                    console.log(`Loaded ${result.data.length} existing FDOs from registry`);
+                }
+            } catch (error) {
+                console.error("Failed to load existing FDOs:", error);
+            }
+        }
+
+        // WebSocket connection
+        const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+        const ws = new WebSocket(`${protocol}//${window.location.host}/ws/events`);
+
+        ws.onopen = () => {
+            document.getElementById("status").textContent = "● Connected";
+            document.getElementById("status").className = "connection-status connected";
+            // Load existing FDOs from registry on connection
+            loadExistingFDOs();
+        };
+
+        ws.onclose = () => {
+            document.getElementById("status").textContent = "● Disconnected";
+            document.getElementById("status").className = "connection-status disconnected";
+        };
+
+        ws.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+
+            if (data.event_type === "fdo_registered") {
+                // Add new FDO node
+                const nodeId = data.data.pid;
+                if (!nodes.find(n => n.id === nodeId)) {
+                    const kernelAttrs = data.data.kernel_attributes || {};
+
+                    // Use name from kernel_attributes, fallback to type, then PID
+                    let label = kernelAttrs.name ||
+                                data.data.fdo_type?.replace(/_/g, ' ') ||
+                                nodeId.split('/').pop().substring(0, 15) + '...';
+
+                    // Position new nodes in a circle around registry with random offset
+                    const angle = Math.random() * 2 * Math.PI;
+                    const radius = 250 + Math.random() * 150; // Random radius 250-400
+                    const newNode = {
+                        id: nodeId,
+                        label: label,
+                        type: "fdo",
+                        color: "#4ecdc4",
+                        data: data.data
+                    };
+                    // Set initial position
+                    newNode.x = width / 2 + radius * Math.cos(angle);
+                    newNode.y = height / 2 + radius * Math.sin(angle);
+                    nodes.push(newNode);
+
+                    // Always connected to registry
+                    links.push({
+                        source: "registry",
+                        target: nodeId,
+                        type: "permanent"
+                    });
+
+                    updateGraph();
+                    document.getElementById("fdo-count").textContent = nodes.length - 1;
+                }
+                addEvent(data);
+            }
+            else if (data.event_type === "discovery_request") {
+                discoveryCount++;
+                document.getElementById("discovery-count").textContent = discoveryCount;
+
+                // Show discovery animation (registry pulses)
+                setNodeActive("registry", 2000);
+                addEvent(data);
+            }
+            else if (data.event_type === "call_made") {
+                callCount++;
+                document.getElementById("call-count").textContent = callCount;
+
+                const caller = data.data.caller_pid;
+                const target = data.data.target_pid;
+
+                // Activate both nodes
+                setNodeActive(caller);
+                setNodeActive(target);
+
+                // Show link
+                showLink(caller, target, "active");
+
+                addEvent(data);
+            }
+        };
+
+        // Initial render
+        updateGraph();
+    </script>
+</body>
+</html>

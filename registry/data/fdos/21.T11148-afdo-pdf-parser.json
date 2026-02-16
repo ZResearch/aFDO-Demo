@@ -1,0 +1,267 @@
+{
+  "pid": "21.T11148/afdo-pdf-parser",
+  "fdo_type_pid": "21.T11148/type-document-processor-v1",
+  "fdo_profile_pid": "21.T11148/profile-ai-agent-v1",
+  "operation_pids": [
+    "21.T11148/afdo-de95a057-op-extract-text",
+    "21.T11148/afdo-02638717-op-extract-metadata",
+    "21.T11148/afdo-abad0c86-op-extract-tables",
+    "21.T11148/afdo-a31427d7-op-extract-first-page",
+    "21.T11148/afdo-e3542cec-op-get-description"
+  ],
+  "metadata_pointer": "21.T11148/afdo-metadata-pdf-parser",
+  "self_description": {
+    "agent_info": {
+      "name": "PDF Parser Agent",
+      "version": "1.0.0",
+      "agent_type": "task",
+      "description": "Extracts text and metadata from PDF documents using PyPDF2 and pdfplumber"
+    },
+    "capabilities": {
+      "extract_text": {
+        "operation_type": "data_extraction",
+        "input_schema": {
+          "type": "object",
+          "required": [
+            "pdf_data"
+          ],
+          "properties": {
+            "pdf_data": {
+              "type": "string",
+              "format": "base64",
+              "contentEncoding": "base64"
+            },
+            "summarize": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        },
+        "output_schema": {
+          "type": "object",
+          "required": [
+            "text",
+            "char_count",
+            "word_count"
+          ],
+          "properties": {
+            "text": {
+              "type": "string"
+            },
+            "char_count": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "word_count": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "summary": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "processor": {
+              "type": "string"
+            }
+          }
+        },
+        "constraints": {
+          "max_input_size": 52428800,
+          "timeout_seconds": 30,
+          "rate_limit": 20
+        },
+        "examples": [
+          {
+            "input": {
+              "pdf_data": "JVBERi0xLjQKJeLjz9MK...",
+              "summarize": false
+            },
+            "output": {
+              "text": "This is a sample PDF document...",
+              "char_count": 5000,
+              "word_count": 800,
+              "summary": null,
+              "processor": "21.T11148/afdo-pdf-parser"
+            }
+          }
+        ]
+      },
+      "extract_metadata": {
+        "operation_type": "data_extraction",
+        "input_schema": {
+          "type": "object",
+          "required": [
+            "pdf_data"
+          ],
+          "properties": {
+            "pdf_data": {
+              "type": "string",
+              "format": "base64",
+              "contentEncoding": "base64"
+            }
+          }
+        },
+        "output_schema": {
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string"
+            },
+            "author": {
+              "type": "string"
+            },
+            "pages": {
+              "type": "integer"
+            },
+            "creation_date": {
+              "type": "string"
+            },
+            "extracted_by": {
+              "type": "string"
+            },
+            "extraction_method": {
+              "type": "string"
+            }
+          }
+        },
+        "constraints": {
+          "max_input_size": 52428800,
+          "timeout_seconds": 10,
+          "rate_limit": 50
+        },
+        "examples": []
+      },
+      "extract_tables": {
+        "operation_type": "data_extraction",
+        "input_schema": {
+          "type": "object",
+          "required": [
+            "pdf_data"
+          ],
+          "properties": {
+            "pdf_data": {
+              "type": "string",
+              "format": "base64",
+              "contentEncoding": "base64"
+            }
+          }
+        },
+        "output_schema": {
+          "type": "object",
+          "required": [
+            "tables",
+            "table_count"
+          ],
+          "properties": {
+            "tables": {
+              "type": "array",
+              "items": {
+                "type": "array"
+              }
+            },
+            "table_count": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "extracted_by": {
+              "type": "string"
+            }
+          }
+        },
+        "constraints": {
+          "max_input_size": 52428800,
+          "timeout_seconds": 60,
+          "rate_limit": 10
+        },
+        "examples": []
+      },
+      "extract_first_page": {
+        "operation_type": "data_extraction",
+        "input_schema": {
+          "type": "object",
+          "required": [
+            "pdf_data"
+          ],
+          "properties": {
+            "pdf_data": {
+              "type": "string",
+              "format": "base64",
+              "contentEncoding": "base64"
+            },
+            "max_chars": {
+              "type": "integer",
+              "default": 2000,
+              "minimum": 100,
+              "maximum": 10000
+            }
+          }
+        },
+        "output_schema": {
+          "type": "object",
+          "required": [
+            "first_page_text",
+            "char_count",
+            "truncated"
+          ],
+          "properties": {
+            "first_page_text": {
+              "type": "string"
+            },
+            "char_count": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "truncated": {
+              "type": "boolean"
+            },
+            "extracted_by": {
+              "type": "string"
+            }
+          }
+        },
+        "constraints": {
+          "max_input_size": 52428800,
+          "timeout_seconds": 5,
+          "rate_limit": 100
+        },
+        "examples": []
+      }
+    },
+    "technical_spec": {
+      "runtime": "Python 3.10",
+      "dependencies": [
+        "PyPDF2==3.0.1",
+        "pdfplumber==0.10.3"
+      ],
+      "resource_requirements": {
+        "memory_mb": 256,
+        "cpu_cores": 0.5
+      }
+    },
+    "agent_attributes": {
+      "has_llm": false,
+      "autonomy_level": "task",
+      "decision_policy": "hardcoded",
+      "can_delegate": false
+    }
+  },
+  "activity_log": {
+    "calls_made": [],
+    "calls_received": []
+  },
+  "kernel_attributes": {
+    "name": "PDF Parser",
+    "port": 8004,
+    "reputation": 0.85,
+    "cost": 0.05,
+    "status": "active",
+    "has_llm": false
+  },
+  "created_at": "2026-02-16T19:50:17.416501Z",
+  "updated_at": "2026-02-16T21:23:22.016335Z",
+  "status": "inactive",
+  "last_heartbeat": 1771275228.0212982,
+  "inactive_since": 1771277001.9953969
+}

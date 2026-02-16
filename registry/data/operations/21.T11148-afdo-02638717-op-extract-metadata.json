@@ -1,0 +1,43 @@
+{
+  "pid": "21.T11148/afdo-02638717-op-extract-metadata",
+  "name": "extract_metadata",
+  "description": "Operation: extract_metadata",
+  "input_schema": {
+    "type": "object",
+    "required": [
+      "pdf_data"
+    ],
+    "properties": {
+      "pdf_data": {
+        "type": "string",
+        "format": "base64",
+        "contentEncoding": "base64"
+      }
+    }
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "title": {
+        "type": "string"
+      },
+      "author": {
+        "type": "string"
+      },
+      "pages": {
+        "type": "integer"
+      },
+      "creation_date": {
+        "type": "string"
+      },
+      "extracted_by": {
+        "type": "string"
+      },
+      "extraction_method": {
+        "type": "string"
+      }
+    }
+  },
+  "semantics": null,
+  "created_at": "2026-02-14T22:04:20.053700Z"
+}

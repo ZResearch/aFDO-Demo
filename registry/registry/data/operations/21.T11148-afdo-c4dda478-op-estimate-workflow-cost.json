@@ -1,0 +1,9 @@
+{
+  "pid": "21.T11148/afdo-c4dda478-op-estimate-workflow-cost",
+  "name": "estimate_workflow_cost",
+  "description": "Operation: estimate_workflow_cost",
+  "input_schema": {},
+  "output_schema": {},
+  "semantics": null,
+  "created_at": "2026-02-16T21:16:42.060057Z"
+}

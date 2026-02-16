@@ -1,0 +1,9 @@
+{
+  "pid": "21.T11148/afdo-dde5553b-op-assess-methodology",
+  "name": "assess_methodology",
+  "description": "Operation: assess_methodology",
+  "input_schema": {},
+  "output_schema": {},
+  "semantics": null,
+  "created_at": "2026-02-16T21:16:28.310352Z"
+}

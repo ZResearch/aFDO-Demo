@@ -1,0 +1,72 @@
+{
+  "pid": "21.T11148/afdo-metadata-wikipedia-agent",
+  "associated_fdo": "21.T11148/afdo-wikipedia-agent",
+  "content": {
+    "description": "Provides encyclopedic knowledge, general facts, biographies, historical information, definitions, summaries about people, places, events, organizations, and concepts from Wikipedia. Best for queries about who someone is, what something is, when events happened, where places are located, general knowledge questions, factual information, and background information. NOT suitable for latest research papers or cutting-edge scientific publications.",
+    "version": "1.0.0",
+    "agent_role": "data_source",
+    "api_source": "Wikipedia REST API v1",
+    "requires_auth": false,
+    "schema_version": "1.0.0",
+    "provenance": {
+      "creation_method": "automated_registration",
+      "framework": "aFDO_marketplace_v1.0",
+      "registration_timestamp": "2026-02-16T21:47:25.350371Z",
+      "framework_version": "1.0.0"
+    },
+    "technical_details": {
+      "port": 8010,
+      "base_url": "https://en.wikipedia.org/api/rest_v1",
+      "operations_count": 5,
+      "has_marketplace_features": true,
+      "has_llm": false,
+      "base_cost": 0.01
+    },
+    "semantic_links": [
+      {
+        "relation": "implements",
+        "target": "21.T11148/profile-ai-agent-v1"
+      },
+      {
+        "relation": "type_of",
+        "target": "21.T11148/type-data-source-v1"
+      },
+      {
+        "relation": "registered_in",
+        "target": "21.T11148/registry-system-001"
+      }
+    ],
+    "compliance": {
+      "FDO_compliant": true,
+      "FAIR_enabled": true,
+      "DOIP_protocol": "2.0",
+      "supports_marketplace": true
+    },
+    "discovery": {
+      "operations": [
+        "receive_query",
+        "get_article_summary",
+        "search_wikipedia",
+        "get_facts",
+        "get_description"
+      ],
+      "specialization": "general_knowledge",
+      "reputation": 0.85
+    }
+  },
+  "created_at": "2026-02-16T21:47:25.350382Z",
+  "updated_at": "2026-02-16T21:47:25.350383Z",
+  "schema_version": "1.0.0",
+  "created_by": "21.T11148/afdo-wikipedia-agent",
+  "provenance": {
+    "registration_method": "self_registration",
+    "framework": "aFDO_marketplace_v1.0"
+  },
+  "semantic_links": [
+    {
+      "relation": "describes",
+      "target": "21.T11148/afdo-wikipedia-agent"
+    }
+  ],
+  "license": "research-use"
+}

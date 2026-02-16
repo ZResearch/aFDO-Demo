@@ -1,0 +1,54 @@
+{
+  "pid": "21.T11148/afdo-de95a057-op-extract-text",
+  "name": "extract_text",
+  "description": "Operation: extract_text",
+  "input_schema": {
+    "type": "object",
+    "required": [
+      "pdf_data"
+    ],
+    "properties": {
+      "pdf_data": {
+        "type": "string",
+        "format": "base64",
+        "contentEncoding": "base64"
+      },
+      "summarize": {
+        "type": "boolean",
+        "default": false
+      }
+    }
+  },
+  "output_schema": {
+    "type": "object",
+    "required": [
+      "text",
+      "char_count",
+      "word_count"
+    ],
+    "properties": {
+      "text": {
+        "type": "string"
+      },
+      "char_count": {
+        "type": "integer",
+        "minimum": 0
+      },
+      "word_count": {
+        "type": "integer",
+        "minimum": 0
+      },
+      "summary": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "processor": {
+        "type": "string"
+      }
+    }
+  },
+  "semantics": null,
+  "created_at": "2026-02-14T22:04:20.044683Z"
+}

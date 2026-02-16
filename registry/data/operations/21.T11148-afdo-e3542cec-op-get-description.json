@@ -1,0 +1,9 @@
+{
+  "pid": "21.T11148/afdo-e3542cec-op-get-description",
+  "name": "get_description",
+  "description": "Operation: get_description",
+  "input_schema": {},
+  "output_schema": {},
+  "semantics": null,
+  "created_at": "2026-02-14T22:03:59.073756Z"
+}

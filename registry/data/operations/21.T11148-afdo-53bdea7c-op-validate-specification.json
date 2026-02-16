@@ -1,0 +1,38 @@
+{
+  "pid": "21.T11148/afdo-53bdea7c-op-validate-specification",
+  "name": "validate_specification",
+  "description": "Operation: validate_specification",
+  "input_schema": {
+    "type": "object",
+    "required": [
+      "specification"
+    ],
+    "properties": {
+      "specification": {
+        "type": "object"
+      }
+    }
+  },
+  "output_schema": {
+    "type": "object",
+    "required": [
+      "valid"
+    ],
+    "properties": {
+      "valid": {
+        "type": "boolean"
+      },
+      "error": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "validated_by": {
+        "type": "string"
+      }
+    }
+  },
+  "semantics": null,
+  "created_at": "2026-02-14T22:03:59.067153Z"
+}

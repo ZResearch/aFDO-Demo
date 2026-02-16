@@ -1,0 +1,9 @@
+{
+  "pid": "21.T11148/afdo-ca9ec136-op-extract-key-findings",
+  "name": "extract_key_findings",
+  "description": "Operation: extract_key_findings",
+  "input_schema": {},
+  "output_schema": {},
+  "semantics": null,
+  "created_at": "2026-02-14T22:04:54.834131Z"
+}

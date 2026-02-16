@@ -1,0 +1,49 @@
+{
+  "policy_id": "default_task_agent_policy",
+  "policy_version": "1.0.0",
+  "description": "Default policy for task agents",
+  "default_action": "handle_alone",
+
+  "rules": [
+    {
+      "rule_id": "capable_simple",
+      "priority": 10,
+      "conditions": {
+        "has_capability": true,
+        "complexity": "simple"
+      },
+      "action": {
+        "type": "handle_alone",
+        "reasoning": "I can handle simple tasks in my capabilities"
+      }
+    },
+    {
+      "rule_id": "capable_moderate",
+      "priority": 9,
+      "conditions": {
+        "has_capability": true,
+        "complexity": "moderate"
+      },
+      "action": {
+        "type": "handle_alone",
+        "reasoning": "I can handle moderate tasks in my capabilities"
+      }
+    },
+    {
+      "rule_id": "not_capable_need_helper",
+      "priority": 5,
+      "conditions": {
+        "has_capability": false
+      },
+      "action": {
+        "type": "query_registry_for_helper",
+        "reasoning": "Task outside my capabilities - query registry for helper",
+        "parameters": {
+          "registry_query": {
+            "operation": "from_request"
+          }
+        }
+      }
+    }
+  ]
+}

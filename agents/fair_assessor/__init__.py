@@ -1,0 +1,1 @@
+"""FAIR Assessor aFDO package."""

@@ -1,0 +1,20 @@
+{
+  "pid": "21.T11148/type-llm-service-v1",
+  "name": "LLM Service",
+  "category": "data_processor",
+  "expected_capabilities": [
+    "generate_text"
+  ],
+  "optional_capabilities": [
+    "summarize",
+    "analyze_text",
+    "answer_question",
+    "analyze_scientific_text",
+    "extract_entities",
+    "classify"
+  ],
+  "version": "1.0.0",
+  "description": "Agents that provide LLM-based text generation and analysis",
+  "supersedes": [],
+  "created_at": "2026-02-16T21:45:40.685716Z"
+}

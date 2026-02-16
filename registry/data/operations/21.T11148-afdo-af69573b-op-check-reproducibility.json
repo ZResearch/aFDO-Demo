@@ -1,0 +1,9 @@
+{
+  "pid": "21.T11148/afdo-af69573b-op-check-reproducibility",
+  "name": "check_reproducibility",
+  "description": "Operation: check_reproducibility",
+  "input_schema": {},
+  "output_schema": {},
+  "semantics": null,
+  "created_at": "2026-02-14T22:04:54.854660Z"
+}

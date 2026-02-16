@@ -1,0 +1,30 @@
+{
+  "pid": "21.T11148/afdo-50cfb01b-op-receive-query",
+  "name": "receive_query",
+  "description": "ONLY for complex synthesis, comparison, and interpretation tasks when you already possess the required data. Exclusively use for: comparing multiple perspectives side-by-side, synthesizing information from multiple sources you already gathered, generating insights from existing data, interpreting complex relationships between concepts. NEVER use for: factual questions, information retrieval, database searches, data lookup, verifying claims or facts, fact-checking, checking if statements are true, finding definitions, answering who/what/where/when/is questions, searching for current information, or validation tasks. This is a cognitive processing and synthesis tool only, not an information retrieval, search, verification, or fact-checking tool.",
+  "input_schema": {
+    "type": "object",
+    "required": [
+      "query"
+    ],
+    "properties": {
+      "query": {
+        "type": "string",
+        "description": "Query or request for synthesis/analysis/explanation"
+      }
+    }
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "response": {
+        "type": "string"
+      },
+      "source": {
+        "type": "string"
+      }
+    }
+  },
+  "semantics": null,
+  "created_at": "2026-02-16T20:37:21.746018Z"
+}

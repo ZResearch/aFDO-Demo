@@ -1,0 +1,148 @@
+{
+  "pid": "21.T11148/afdo-metadata-fair-assessor",
+  "associated_fdo": "21.T11148/afdo-fair-assessor",
+  "content": {
+    "description": "Evaluates FAIR compliance of research data and metadata",
+    "version": "2.0.0",
+    "agent_role": "task_agent",
+    "based_on": "CIKM 2025 - FAIR Data Assessment Using LLMs",
+    "capabilities": {
+      "assess_fairness": {
+        "description": "Complete FAIR assessment with scores and actionable suggestions",
+        "input_schema": {
+          "metadata": "dict with dataset/paper metadata",
+          "context": "optional context dict"
+        },
+        "output_schema": {
+          "overall_score": "float 0-1",
+          "findable_score": "float 0-1",
+          "accessible_score": "float 0-1",
+          "interoperable_score": "float 0-1",
+          "reusable_score": "float 0-1",
+          "detailed_scores": "dict with principle-level scores",
+          "suggestions": "list of improvement actions"
+        },
+        "estimated_duration": "1-3s",
+        "estimated_cost": "$0.02",
+        "requires_llm": false
+      },
+      "score_metadata": {
+        "description": "Score metadata quality on FAIR principles",
+        "input_schema": {
+          "metadata": "dict with metadata to evaluate"
+        },
+        "output_schema": {
+          "metadata_quality_score": "float 0-1",
+          "completeness": "float 0-1",
+          "richness": "float 0-1"
+        },
+        "estimated_duration": "0.5-1s",
+        "estimated_cost": "$0.02"
+      },
+      "suggest_improvements": {
+        "description": "Provide actionable improvement recommendations",
+        "input_schema": {
+          "assessment": "dict from assess_fairness",
+          "priority": "string (high/medium/low)"
+        },
+        "output_schema": {
+          "suggestions": "prioritized list of improvements",
+          "quick_wins": "list of easy improvements",
+          "long_term": "list of strategic improvements"
+        },
+        "estimated_duration": "0.5-1s",
+        "estimated_cost": "$0.02"
+      }
+    },
+    "principles_assessed": {
+      "Findable": [
+        "F1: Global identifier",
+        "F2: Rich metadata",
+        "F3: Metadata in registry",
+        "F4: Searchable"
+      ],
+      "Accessible": [
+        "A1: Retrievable via protocol",
+        "A2: Metadata persistence"
+      ],
+      "Interoperable": [
+        "I1: Formal language",
+        "I2: FAIR vocabularies",
+        "I3: Qualified references"
+      ],
+      "Reusable": [
+        "R1: Usage license",
+        "R2: Provenance",
+        "R3: Community standards",
+        "R4: Domain-relevant"
+      ]
+    },
+    "performance_characteristics": {
+      "typical_latency": "1-3s",
+      "max_concurrent_requests": 50,
+      "deterministic": true
+    },
+    "llm_capable": false,
+    "methodology": "Rule-based assessment with weighted scoring per CIKM 2025 methodology",
+    "schema_version": "1.0.0",
+    "provenance": {
+      "creation_method": "automated_registration",
+      "framework": "aFDO_marketplace_v1.0",
+      "registration_timestamp": "2026-02-16T19:50:24.294589Z",
+      "framework_version": "1.0.0"
+    },
+    "technical_details": {
+      "port": 8005,
+      "base_url": "http://localhost:8005",
+      "operations_count": 4,
+      "has_marketplace_features": true,
+      "has_llm": false,
+      "base_cost": 0.02
+    },
+    "semantic_links": [
+      {
+        "relation": "implements",
+        "target": "21.T11148/profile-ai-agent-v1"
+      },
+      {
+        "relation": "type_of",
+        "target": "21.T11148/type-quality-assessor-v1"
+      },
+      {
+        "relation": "registered_in",
+        "target": "21.T11148/registry-system-001"
+      }
+    ],
+    "compliance": {
+      "FDO_compliant": true,
+      "FAIR_enabled": true,
+      "DOIP_protocol": "2.0",
+      "supports_marketplace": true
+    },
+    "discovery": {
+      "operations": [
+        "assess_fairness",
+        "score_metadata",
+        "suggest_improvements",
+        "get_description"
+      ],
+      "specialization": "FAIR_compliance",
+      "reputation": 0.85
+    }
+  },
+  "created_at": "2026-02-16T19:50:24.294598Z",
+  "updated_at": "2026-02-16T19:50:24.294600Z",
+  "schema_version": "1.0.0",
+  "created_by": "21.T11148/afdo-fair-assessor",
+  "provenance": {
+    "registration_method": "self_registration",
+    "framework": "aFDO_marketplace_v1.0"
+  },
+  "semantic_links": [
+    {
+      "relation": "describes",
+      "target": "21.T11148/afdo-fair-assessor"
+    }
+  ],
+  "license": "research-use"
+}

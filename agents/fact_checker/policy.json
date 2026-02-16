@@ -1,0 +1,233 @@
+{
+  "policy_id": "fact_checker_policy",
+  "policy_version": "1.0.0",
+  "description": "Policy for Fact Checker Agent - TRULY policy-driven multi-source verification",
+  "default_action": "handle_alone",
+
+  "rules": [
+    {
+      "rule_id": "rule_00_receive_query_verification",
+      "description": "Universal entry point - route to multi-source verification",
+      "priority": 11,
+      "conditions": {
+        "operation": ["receive_query"],
+        "has_capability": true
+      },
+      "action": {
+        "type": "sequence",
+        "reasoning": "Natural language verification queries need multi-source evidence gathering and synthesis",
+        "parameters": {
+          "steps": [
+            {
+              "name": "step1_gather_evidence",
+              "action": "semantic_discovery",
+              "capability_query": "search and retrieve factual information from reliable sources including research papers, encyclopedias, scientific databases, and knowledge bases",
+              "call_best_match": false,
+              "parameters": {
+                "top_k": 5,
+                "min_similarity": 0.3,
+                "collect_all_results": true,
+                "parallel_execution": true,
+                "min_successful": 2,
+                "operation_to_call": "auto_detect",
+                "pass_parameters": {
+                  "query": "${query}"
+                }
+              },
+              "output_variable": "evidence"
+            },
+            {
+              "name": "step2_synthesize_verification",
+              "action": "semantic_discovery",
+              "capability_query": "analyze and synthesize information from multiple sources to verify claims",
+              "call_best_match": true,
+              "parameters": {
+                "top_k": 1,
+                "operation_to_call": "receive_query",
+                "pass_parameters": {
+                  "message": "Verify the query: '${query}' based on evidence from multiple sources. Evidence gathered: ${evidence}. Analyze consistency across sources. Determine if the claim is verified. Provide a clear answer with confidence assessment.",
+                  "task": "verify_and_synthesize",
+                  "query": "${query}",
+                  "evidence": "${evidence}"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "rule_id": "rule_01_verify_fact_multi_source",
+      "description": "Verify fact through multi-source evidence gathering and synthesis",
+      "priority": 10,
+      "conditions": {
+        "operation": ["verify_fact"],
+        "has_capability": true
+      },
+      "action": {
+        "type": "sequence",
+        "reasoning": "Fact verification requires gathering evidence from multiple independent sources, then synthesizing verification",
+        "parameters": {
+          "steps": [
+            {
+              "name": "step1_gather_evidence",
+              "action": "semantic_discovery",
+              "capability_query": "search and retrieve information",
+              "call_best_match": false,
+              "parameters": {
+                "top_k": 5,
+                "min_similarity": 0.3,
+                "collect_all_results": true,
+                "parallel_execution": true,
+                "min_successful": 2,
+                "operation_to_call": "auto_detect",
+                "pass_parameters": {
+                  "query": "${claim}"
+                }
+              },
+              "output_variable": "evidence"
+            },
+            {
+              "name": "step2_synthesize_verification",
+              "action": "semantic_discovery",
+              "capability_query": "analyze and synthesize information from multiple sources",
+              "call_best_match": true,
+              "parameters": {
+                "top_k": 1,
+                "operation_to_call": "receive_query",
+                "pass_parameters": {
+                  "message": "Verify the claim: '${claim}' based on evidence from multiple sources. Analyze the evidence: ${evidence}. Assess consistency across sources. Calculate confidence score (0-1) based on agreement. Determine if claim is verified. Return JSON with: {verified: bool, confidence: float, synthesis: string, supporting_sources: int, conflicting_sources: int}",
+                  "task": "verify_consistency",
+                  "claim": "${claim}",
+                  "evidence": "${evidence}"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+
+    {
+      "rule_id": "rule_02_cross_validate_multi_source",
+      "description": "Cross-validate information across multiple sources",
+      "priority": 9,
+      "conditions": {
+        "operation": ["cross_validate"],
+        "has_capability": true
+      },
+      "action": {
+        "type": "sequence",
+        "reasoning": "Cross-validation requires querying multiple sources and comparing results",
+        "parameters": {
+          "steps": [
+            {
+              "name": "step1_gather_from_sources",
+              "action": "semantic_discovery",
+              "capability_query": "search and retrieve information",
+              "call_best_match": false,
+              "parameters": {
+                "top_k": 5,
+                "min_similarity": 0.3,
+                "collect_all_results": true,
+                "parallel_execution": true,
+                "min_successful": 2,
+                "operation_to_call": "auto_detect",
+                "pass_parameters": {
+                  "query": "${claim}"
+                }
+              },
+              "output_variable": "source_results"
+            },
+            {
+              "name": "step2_analyze_consistency",
+              "action": "semantic_discovery",
+              "capability_query": "analyze and synthesize information from multiple sources",
+              "call_best_match": true,
+              "parameters": {
+                "top_k": 1,
+                "operation_to_call": "receive_query",
+                "pass_parameters": {
+                  "message": "Cross-validate the claim: '${claim}' across multiple sources. Compare results: ${source_results}. Calculate consistency score (0-1). Identify agreements and conflicts. Return JSON with: {validated: bool, consistency_score: float, agreements: array, conflicts: array}",
+                  "task": "consistency_analysis",
+                  "claim": "${claim}",
+                  "source_results": "${source_results}"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+
+    {
+      "rule_id": "rule_03_quick_claim_check",
+      "description": "Quick claim verification with fewer sources",
+      "priority": 8,
+      "conditions": {
+        "operation": ["check_claim"],
+        "has_capability": true
+      },
+      "action": {
+        "type": "sequence",
+        "reasoning": "Quick check uses fewer sources for faster results",
+        "parameters": {
+          "steps": [
+            {
+              "name": "step1_quick_gather",
+              "action": "semantic_discovery",
+              "capability_query": "search and retrieve information",
+              "call_best_match": false,
+              "parameters": {
+                "top_k": 3,
+                "min_similarity": 0.4,
+                "collect_all_results": true,
+                "parallel_execution": true,
+                "min_successful": 1,
+                "operation_to_call": "auto_detect",
+                "pass_parameters": {
+                  "query": "${claim}"
+                }
+              },
+              "output_variable": "quick_evidence"
+            },
+            {
+              "name": "step2_quick_assessment",
+              "action": "semantic_discovery",
+              "capability_query": "analyze and synthesize information",
+              "call_best_match": true,
+              "parameters": {
+                "top_k": 1,
+                "operation_to_call": "receive_query",
+                "pass_parameters": {
+                  "message": "Quick assessment of claim: '${claim}' based on evidence: ${quick_evidence}. Is the claim likely true? Return JSON with: {likely_true: bool, confidence: float, reasoning: string}",
+                  "task": "quick_assessment",
+                  "claim": "${claim}",
+                  "evidence": "${quick_evidence}"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+
+    {
+      "rule_id": "rule_04_unknown_operation",
+      "description": "Delegate unknown operations to helpers",
+      "priority": 5,
+      "conditions": {
+        "has_capability": false
+      },
+      "action": {
+        "type": "query_registry_for_helper",
+        "reasoning": "Operation not in my capabilities, need helper",
+        "parameters": {
+          "registry_query": {
+            "selection_criteria": "balanced"
+          }
+        }
+      }
+    }
+  ]
+}

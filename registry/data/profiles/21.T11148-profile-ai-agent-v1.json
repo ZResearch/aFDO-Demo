@@ -1,0 +1,72 @@
+{
+  "pid": "21.T11148/profile-ai-agent-v1",
+  "name": "AI Agent Profile",
+  "required_fields": [
+    "pid",
+    "fdo_type_pid",
+    "fdo_profile_pid",
+    "self_description",
+    "activity_log",
+    "kernel_attributes"
+  ],
+  "optional_fields": [
+    "economic_attributes",
+    "reputation",
+    "metadata_pointer"
+  ],
+  "field_schemas": {
+    "pid": {
+      "type": "string",
+      "pattern": "^21\\.T11148/afdo-[a-z-]+(-[0-9]+)?$"
+    },
+    "fdo_type_pid": {
+      "type": "string",
+      "pattern": "^21\\.T11148/type-[a-z-]+-v\\d+$"
+    },
+    "fdo_profile_pid": {
+      "type": "string",
+      "pattern": "^21\\.T11148/profile-[a-z-]+-v\\d+$"
+    },
+    "self_description": {
+      "type": "object"
+    },
+    "activity_log": {
+      "type": "object",
+      "properties": {
+        "calls_made": {
+          "type": "array"
+        },
+        "calls_received": {
+          "type": "array"
+        }
+      }
+    },
+    "kernel_attributes": {
+      "type": "object",
+      "required": [
+        "port",
+        "endpoint",
+        "protocol",
+        "status"
+      ],
+      "properties": {
+        "port": {
+          "type": "integer"
+        },
+        "endpoint": {
+          "type": "string"
+        },
+        "protocol": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "version": "1.0.0",
+  "description": "Standard profile for autonomous AI agents in the aFDO system",
+  "supersedes": [],
+  "created_at": "2026-02-16T21:45:40.687392Z"
+}

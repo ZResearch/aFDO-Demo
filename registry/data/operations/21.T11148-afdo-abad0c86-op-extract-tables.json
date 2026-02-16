@@ -1,0 +1,42 @@
+{
+  "pid": "21.T11148/afdo-abad0c86-op-extract-tables",
+  "name": "extract_tables",
+  "description": "Operation: extract_tables",
+  "input_schema": {
+    "type": "object",
+    "required": [
+      "pdf_data"
+    ],
+    "properties": {
+      "pdf_data": {
+        "type": "string",
+        "format": "base64",
+        "contentEncoding": "base64"
+      }
+    }
+  },
+  "output_schema": {
+    "type": "object",
+    "required": [
+      "tables",
+      "table_count"
+    ],
+    "properties": {
+      "tables": {
+        "type": "array",
+        "items": {
+          "type": "array"
+        }
+      },
+      "table_count": {
+        "type": "integer",
+        "minimum": 0
+      },
+      "extracted_by": {
+        "type": "string"
+      }
+    }
+  },
+  "semantics": null,
+  "created_at": "2026-02-14T22:04:20.061107Z"
+}

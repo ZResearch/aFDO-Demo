@@ -1,0 +1,37 @@
+{
+  "policy_id": "default_interface_agent_policy",
+  "policy_version": "1.0.0",
+  "description": "Default policy for interface agents",
+  "default_action": "delegate_fully",
+
+  "rules": [
+    {
+      "rule_id": "greeting",
+      "priority": 10,
+      "conditions": {
+        "operation": ["greeting", "hello", "help"],
+        "complexity": "simple"
+      },
+      "action": {
+        "type": "handle_alone",
+        "reasoning": "Simple greeting"
+      }
+    },
+    {
+      "rule_id": "user_request",
+      "priority": 5,
+      "conditions": {
+        "operation": ["receive_user_input", "process_query"]
+      },
+      "action": {
+        "type": "delegate_fully",
+        "reasoning": "User request needs domain expertise",
+        "parameters": {
+          "registry_query": {
+            "operations": ["plan_research_task", "coordinate_workflow"]
+          }
+        }
+      }
+    }
+  ]
+}

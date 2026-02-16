@@ -1,0 +1,82 @@
+{
+  "policy_id": "arxiv_agent_policy",
+  "policy_version": "1.0.0",
+  "description": "Policy for ArXiv Agent - searches scientific papers",
+  "default_action": "handle_alone",
+
+  "rules": [
+    {
+      "rule_id": "rule_00_delegate_synthesis_queries",
+      "description": "Delegate synthesis/comparison queries to LLM via semantic discovery",
+      "priority": 11,
+      "conditions": {
+        "operation": ["receive_query"],
+        "query_requires_synthesis": true
+      },
+      "action": {
+        "type": "semantic_discovery",
+        "reasoning": "Query requires synthesis or analysis beyond paper search. Delegating to LLM for intelligent processing.",
+        "parameters": {
+          "discovery_query": {
+            "use_semantic_matching": true,
+            "min_similarity": 0.3,
+            "selection_criteria": "balanced"
+          }
+        }
+      }
+    },
+
+    {
+      "rule_id": "rule_01_handle_paper_search",
+      "description": "Handle paper searches directly",
+      "priority": 10,
+      "conditions": {
+        "operation": ["search_papers", "get_paper_abstract", "find_research", "receive_query"],
+        "has_capability": true
+      },
+      "action": {
+        "type": "handle_alone",
+        "reasoning": "Paper searches are my core capability"
+      }
+    },
+
+    {
+      "rule_id": "rule_02_complex_need_workflow",
+      "description": "Complex research needs workflow",
+      "priority": 9,
+      "conditions": {
+        "complexity": "complex"
+      },
+      "action": {
+        "type": "consult_for_workflow",
+        "reasoning": "Complex research requiring multiple sources - need workflow",
+        "parameters": {
+          "consultant_query": {
+            "operations": ["generate_workflow", "plan_research"]
+          }
+        },
+        "fallback": {
+          "type": "handle_alone"
+        }
+      }
+    },
+
+    {
+      "rule_id": "rule_03_not_capable_delegate",
+      "description": "For operations outside capability, find helper",
+      "priority": 5,
+      "conditions": {
+        "has_capability": false
+      },
+      "action": {
+        "type": "query_registry_for_helper",
+        "reasoning": "Operation outside my capabilities",
+        "parameters": {
+          "registry_query": {
+            "operation": "from_request"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,114 @@
+{
+  "workflow_id": "wf_multi_source_research_001",
+  "name": "Multi-Source Research Workflow",
+  "description": "Gather information from Wikipedia, ArXiv, and Books, then synthesize",
+  "created_by": "system",
+  "created_at": "2026-02-12T00:00:00Z",
+  "status": "draft",
+
+  "input_schema": {
+    "type": "object",
+    "required": ["question"],
+    "properties": {
+      "question": {
+        "type": "string",
+        "description": "Research question"
+      },
+      "include_papers": {
+        "type": "boolean",
+        "default": true,
+        "description": "Include scientific papers"
+      },
+      "include_books": {
+        "type": "boolean",
+        "default": true,
+        "description": "Include book references"
+      }
+    }
+  },
+
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "answer": {"type": "string"},
+      "sources": {"type": "object"}
+    }
+  },
+
+  "steps": [
+    {
+      "step_id": "step_01_fetch_general_facts",
+      "name": "Fetch General Facts",
+      "description": "Get general knowledge from Wikipedia",
+      "operation": "get_article_summary",
+      "executor": "discover",
+      "discovery_query": {
+        "operation": "get_article_summary",
+        "selection_criteria": "cheapest"
+      },
+      "depends_on": [],
+      "input_mapping": {
+        "topic": "workflow.input.question"
+      },
+      "on_failure": "continue"
+    },
+
+    {
+      "step_id": "step_02_search_papers",
+      "name": "Search Papers",
+      "description": "Find scientific papers on ArXiv",
+      "operation": "search_papers",
+      "executor": "discover",
+      "discovery_query": {
+        "operation": "search_papers",
+        "selection_criteria": "cheapest"
+      },
+      "depends_on": [],
+      "input_mapping": {
+        "query": "workflow.input.question",
+        "max_results": 3
+      },
+      "on_failure": "continue"
+    },
+
+    {
+      "step_id": "step_03_search_books",
+      "name": "Search Books",
+      "description": "Find related books",
+      "operation": "search_books",
+      "executor": "discover",
+      "discovery_query": {
+        "operation": "search_books",
+        "selection_criteria": "cheapest"
+      },
+      "depends_on": [],
+      "input_mapping": {
+        "query": "workflow.input.question",
+        "limit": 3
+      },
+      "on_failure": "continue"
+    },
+
+    {
+      "step_id": "step_04_synthesize_all",
+      "name": "Synthesize All Sources",
+      "description": "Synthesize information from all sources",
+      "operation": "synthesize_text",
+      "executor": "discover",
+      "discovery_query": {
+        "operation": "synthesize_text",
+        "selection_criteria": "balanced"
+      },
+      "depends_on": ["step_01_fetch_general_facts", "step_02_search_papers", "step_03_search_books"],
+      "input_mapping": {
+        "sources": [
+          "step_01_fetch_general_facts.result",
+          "step_02_search_papers.result",
+          "step_03_search_books.result"
+        ],
+        "question": "workflow.input.question"
+      },
+      "on_failure": "abort"
+    }
+  ]
+}

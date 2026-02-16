@@ -1,0 +1,139 @@
+{
+  "pid": "21.T11148/afdo-metadata-llm-endpoint-gpt-4",
+  "associated_fdo": "21.T11148/afdo-llm-endpoint-gpt-4",
+  "content": {
+    "description": "General-purpose LLM service using GPT-4",
+    "version": "2.0.0",
+    "agent_role": "llm_service",
+    "model": "gpt-4o",
+    "provider": "OpenAI",
+    "cost_per_1k_tokens": 0.03,
+    "capabilities": {
+      "generate_text": {
+        "description": "Generate text completion from prompt",
+        "input_schema": {
+          "prompt": "string prompt or messages list",
+          "max_tokens": "integer max output tokens (default 500)"
+        },
+        "output_schema": {
+          "text": "generated text string",
+          "tokens_used": "integer total tokens",
+          "cost": "float operation cost"
+        },
+        "estimated_duration": "2-10s",
+        "estimated_cost": "$0.03 per 1K tokens"
+      },
+      "summarize": {
+        "description": "Summarize long text into concise form",
+        "input_schema": {
+          "text": "text to summarize",
+          "max_length": "integer words (default 200)"
+        },
+        "output_schema": {
+          "summary": "summarized text",
+          "compression_ratio": "float",
+          "cost": "float"
+        },
+        "estimated_duration": "3-15s",
+        "estimated_cost": "$0.05-0.20"
+      },
+      "extract_entities": {
+        "description": "Extract named entities from text",
+        "input_schema": {
+          "text": "text to analyze",
+          "entity_types": "list of types to extract (optional)"
+        },
+        "output_schema": {
+          "entities": "list of extracted entities with types",
+          "cost": "float"
+        },
+        "estimated_duration": "2-8s",
+        "estimated_cost": "$0.03-0.10"
+      },
+      "classify": {
+        "description": "Classify text into categories",
+        "input_schema": {
+          "text": "text to classify",
+          "categories": "list of possible categories"
+        },
+        "output_schema": {
+          "category": "predicted category string",
+          "confidence": "float 0-1",
+          "cost": "float"
+        },
+        "estimated_duration": "2-5s",
+        "estimated_cost": "$0.03-0.08"
+      }
+    },
+    "performance_characteristics": {
+      "typical_latency": "2-10s depending on length",
+      "max_tokens_per_request": 8000,
+      "supports_streaming": false,
+      "rate_limit": "90K tokens/minute"
+    },
+    "service_type": "llm_endpoint",
+    "specialization": "general_purpose",
+    "llm_capable": true,
+    "schema_version": "1.0.0",
+    "provenance": {
+      "creation_method": "automated_registration",
+      "framework": "aFDO_marketplace_v1.0",
+      "registration_timestamp": "2026-02-16T19:50:03.753970Z",
+      "framework_version": "1.0.0"
+    },
+    "technical_details": {
+      "port": 8007,
+      "base_url": "http://localhost:8007",
+      "operations_count": 5,
+      "has_marketplace_features": true,
+      "has_llm": true,
+      "base_cost": 0.03
+    },
+    "semantic_links": [
+      {
+        "relation": "implements",
+        "target": "21.T11148/profile-ai-agent-v1"
+      },
+      {
+        "relation": "type_of",
+        "target": "21.T11148/type-llm-service-v1"
+      },
+      {
+        "relation": "registered_in",
+        "target": "21.T11148/registry-system-001"
+      }
+    ],
+    "compliance": {
+      "FDO_compliant": true,
+      "FAIR_enabled": true,
+      "DOIP_protocol": "2.0",
+      "supports_marketplace": true
+    },
+    "discovery": {
+      "operations": [
+        "generate_text",
+        "summarize",
+        "extract_entities",
+        "classify",
+        "get_description"
+      ],
+      "specialization": null,
+      "reputation": 0.85
+    }
+  },
+  "created_at": "2026-02-16T19:50:03.753979Z",
+  "updated_at": "2026-02-16T19:50:03.753980Z",
+  "schema_version": "1.0.0",
+  "created_by": "21.T11148/afdo-llm-endpoint-gpt-4",
+  "provenance": {
+    "registration_method": "self_registration",
+    "framework": "aFDO_marketplace_v1.0"
+  },
+  "semantic_links": [
+    {
+      "relation": "describes",
+      "target": "21.T11148/afdo-llm-endpoint-gpt-4"
+    }
+  ],
+  "license": "research-use"
+}

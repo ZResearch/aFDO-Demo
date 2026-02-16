@@ -1,0 +1,113 @@
+{
+  "pid": "21.T11148/afdo-156a5636-op-analyze-paper-budget",
+  "name": "analyze_paper_budget",
+  "description": "Operation: analyze_paper_budget",
+  "input_schema": {
+    "type": "object",
+    "required": [
+      "pdf_data",
+      "budget"
+    ],
+    "properties": {
+      "pdf_data": {
+        "type": "string",
+        "format": "base64",
+        "contentEncoding": "base64"
+      },
+      "budget": {
+        "type": "number",
+        "minimum": 0.0
+      },
+      "selection_policy": {
+        "type": "string",
+        "enum": [
+          "cheapest",
+          "fastest",
+          "balanced",
+          "premium"
+        ],
+        "default": "balanced"
+      }
+    }
+  },
+  "output_schema": {
+    "type": "object",
+    "required": [
+      "analysis",
+      "fair_assessment",
+      "cost_breakdown"
+    ],
+    "properties": {
+      "analysis": {
+        "type": "object",
+        "properties": {
+          "summary": {
+            "type": "string"
+          },
+          "key_findings": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "methodology": {
+            "type": "string"
+          },
+          "contributions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "fair_assessment": {
+        "type": "object",
+        "properties": {
+          "overall_score": {
+            "type": "number"
+          },
+          "findable_score": {
+            "type": "number"
+          },
+          "accessible_score": {
+            "type": "number"
+          },
+          "interoperable_score": {
+            "type": "number"
+          },
+          "reusable_score": {
+            "type": "number"
+          }
+        }
+      },
+      "cost_breakdown": {
+        "type": "object",
+        "properties": {
+          "total_cost": {
+            "type": "number"
+          },
+          "services_used": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "service_pid": {
+                  "type": "string"
+                },
+                "operation": {
+                  "type": "string"
+                },
+                "cost": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "semantics": null,
+  "created_at": "2026-02-16T21:16:28.303014Z"
+}

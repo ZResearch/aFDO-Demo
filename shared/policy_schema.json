@@ -1,0 +1,155 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "aFDO Policy Schema",
+  "description": "Machine-readable policy for agent decision-making",
+  "type": "object",
+  "required": ["policy_id", "policy_version", "rules"],
+  "properties": {
+    "policy_id": {
+      "type": "string",
+      "description": "Unique identifier for this policy"
+    },
+    "policy_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "Semantic version of policy"
+    },
+    "description": {
+      "type": "string",
+      "description": "Human-readable policy description"
+    },
+    "default_action": {
+      "type": "string",
+      "enum": [
+        "handle_alone",
+        "query_registry_for_helper",
+        "query_registry_for_planner",
+        "delegate_fully",
+        "collaborate"
+      ],
+      "default": "handle_alone"
+    },
+    "rules": {
+      "type": "array",
+      "description": "Ordered list of policy rules (evaluated in order)",
+      "items": {
+        "type": "object",
+        "required": ["rule_id", "conditions", "action"],
+        "properties": {
+          "rule_id": {
+            "type": "string",
+            "description": "Unique rule identifier"
+          },
+          "description": {
+            "type": "string",
+            "description": "Human-readable rule description"
+          },
+          "priority": {
+            "type": "integer",
+            "description": "Rule priority (higher = evaluated first)",
+            "default": 0
+          },
+          "conditions": {
+            "type": "object",
+            "description": "Conditions that must be met for rule to apply",
+            "properties": {
+              "operation": {
+                "oneOf": [
+                  {"type": "string"},
+                  {"type": "array", "items": {"type": "string"}}
+                ],
+                "description": "Operation name(s) this rule applies to"
+              },
+              "has_capability": {
+                "type": "boolean",
+                "description": "Whether agent has capability for this operation"
+              },
+              "complexity": {
+                "type": "string",
+                "enum": ["simple", "moderate", "complex", "very_complex"],
+                "description": "Task complexity level"
+              },
+              "parameter_count": {
+                "type": "object",
+                "properties": {
+                  "operator": {
+                    "type": "string",
+                    "enum": [">", "<", ">=", "<=", "=="]
+                  },
+                  "value": {"type": "integer"}
+                }
+              },
+              "budget_threshold": {
+                "type": "number",
+                "description": "Minimum budget required"
+              },
+              "custom": {
+                "type": "object",
+                "description": "Agent-specific custom conditions"
+              }
+            }
+          },
+          "action": {
+            "type": "object",
+            "required": ["type"],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "handle_alone",
+                  "query_registry_for_helper",
+                  "query_registry_for_planner",
+                  "query_registry_for_coordinator",
+                  "delegate_fully",
+                  "collaborate",
+                  "escalate",
+                  "custom"
+                ]
+              },
+              "reasoning": {
+                "type": "string",
+                "description": "Why this action was chosen"
+              },
+              "parameters": {
+                "type": "object",
+                "description": "Action-specific parameters",
+                "properties": {
+                  "registry_query": {
+                    "type": "object",
+                    "properties": {
+                      "operation": {"type": "string"},
+                      "operations": {
+                        "type": "array",
+                        "items": {"type": "string"}
+                      },
+                      "type": {"type": "string"},
+                      "fallback_operations": {
+                        "type": "array",
+                        "items": {"type": "string"}
+                      }
+                    }
+                  },
+                  "selection_criteria": {
+                    "type": "string",
+                    "enum": ["cheapest", "fastest", "balanced", "premium"]
+                  },
+                  "max_cost": {"type": "number"},
+                  "timeout": {"type": "integer"},
+                  "custom_handler": {"type": "string"}
+                }
+              },
+              "fallback": {
+                "type": "object",
+                "description": "Fallback action if primary fails",
+                "properties": {
+                  "type": {"type": "string"},
+                  "parameters": {"type": "object"}
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

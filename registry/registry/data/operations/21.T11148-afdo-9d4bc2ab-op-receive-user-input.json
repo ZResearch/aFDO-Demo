@@ -1,0 +1,73 @@
+{
+  "pid": "21.T11148/afdo-9d4bc2ab-op-receive-user-input",
+  "name": "receive_user_input",
+  "description": "Operation: receive_user_input",
+  "input_schema": {
+    "type": "object",
+    "required": [
+      "message"
+    ],
+    "properties": {
+      "message": {
+        "type": "string",
+        "minLength": 1
+      },
+      "budget": {
+        "type": "number",
+        "default": 1.0,
+        "minimum": 0.0
+      },
+      "policy": {
+        "type": "string",
+        "enum": [
+          "cheapest",
+          "fastest",
+          "balanced"
+        ],
+        "default": "balanced"
+      },
+      "auto_execute": {
+        "type": "boolean",
+        "default": true
+      }
+    }
+  },
+  "output_schema": {
+    "type": "object",
+    "required": [
+      "status"
+    ],
+    "properties": {
+      "status": {
+        "type": "string",
+        "enum": [
+          "success",
+          "insufficient_budget",
+          "error"
+        ]
+      },
+      "message": {
+        "type": "string"
+      },
+      "result": {
+        "type": "object"
+      },
+      "budget_summary": {
+        "type": "object",
+        "properties": {
+          "allocated": {
+            "type": "number"
+          },
+          "spent": {
+            "type": "number"
+          },
+          "remaining": {
+            "type": "number"
+          }
+        }
+      }
+    }
+  },
+  "semantics": null,
+  "created_at": "2026-02-16T21:16:42.055820Z"
+}

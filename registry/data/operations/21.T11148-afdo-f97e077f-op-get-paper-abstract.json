@@ -1,0 +1,32 @@
+{
+  "pid": "21.T11148/afdo-f97e077f-op-get-paper-abstract",
+  "name": "get_paper_abstract",
+  "description": "Operation: get_paper_abstract",
+  "input_schema": {
+    "type": "object",
+    "required": [
+      "arxiv_id"
+    ],
+    "properties": {
+      "arxiv_id": {
+        "type": "string"
+      }
+    }
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "title": {
+        "type": "string"
+      },
+      "abstract": {
+        "type": "string"
+      },
+      "authors": {
+        "type": "array"
+      }
+    }
+  },
+  "semantics": null,
+  "created_at": "2026-02-14T22:04:40.778392Z"
+}

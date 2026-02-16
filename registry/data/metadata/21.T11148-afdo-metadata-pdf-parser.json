@@ -1,0 +1,138 @@
+{
+  "pid": "21.T11148/afdo-metadata-pdf-parser",
+  "associated_fdo": "21.T11148/afdo-pdf-parser",
+  "content": {
+    "description": "Extracts text, metadata, and tables from PDF documents",
+    "version": "2.0.0",
+    "agent_role": "task_agent",
+    "capabilities": {
+      "extract_text": {
+        "description": "Extracts all text content from PDF document",
+        "input_schema": {
+          "pdf_data": "base64 encoded PDF content"
+        },
+        "output_schema": {
+          "text": "extracted text string",
+          "page_count": "integer",
+          "success": "boolean"
+        },
+        "estimated_duration": "2-5s",
+        "estimated_cost": "$0.05",
+        "requires_llm": false
+      },
+      "extract_metadata": {
+        "description": "Extracts title, author, and basic metadata from PDF",
+        "input_schema": {
+          "pdf_data": "base64 encoded PDF content"
+        },
+        "output_schema": {
+          "title": "string",
+          "author": "string",
+          "pages": "integer",
+          "creation_date": "string"
+        },
+        "estimated_duration": "1-2s",
+        "estimated_cost": "$0.05"
+      },
+      "extract_tables": {
+        "description": "Extracts tabular data from PDF",
+        "input_schema": {
+          "pdf_data": "base64 encoded PDF content"
+        },
+        "output_schema": {
+          "tables": "list of table data structures",
+          "table_count": "integer"
+        },
+        "estimated_duration": "3-8s",
+        "estimated_cost": "$0.05"
+      },
+      "extract_first_page": {
+        "description": "Extracts text from first page only (fast preview)",
+        "input_schema": {
+          "pdf_data": "base64 encoded PDF content"
+        },
+        "output_schema": {
+          "text": "first page text",
+          "success": "boolean"
+        },
+        "estimated_duration": "0.5-1s",
+        "estimated_cost": "$0.05"
+      }
+    },
+    "dependencies": {
+      "required_libraries": [
+        "PyPDF2",
+        "pdfplumber"
+      ],
+      "python_version": ">=3.8"
+    },
+    "performance_characteristics": {
+      "typical_latency": "2-5s for full extraction",
+      "max_file_size": "50MB",
+      "supported_pdf_versions": "1.0-1.7",
+      "max_concurrent_requests": 20
+    },
+    "llm_capable": false,
+    "schema_version": "1.0.0",
+    "provenance": {
+      "creation_method": "automated_registration",
+      "framework": "aFDO_marketplace_v1.0",
+      "registration_timestamp": "2026-02-16T19:50:17.391419Z",
+      "framework_version": "1.0.0"
+    },
+    "technical_details": {
+      "port": 8004,
+      "base_url": "http://localhost:8004",
+      "operations_count": 5,
+      "has_marketplace_features": true,
+      "has_llm": false,
+      "base_cost": 0.05
+    },
+    "semantic_links": [
+      {
+        "relation": "implements",
+        "target": "21.T11148/profile-ai-agent-v1"
+      },
+      {
+        "relation": "type_of",
+        "target": "21.T11148/type-document-processor-v1"
+      },
+      {
+        "relation": "registered_in",
+        "target": "21.T11148/registry-system-001"
+      }
+    ],
+    "compliance": {
+      "FDO_compliant": true,
+      "FAIR_enabled": true,
+      "DOIP_protocol": "2.0",
+      "supports_marketplace": true
+    },
+    "discovery": {
+      "operations": [
+        "extract_text",
+        "extract_metadata",
+        "extract_tables",
+        "extract_first_page",
+        "get_description"
+      ],
+      "specialization": null,
+      "reputation": 0.85
+    }
+  },
+  "created_at": "2026-02-16T19:50:17.391430Z",
+  "updated_at": "2026-02-16T19:50:17.391432Z",
+  "schema_version": "1.0.0",
+  "created_by": "21.T11148/afdo-pdf-parser",
+  "provenance": {
+    "registration_method": "self_registration",
+    "framework": "aFDO_marketplace_v1.0"
+  },
+  "semantic_links": [
+    {
+      "relation": "describes",
+      "target": "21.T11148/afdo-pdf-parser"
+    }
+  ],
+  "license": "research-use"
+}

@@ -1,0 +1,43 @@
+{
+  "pid": "21.T11148/afdo-25414e50-op-score-metadata",
+  "name": "score_metadata",
+  "description": "Operation: score_metadata",
+  "input_schema": {
+    "type": "object",
+    "required": [
+      "metadata"
+    ],
+    "properties": {
+      "metadata": {
+        "type": "object"
+      }
+    }
+  },
+  "output_schema": {
+    "type": "object",
+    "required": [
+      "metadata_quality_score",
+      "completeness",
+      "richness"
+    ],
+    "properties": {
+      "metadata_quality_score": {
+        "type": "number",
+        "minimum": 0.0,
+        "maximum": 1.0
+      },
+      "completeness": {
+        "type": "number",
+        "minimum": 0.0,
+        "maximum": 1.0
+      },
+      "richness": {
+        "type": "number",
+        "minimum": 0.0,
+        "maximum": 1.0
+      }
+    }
+  },
+  "semantics": null,
+  "created_at": "2026-02-14T22:04:26.887363Z"
+}

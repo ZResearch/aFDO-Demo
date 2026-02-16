@@ -1,0 +1,9 @@
+{
+  "pid": "21.T11148/afdo-bc586d41-op-get-description",
+  "name": "get_description",
+  "description": "Operation: get_description",
+  "input_schema": {},
+  "output_schema": {},
+  "semantics": null,
+  "created_at": "2026-02-16T21:16:19.351136Z"
+}

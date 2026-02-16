@@ -1,0 +1,50 @@
+{
+  "pid": "21.T11148/afdo-ad364324-op-interpret-natural-language",
+  "name": "interpret_natural_language",
+  "description": "Operation: interpret_natural_language",
+  "input_schema": {
+    "type": "object",
+    "required": [
+      "query"
+    ],
+    "properties": {
+      "query": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 10000
+      }
+    }
+  },
+  "output_schema": {
+    "type": "object",
+    "required": [
+      "query",
+      "interpretation",
+      "workflow_plan"
+    ],
+    "properties": {
+      "query": {
+        "type": "string"
+      },
+      "interpretation": {
+        "type": "string"
+      },
+      "workflow_plan": {
+        "type": "object",
+        "properties": {
+          "steps": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "handler": {
+        "type": "string"
+      }
+    }
+  },
+  "semantics": null,
+  "created_at": "2026-02-16T21:16:35.110676Z"
+}

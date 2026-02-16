@@ -1,0 +1,109 @@
+{
+  "test_queries": [
+    {
+      "id": "test_001",
+      "query": "The 2022 Nature paper on quantum supremacy claims their system is 1000x faster than classical computers. Is this true?",
+      "expected_agent": "Fact Checker",
+      "reason": "Verification of claim from research paper",
+      "category": "paper_claim_verification"
+    },
+    {
+      "id": "test_002",
+      "query": "Who is the president of Algeria?",
+      "expected_agent": "Wikipedia",
+      "reason": "Simple factual retrieval about current leader",
+      "category": "factual_retrieval"
+    },
+    {
+      "id": "test_003",
+      "query": "Is Tunis the capital of Algeria?",
+      "expected_agent": "Fact Checker",
+      "reason": "Verification query ('is X Y?')",
+      "category": "fact_verification"
+    },
+    {
+      "id": "test_004",
+      "query": "Find recent papers on machine learning",
+      "expected_agent": "ArXiv",
+      "reason": "Direct paper search request",
+      "category": "paper_search"
+    },
+    {
+      "id": "test_005",
+      "query": "A recent study claims coffee reduces heart disease. Is this supported by evidence?",
+      "expected_agent": "Fact Checker",
+      "reason": "Verification of study claim with evidence assessment",
+      "category": "study_claim_verification"
+    },
+    {
+      "id": "test_006",
+      "query": "What is quantum computing?",
+      "expected_agent": "Wikipedia",
+      "reason": "Definition/explanation request",
+      "category": "definition"
+    },
+    {
+      "id": "test_007",
+      "query": "Compare the economic policies of France and Germany",
+      "expected_agent": "LLM Consultant",
+      "reason": "Comparison and synthesis task",
+      "category": "comparison_synthesis"
+    },
+    {
+      "id": "test_008",
+      "query": "Did the moon landing happen in 1969?",
+      "expected_agent": "Fact Checker",
+      "reason": "Historical fact verification",
+      "category": "historical_verification"
+    },
+    {
+      "id": "test_009",
+      "query": "What are the symptoms of diabetes?",
+      "expected_agent": "Wikipedia",
+      "reason": "Medical information retrieval",
+      "category": "medical_info"
+    },
+    {
+      "id": "test_010",
+      "query": "The article claims climate change is accelerating. Verify this claim.",
+      "expected_agent": "Fact Checker",
+      "reason": "Explicit verification request about article claim",
+      "category": "article_claim_verification"
+    },
+    {
+      "id": "test_011",
+      "query": "Show me papers about neural networks published in 2023",
+      "expected_agent": "ArXiv",
+      "reason": "Specific paper search with date constraint",
+      "category": "paper_search"
+    },
+    {
+      "id": "test_012",
+      "query": "Is it true that Einstein failed math in school?",
+      "expected_agent": "Fact Checker",
+      "reason": "Verification of common claim/myth",
+      "category": "myth_verification"
+    },
+    {
+      "id": "test_013",
+      "query": "What is the population of Tokyo?",
+      "expected_agent": "Wikipedia",
+      "reason": "Statistical fact retrieval",
+      "category": "statistical_retrieval"
+    },
+    {
+      "id": "test_014",
+      "query": "The research paper by Smith et al. reports a 95% accuracy rate. Can this be verified?",
+      "expected_agent": "Fact Checker",
+      "reason": "Verification of specific research finding",
+      "category": "research_finding_verification"
+    },
+    {
+      "id": "test_015",
+      "query": "Explain the concept of entropy in thermodynamics",
+      "expected_agent": "LLM Consultant",
+      "reason": "Explanation/teaching task requiring synthesis",
+      "category": "explanation"
+    }
+  ]
+}

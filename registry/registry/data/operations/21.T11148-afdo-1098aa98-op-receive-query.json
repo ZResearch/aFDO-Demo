@@ -1,0 +1,37 @@
+{
+  "pid": "21.T11148/afdo-1098aa98-op-receive-query",
+  "name": "receive_query",
+  "description": "Verifies factual claims, statements, and assertions by consulting multiple independent sources. Specializes in validating claims from scientific publications, research papers, academic studies, journal articles, and news reports. Answers verification questions like 'is X Y?', 'is it true that X?', 'did X happen?', 'the paper/study/article/research claims X, is this correct?', 'does the scientific evidence support X?', 'verify this claim from the publication', 'are the research findings accurate?'. Uses multi-source triangulation across research databases, encyclopedias, scientific papers, and authoritative sources to provide confidence-scored verification with evidence from multiple independent sources.",
+  "input_schema": {
+    "type": "object",
+    "required": [
+      "query"
+    ],
+    "properties": {
+      "query": {
+        "type": "string",
+        "description": "Natural language query requiring fact verification"
+      }
+    }
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "answer": {
+        "type": "string",
+        "description": "Synthesized answer with verification status"
+      },
+      "verified": {
+        "type": "boolean"
+      },
+      "confidence": {
+        "type": "number"
+      },
+      "sources": {
+        "type": "array"
+      }
+    }
+  },
+  "semantics": null,
+  "created_at": "2026-02-16T21:19:10.073641Z"
+}
