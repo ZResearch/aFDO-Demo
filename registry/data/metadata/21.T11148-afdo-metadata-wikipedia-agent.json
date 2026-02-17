@@ -11,7 +11,7 @@
     "provenance": {
       "creation_method": "automated_registration",
       "framework": "aFDO_marketplace_v1.0",
-      "registration_timestamp": "2026-02-16T21:58:35.539706Z",
+      "registration_timestamp": "2026-02-17T09:19:14.637332Z",
       "framework_version": "1.0.0"
     },
     "technical_details": {
@@ -54,8 +54,8 @@
       "reputation": 0.85
     }
   },
-  "created_at": "2026-02-16T21:58:35.539720Z",
-  "updated_at": "2026-02-16T21:58:35.539722Z",
+  "created_at": "2026-02-17T09:19:14.637340Z",
+  "updated_at": "2026-02-17T09:19:14.637342Z",
   "schema_version": "1.0.0",
   "created_by": "21.T11148/afdo-wikipedia-agent",
   "provenance": {

@@ -13,9 +13,9 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
-            background: #1a1a2e;
-            color: #eee;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: #0f172a;
+            color: #e2e8f0;
             overflow: hidden;
         }
 
@@ -27,78 +27,104 @@
         .graph-area {
             flex: 1;
             position: relative;
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
         }
 
         .sidebar {
-            width: 350px;
-            background: #16213e;
-            border-left: 1px solid #0f3460;
+            width: 380px;
+            background: #1e293b;
+            border-left: 1px solid #334155;
             display: flex;
             flex-direction: column;
         }
 
         .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 20px;
-            text-align: center;
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            padding: 24px;
+            border-bottom: 1px solid #1e40af;
         }
 
         .header h1 {
             font-size: 20px;
-            margin-bottom: 5px;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: white;
+            letter-spacing: -0.025em;
         }
 
         .header p {
             font-size: 12px;
             opacity: 0.9;
+            color: white;
+            font-weight: 400;
         }
 
         .stats {
-            padding: 15px;
-            background: #0f3460;
+            padding: 20px;
+            background: #0f172a;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
+            gap: 12px;
+            border-bottom: 1px solid #334155;
         }
 
         .stat {
             text-align: center;
-            padding: 10px;
-            background: #16213e;
+            padding: 14px;
+            background: #1e293b;
             border-radius: 8px;
+            border: 1px solid #334155;
         }
 
         .stat-value {
-            font-size: 24px;
-            font-weight: bold;
-            color: #4ecdc4;
+            font-size: 28px;
+            font-weight: 600;
+            color: #3b82f6;
+            margin-bottom: 4px;
         }
 
         .stat-label {
             font-size: 11px;
-            color: #aaa;
-            margin-top: 5px;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 500;
+        }
+
+        .events-header {
+            padding: 16px 20px;
+            background: #0f172a;
+            border-bottom: 1px solid #334155;
+        }
+
+        .events-header h2 {
+            font-size: 14px;
+            font-weight: 600;
+            color: #e2e8f0;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
         .events {
             flex: 1;
             overflow-y: auto;
-            padding: 15px;
+            padding: 16px;
         }
 
         .event {
-            padding: 10px;
+            padding: 12px 14px;
             margin-bottom: 10px;
-            background: #0f3460;
-            border-radius: 8px;
-            border-left: 3px solid #4ecdc4;
+            background: #0f172a;
+            border-radius: 6px;
+            border-left: 3px solid #3b82f6;
             font-size: 12px;
             animation: slideIn 0.3s ease-out;
+            border: 1px solid #334155;
         }
 
         @keyframes slideIn {
             from {
-                transform: translateX(100%);
+                transform: translateX(20px);
                 opacity: 0;
             }
             to {
@@ -108,47 +134,64 @@
         }
 
         .event-time {
-            color: #888;
+            color: #64748b;
             font-size: 10px;
-            margin-bottom: 5px;
+            margin-bottom: 6px;
+            font-weight: 500;
         }
 
         .event-type {
-            font-weight: bold;
-            color: #4ecdc4;
-            margin-bottom: 5px;
+            font-weight: 600;
+            color: #3b82f6;
+            margin-bottom: 4px;
+        }
+
+        .event-details {
+            color: #94a3b8;
+            font-size: 11px;
+            line-height: 1.5;
         }
 
         .event.discovery-request {
-            border-left-color: #f7b731;
+            border-left-color: #f59e0b;
         }
 
         .event.call-made {
-            border-left-color: #ff6b6b;
+            border-left-color: #ef4444;
         }
 
         .event.fdo-registered {
-            border-left-color: #4ecdc4;
+            border-left-color: #10b981;
         }
 
         .legend {
-            padding: 15px;
-            background: #0f3460;
-            border-top: 1px solid #16213e;
+            padding: 16px 20px;
+            background: #0f172a;
+            border-top: 1px solid #334155;
+        }
+
+        .legend-title {
+            font-size: 11px;
+            font-weight: 600;
+            color: #94a3b8;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
         .legend-item {
             display: flex;
             align-items: center;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             font-size: 11px;
+            color: #cbd5e1;
         }
 
         .legend-color {
             width: 12px;
             height: 12px;
-            border-radius: 50%;
-            margin-right: 8px;
+            border-radius: 3px;
+            margin-right: 10px;
         }
 
         .node {
@@ -157,569 +200,256 @@
 
         .node circle {
             stroke: #fff;
-            stroke-width: 2px;
+            stroke-width: 2.5px;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
         }
 
         .node text {
-            font-size: 10px;
-            fill: #eee;
+            font-size: 11px;
+            fill: #e2e8f0;
             text-anchor: middle;
             pointer-events: none;
+            font-weight: 500;
         }
 
         .link {
-            stroke: #555;
-            stroke-opacity: 0.6;
+            stroke: #475569;
+            stroke-opacity: 0.4;
+            stroke-width: 1.5px;
         }
 
         .link.active {
-            stroke: #ff6b6b;
+            stroke: #ef4444;
             stroke-width: 3px;
-            stroke-opacity: 1;
+            stroke-opacity: 0.8;
+            animation: pulse 2s infinite;
         }
 
         .link.discovery {
-            stroke: #f7b731;
+            stroke: #f59e0b;
             stroke-dasharray: 5,5;
             stroke-width: 2px;
+            stroke-opacity: 0.6;
         }
 
         .connection-status {
             position: absolute;
-            top: 20px;
-            right: 20px;
-            padding: 10px 15px;
-            background: #16213e;
-            border-radius: 20px;
+            top: 24px;
+            right: 24px;
+            padding: 10px 16px;
+            background: #1e293b;
+            border-radius: 6px;
             font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid #334155;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #10b981;
         }
 
         .connection-status.connected {
-            border: 2px solid #4ecdc4;
-            color: #4ecdc4;
+            border-color: #10b981;
         }
 
-        .connection-status.disconnected {
-            border: 2px solid #ff6b6b;
-            color: #ff6b6b;
-        }
-
-        /* FDO Detail Modal Styles */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 2000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.7);
-        }
-
-        .modal-content {
-            background-color: #1e1e1e;
-            margin: 3% auto;
-            padding: 30px;
-            border: 1px solid #444;
-            width: 85%;
-            max-width: 1400px;
-            border-radius: 12px;
-            color: #e0e0e0;
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid #333;
-        }
-
-        .modal-title {
-            font-size: 24px;
-            font-weight: bold;
-            color: #4ecdc4;
-        }
-
-        .close-btn {
-            color: #aaa;
-            font-size: 32px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: color 0.2s;
-            background: none;
-            border: none;
-        }
-
-        .close-btn:hover {
-            color: #fff;
-        }
-
-        #breadcrumb {
-            margin-bottom: 20px;
-            padding: 12px;
-            background: #2d2d2d;
-            border-radius: 6px;
-            font-size: 13px;
-        }
-
-        #breadcrumb a {
-            color: #4da6ff;
-            text-decoration: none;
-            margin: 0 5px;
-            transition: color 0.2s;
-        }
-
-        #breadcrumb a:hover {
-            color: #80c0ff;
-            text-decoration: underline;
-        }
-
-        .fdo-viewer {
-            font-family: 'Monaco', 'Courier New', monospace;
-            font-size: 14px;
-            line-height: 1.6;
-            background: #252525;
-            padding: 20px;
-            border-radius: 8px;
-            overflow-x: auto;
-        }
-
-        .pid-link {
-            color: #4da6ff;
-            text-decoration: underline;
-            cursor: pointer;
-            transition: color 0.2s;
-        }
-
-        .pid-link:hover {
-            color: #80c0ff;
-            background: rgba(77, 166, 255, 0.1);
-        }
-
-        .json-key {
-            color: #9cdcfe;
-        }
-
-        .json-string {
-            color: #ce9178;
-        }
-
-        .json-number {
-            color: #b5cea8;
-        }
-
-        .json-boolean {
-            color: #569cd6;
-        }
-
-        .json-null {
-            color: #808080;
-        }
-
-        .json-bracket {
-            color: #d4d4d4;
-        }
-
-        .expandable {
-            cursor: pointer;
-            user-select: none;
-            color: #4ecdc4;
-        }
-
-        .expandable::before {
-            content: '▶ ';
-            display: inline-block;
-            transition: transform 0.2s;
-        }
-
-        .expandable.expanded::before {
-            transform: rotate(90deg);
-        }
-
-        /* Job Monitor Styles */
-        .job-monitor {
-            margin-top: 20px;
-            padding: 15px;
-            background: #1e1e1e;
-            border-radius: 8px;
-            max-height: 400px;
-            overflow-y: auto;
-        }
-
-        .job-monitor h3 {
-            margin: 0 0 15px 0;
-            color: #4ecdc4;
-            font-size: 16px;
-            border-bottom: 2px solid #2d2d2d;
-            padding-bottom: 8px;
-        }
-
-        .job-card {
-            background: #2d2d2d;
-            border-left: 4px solid #4da6ff;
-            padding: 12px;
-            margin: 8px 0;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-size: 13px;
-        }
-
-        .job-card:hover {
-            background: #353535;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-        }
-
-        .job-card.active {
-            border-left-color: #4caf50;
+        .connection-status.connected .status-dot {
+            background: #10b981;
             animation: pulse 2s infinite;
         }
 
-        .job-card.failed {
-            border-left-color: #f44336;
+        .connection-status.disconnected {
+            border-color: #ef4444;
         }
 
-        .job-card.completed {
-            border-left-color: #2196f3;
-            opacity: 0.85;
+        .connection-status.disconnected .status-dot {
+            background: #ef4444;
         }
 
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
         }
 
-        .job-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 8px;
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
         }
 
-        .job-id {
-            font-family: 'Monaco', 'Courier New', monospace;
-            color: #4da6ff;
-            font-weight: bold;
-            font-size: 12px;
+        ::-webkit-scrollbar-thumb {
+            background: #475569;
+            border-radius: 4px;
         }
 
-        .job-status {
-            padding: 2px 8px;
-            border-radius: 12px;
-            font-size: 11px;
-            font-weight: bold;
-            text-transform: uppercase;
+        ::-webkit-scrollbar-thumb:hover {
+            background: #64748b;
         }
 
-        .job-status.in_progress {
-            background: #4caf50;
-            color: white;
-        }
-
-        .job-status.completed {
-            background: #2196f3;
-            color: white;
-        }
-
-        .job-status.failed {
-            background: #f44336;
-            color: white;
-        }
-
-        .job-info {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 8px;
-            color: #999;
-            font-size: 11px;
-        }
-
-        .job-initiator {
-            color: #9cdcfe;
-        }
-
-        .call-chain {
-            margin-top: 8px;
-            padding-left: 15px;
-            border-left: 2px solid #444;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease;
-        }
-
-        .job-card.expanded .call-chain {
-            max-height: 500px;
-        }
-
-        .call-item {
-            font-size: 11px;
-            margin: 4px 0;
-            color: #b0b0b0;
-            padding: 3px 0;
-        }
-
-        .call-item .arrow {
-            color: #4da6ff;
-            margin: 0 4px;
-        }
-
-        .call-item .operation {
-            color: #9cdcfe;
-            font-weight: bold;
-        }
-
-        .call-item .status-icon {
-            margin-right: 4px;
-        }
-
-        .call-item.success {
-            color: #8bc34a;
-        }
-
-        .call-item.failed {
-            color: #f44336;
-        }
-
-        .call-item.initiated {
-            color: #ffc107;
-        }
-
-        .job-summary {
-            display: flex;
-            gap: 10px;
-            margin-top: 6px;
-            font-size: 11px;
-        }
-
-        .job-metric {
-            color: #666;
-        }
-
-        .job-metric strong {
-            color: #999;
-        }
-
-        .no-jobs {
-            text-align: center;
-            color: #666;
-            padding: 20px;
-            font-style: italic;
+        /* Graph Title */
+        .graph-title {
+            position: absolute;
+            top: 24px;
+            left: 24px;
+            background: rgba(30, 41, 59, 0.9);
+            padding: 12px 18px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #e2e8f0;
+            border: 1px solid #334155;
+            backdrop-filter: blur(10px);
         }
     </style>
 </head>
 <body>
-    <!-- FDO Detail Modal -->
-    <div id="fdoModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="modal-title" id="fdoTitle">FDO Details</div>
-                <button class="close-btn" onclick="closeFDOModal()">&times;</button>
-            </div>
-
-            <!-- Navigation breadcrumb -->
-            <div id="breadcrumb"></div>
-
-            <!-- FDO Content -->
-            <div id="fdoContent" class="fdo-viewer">
-                <!-- Dynamically populated -->
-            </div>
-        </div>
-    </div>
-
     <div class="container">
         <div class="graph-area">
-            <svg id="network-graph"></svg>
-            <div class="connection-status" id="status">Connecting...</div>
+            <div class="graph-title">Network Topology</div>
+            <div class="connection-status disconnected" id="connectionStatus">
+                <div class="status-dot"></div>
+                <span>Connecting to registry...</span>
+            </div>
+            <svg id="graph"></svg>
         </div>
 
         <div class="sidebar">
             <div class="header">
-                <h1>🔍 Registry Monitor</h1>
-                <p>Real-time aFDO Network Visualization</p>
+                <h1>aFDO Registry Monitor</h1>
+                <p>Real-time Agent Activity Dashboard</p>
             </div>
 
             <div class="stats">
                 <div class="stat">
-                    <div class="stat-value" id="fdo-count">0</div>
-                    <div class="stat-label">Active FDOs</div>
+                    <div class="stat-value" id="fdoCount">0</div>
+                    <div class="stat-label">Agents</div>
                 </div>
                 <div class="stat">
-                    <div class="stat-value" id="event-count">0</div>
-                    <div class="stat-label">Total Events</div>
+                    <div class="stat-value" id="operationCount">0</div>
+                    <div class="stat-label">Operations</div>
                 </div>
                 <div class="stat">
-                    <div class="stat-value" id="discovery-count">0</div>
-                    <div class="stat-label">Discoveries</div>
+                    <div class="stat-value" id="eventCount">0</div>
+                    <div class="stat-label">Events</div>
                 </div>
                 <div class="stat">
-                    <div class="stat-value" id="call-count">0</div>
-                    <div class="stat-label">Calls Made</div>
+                    <div class="stat-value" id="activeJobs">0</div>
+                    <div class="stat-label">Active Jobs</div>
                 </div>
             </div>
 
-            <!-- Job Monitor Section -->
-            <div class="job-monitor">
-                <h3>🔄 Active Jobs</h3>
-                <div id="activeJobsList">
-                    <div class="no-jobs">No active jobs</div>
-                </div>
+            <div class="events-header">
+                <h2>Activity Stream</h2>
             </div>
 
-            <div class="job-monitor">
-                <h3>📜 Recent Jobs</h3>
-                <div id="jobHistoryList">
-                    <div class="no-jobs">No completed jobs</div>
+            <div class="events" id="events">
+                <div class="event">
+                    <div class="event-time">System initialized</div>
+                    <div class="event-details">Waiting for agent activity...</div>
                 </div>
             </div>
-
-            <div class="events" id="event-feed"></div>
 
             <div class="legend">
+                <div class="legend-title">Event Types</div>
                 <div class="legend-item">
-                    <div class="legend-color" style="background: #4ecdc4"></div>
-                    <span>Idle FDO</span>
+                    <div class="legend-color" style="background: #3b82f6;"></div>
+                    <span>Agent Registration</span>
                 </div>
                 <div class="legend-item">
-                    <div class="legend-color" style="background: #5fff5f"></div>
-                    <span>Active FDO (15s)</span>
+                    <div class="legend-color" style="background: #f59e0b;"></div>
+                    <span>Discovery Request</span>
                 </div>
                 <div class="legend-item">
-                    <div class="legend-color" style="background: #764ba2"></div>
-                    <span>Registry</span>
+                    <div class="legend-color" style="background: #ef4444;"></div>
+                    <span>Agent Call</span>
                 </div>
                 <div class="legend-item">
-                    <div class="legend-color" style="background: #ff6b6b"></div>
-                    <span>FDO Call</span>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background: #f7b731"></div>
-                    <span>Registry Discovery</span>
+                    <div class="legend-color" style="background: #10b981;"></div>
+                    <span>FDO Registration</span>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Network graph visualization
-        const width = window.innerWidth - 350;
-        const height = window.innerHeight;
+        const width = document.querySelector('.graph-area').offsetWidth;
+        const height = document.querySelector('.graph-area').offsetHeight;
 
-        const svg = d3.select("#network-graph")
-            .attr("width", width)
-            .attr("height", height);
+        const svg = d3.select('#graph')
+            .attr('width', width)
+            .attr('height', height);
 
-        const g = svg.append("g");
+        const simulation = d3.forceSimulation()
+            .force('link', d3.forceLink().id(d => d.id).distance(150))
+            .force('charge', d3.forceManyBody().strength(-400))
+            .force('center', d3.forceCenter(width / 2, height / 2))
+            .force('collision', d3.forceCollide().radius(60));
 
-        // Zoom behavior
-        svg.call(d3.zoom()
-            .extent([[0, 0], [width, height]])
-            .scaleExtent([0.5, 3])
-            .on("zoom", (event) => {
-                g.attr("transform", event.transform);
-            }));
-
-        // Data structures
         let nodes = [];
         let links = [];
-        let eventCount = 0;
-        let discoveryCount = 0;
-        let callCount = 0;
+        let linkElements, nodeElements, textElements;
 
-        // Add registry node (center)
-        nodes.push({
-            id: "registry",
-            label: "Registry",
-            type: "registry",
-            color: "#764ba2",
-            x: width / 2,
-            y: height / 2
-        });
+        const nodeColorMap = {
+            'user-interface-v1': '#3b82f6',
+            'fact-checker-v1': '#8b5cf6',
+            'data-source-v1': '#10b981',
+            'llm-endpoint-v1': '#f59e0b',
+            'orchestrator-v1': '#ec4899',
+            'parser-v1': '#06b6d4'
+        };
 
-        // Force simulation with better spacing
-        const simulation = d3.forceSimulation(nodes)
-            .force("link", d3.forceLink(links).id(d => d.id).distance(250))
-            .force("charge", d3.forceManyBody().strength(-800))
-            .force("center", d3.forceCenter(width / 2, height / 2))
-            .force("collision", d3.forceCollide().radius(60));
-
-        // Create link and node groups
-        const linkGroup = g.append("g").attr("class", "links");
-        const nodeGroup = g.append("g").attr("class", "nodes");
-
-        function updateGraph() {
-            // Update links
-            const link = linkGroup.selectAll("line")
-                .data(links, d => d.source.id + "-" + d.target.id);
-
-            link.exit().remove();
-
-            link.enter().append("line")
-                .attr("class", d => `link ${d.type}`)
-                .merge(link)
-                .attr("stroke-width", d => d.type === "active" ? 3 : 1.5);
-
-            // Update nodes
-            const node = nodeGroup.selectAll(".node")
-                .data(nodes, d => d.id);
-
-            node.exit().remove();
-
-            const nodeEnter = node.enter().append("g")
-                .attr("class", "node")
-                .call(d3.drag()
-                    .on("start", dragstarted)
-                    .on("drag", dragged)
-                    .on("end", dragended));
-
-            nodeEnter.append("circle")
-                .attr("r", d => d.type === "registry" ? 30 : 20)
-                .attr("fill", d => d.color);
-
-            nodeEnter.append("text")
-                .attr("dy", 35)
-                .text(d => d.label);
-
-            // Apply click handler to all nodes (both new and existing)
-            const allNodes = nodeEnter.merge(node);
-
-            allNodes.on("click", (event, d) => {
-                console.log("Node clicked:", d.id, "Event:", event);
-                // Don't open modal if dragging
-                if (event.defaultPrevented) {
-                    console.log("Event prevented (dragging)");
-                    return;
-                }
-                // Open FDO details modal
-                if (d.id && d.id !== "registry") {
-                    console.log("Opening FDO modal for:", d.id);
-                    viewFDODetails(d.id, 'fdo');
-                } else {
-                    console.log("Skipping - either no ID or registry node");
-                }
-            });
-
-            allNodes.select("circle")
-                .attr("fill", d => d.color);
-
-            simulation.nodes(nodes);
-            simulation.force("link").links(links);
-            simulation.alpha(1).restart();  // Full alpha for strong movement
+        function getNodeColor(node) {
+            const type = node.fdo_type_pid ? node.fdo_type_pid.split('-').pop() : 'default';
+            return nodeColorMap[type] || '#64748b';
         }
 
-        simulation.on("tick", () => {
-            linkGroup.selectAll("line")
-                .attr("x1", d => d.source.x)
-                .attr("y1", d => d.source.y)
-                .attr("x2", d => d.target.x)
-                .attr("y2", d => d.target.y);
+        function updateGraph() {
+            linkElements = svg.selectAll('.link')
+                .data(links, d => `${d.source.id}-${d.target.id}`)
+                .join('line')
+                .attr('class', 'link');
 
-            nodeGroup.selectAll(".node")
-                .attr("transform", d => `translate(${d.x},${d.y})`);
+            nodeElements = svg.selectAll('.node')
+                .data(nodes, d => d.id)
+                .join('g')
+                .attr('class', 'node')
+                .call(d3.drag()
+                    .on('start', dragstarted)
+                    .on('drag', dragged)
+                    .on('end', dragended));
+
+            nodeElements.selectAll('circle').remove();
+            nodeElements.append('circle')
+                .attr('r', 20)
+                .attr('fill', d => getNodeColor(d));
+
+            nodeElements.selectAll('text').remove();
+            nodeElements.append('text')
+                .attr('dy', 35)
+                .text(d => {
+                    const name = d.name || d.id;
+                    return name.length > 15 ? name.substring(0, 12) + '...' : name;
+                });
+
+            simulation.nodes(nodes);
+            simulation.force('link').links(links);
+            simulation.alpha(0.3).restart();
+        }
+
+        simulation.on('tick', () => {
+            if (linkElements) {
+                linkElements
+                    .attr('x1', d => d.source.x)
+                    .attr('y1', d => d.source.y)
+                    .attr('x2', d => d.target.x)
+                    .attr('y2', d => d.target.y);
+            }
+
+            if (nodeElements) {
+                nodeElements.attr('transform', d => `translate(${d.x},${d.y})`);
+            }
         });
 
         function dragstarted(event, d) {
@@ -739,650 +469,93 @@
             d.fy = null;
         }
 
-        function setNodeActive(nodeId, duration = 15000) {
-            const node = nodes.find(n => n.id === nodeId);
-            if (node && node.type !== "registry") {
-                node.color = "#5fff5f";
-                updateGraph();
-
-                setTimeout(() => {
-                    node.color = "#4ecdc4";
-                    updateGraph();
-                }, duration);
-            }
-        }
-
-        async function ensureNodeExists(nodeId) {
-            // Check if node already exists
-            if (nodes.find(n => n.id === nodeId)) {
-                return;
-            }
-
-            // Don't create registry duplicates
-            if (nodeId === "registry") {
-                return;
-            }
-
-            // Try to fetch FDO info from registry
-            try {
-                const response = await fetch(`http://localhost:8000/doip/read/fdo/${encodeURIComponent(nodeId)}`);
-                const result = await response.json();
-
-                if (result.status === "success" && result.data) {
-                    const fdoData = result.data;
-                    const kernelAttrs = fdoData.kernel_attributes || {};
-
-                    // Use name from kernel_attributes, fallback to type, then PID
-                    let label = kernelAttrs.name ||
-                                fdoData.fdo_type_pid?.replace(/_/g, ' ') ||
-                                nodeId.split('/').pop().substring(0, 15) + '...';
-
-                    const angle = Math.random() * 2 * Math.PI;
-                    const radius = 250 + Math.random() * 150;
-                    const newNode = {
-                        id: nodeId,
-                        label: label,
-                        type: "fdo",
-                        color: "#4ecdc4",
-                        data: fdoData
-                    };
-                    newNode.x = width / 2 + radius * Math.cos(angle);
-                    newNode.y = height / 2 + radius * Math.sin(angle);
-                    nodes.push(newNode);
-
-                    // Add connection to registry
-                    links.push({
-                        source: "registry",
-                        target: nodeId,
-                        type: "permanent"
-                    });
-
-                    return;
-                }
-            } catch (error) {
-                console.warn(`Could not fetch FDO info for ${nodeId}:`, error);
-            }
-
-            // Fallback: Create placeholder node with PID-based label
-            const angle = Math.random() * 2 * Math.PI;
-            const radius = 250 + Math.random() * 150;
-            const newNode = {
-                id: nodeId,
-                label: nodeId.split('/').pop().substring(0, 15) + '...', // Shortened label
-                type: "fdo",
-                color: "#4ecdc4",
-                data: {}
-            };
-            newNode.x = width / 2 + radius * Math.cos(angle);
-            newNode.y = height / 2 + radius * Math.sin(angle);
-            nodes.push(newNode);
-
-            // Add connection to registry
-            links.push({
-                source: "registry",
-                target: nodeId,
-                type: "permanent"
-            });
-        }
-
-        async function showLink(sourceId, targetId, type = "active", duration = 15000) {
-            // Ensure both nodes exist
-            await ensureNodeExists(sourceId);
-            await ensureNodeExists(targetId);
-
-            const linkId = `${sourceId}-${targetId}`;
-
-            // Remove existing link if present
-            links = links.filter(l => {
-                const existingId = (typeof l.source === 'object' ? l.source.id : l.source) + "-" +
-                                   (typeof l.target === 'object' ? l.target.id : l.target);
-                return existingId !== linkId;
-            });
-
-            // Add new link
-            links.push({
-                source: sourceId,
-                target: targetId,
-                type: type,
-                id: linkId
-            });
-
-            updateGraph();
-
-            // Remove after duration
-            setTimeout(() => {
-                links = links.filter(l => l.id !== linkId);
-                updateGraph();
-            }, duration);
-        }
-
-        function addEvent(event) {
-            eventCount++;
-            document.getElementById("event-count").textContent = eventCount;
-
-            const eventFeed = document.getElementById("event-feed");
-            const eventDiv = document.createElement("div");
-            eventDiv.className = `event ${event.event_type.replace('_', '-')}`;
-
-            const time = new Date(event.timestamp).toLocaleTimeString();
-
-            let content = `<div class="event-time">${time}</div>`;
-            content += `<div class="event-type">${event.event_type.replace('_', ' ').toUpperCase()}</div>`;
-            content += `<div>${formatEventData(event)}</div>`;
-
-            eventDiv.innerHTML = content;
-            eventFeed.insertBefore(eventDiv, eventFeed.firstChild);
-
-            // Keep only last 50 events
-            while (eventFeed.children.length > 50) {
-                eventFeed.removeChild(eventFeed.lastChild);
-            }
-        }
-
-        function formatEventData(event) {
-            const data = event.data;
-
-            switch(event.event_type) {
-                case "fdo_registered":
-                    return `${data.fdo_type} registered at port ${data.port}`;
-                case "discovery_request":
-                    return `Searching for ${data.query_value} (${data.results_count} found)`;
-                case "call_made":
-                    return `${data.caller_pid.split('/').pop()} → ${data.target_pid.split('/').pop()}: ${data.operation}`;
-                default:
-                    return JSON.stringify(data).substring(0, 100);
-            }
-        }
-
-        // Load existing FDOs from registry
-        async function loadExistingFDOs() {
-            try {
-                const response = await fetch('http://localhost:8000/doip/search/fdos/active');
-                const result = await response.json();
-
-                if (result.status === "success" && Array.isArray(result.data)) {
-                    for (const fdo of result.data) {
-                        const nodeId = fdo.pid;
-
-                        // Skip if node already exists
-                        if (nodes.find(n => n.id === nodeId)) {
-                            continue;
-                        }
-
-                        const kernelAttrs = fdo.kernel_attributes || {};
-
-                        // Use name from kernel_attributes, fallback to type, then PID
-                        let label = kernelAttrs.name ||
-                                    fdo.fdo_type_pid?.replace(/_/g, ' ') ||
-                                    nodeId.split('/').pop().substring(0, 15) + '...';
-
-                        // Position new nodes in a circle around registry with random offset
-                        const angle = Math.random() * 2 * Math.PI;
-                        const radius = 250 + Math.random() * 150;
-                        const newNode = {
-                            id: nodeId,
-                            label: label,
-                            type: "fdo",
-                            color: "#4ecdc4",
-                            data: fdo
-                        };
-                        newNode.x = width / 2 + radius * Math.cos(angle);
-                        newNode.y = height / 2 + radius * Math.sin(angle);
-                        nodes.push(newNode);
-
-                        // Always connected to registry
-                        links.push({
-                            source: "registry",
-                            target: nodeId,
-                            type: "permanent"
-                        });
-                    }
-
-                    updateGraph();
-                    document.getElementById("fdo-count").textContent = nodes.length - 1;
-                    console.log(`Loaded ${result.data.length} existing FDOs from registry`);
-                }
-            } catch (error) {
-                console.error("Failed to load existing FDOs:", error);
-            }
-        }
-
-        // WebSocket connection
-        const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-        const ws = new WebSocket(`${protocol}//${window.location.host}/ws/events`);
-
-        ws.onopen = () => {
-            document.getElementById("status").textContent = "● Connected";
-            document.getElementById("status").className = "connection-status connected";
-            // Load existing FDOs from registry on connection
-            loadExistingFDOs();
-            // Start job monitoring
-            startJobMonitoring();
-        };
-
-        ws.onclose = () => {
-            document.getElementById("status").textContent = "● Disconnected";
-            document.getElementById("status").className = "connection-status disconnected";
-        };
-
-        ws.onmessage = (event) => {
-            const data = JSON.parse(event.data);
-
-            if (data.event_type === "fdo_registered") {
-                // Add new FDO node
-                const nodeId = data.data.pid;
-                if (!nodes.find(n => n.id === nodeId)) {
-                    const kernelAttrs = data.data.kernel_attributes || {};
-
-                    // Use name from kernel_attributes, fallback to type, then PID
-                    let label = kernelAttrs.name ||
-                                data.data.fdo_type?.replace(/_/g, ' ') ||
-                                nodeId.split('/').pop().substring(0, 15) + '...';
-
-                    // Position new nodes in a circle around registry with random offset
-                    const angle = Math.random() * 2 * Math.PI;
-                    const radius = 250 + Math.random() * 150; // Random radius 250-400
-                    const newNode = {
-                        id: nodeId,
-                        label: label,
-                        type: "fdo",
-                        color: "#4ecdc4",
-                        data: data.data
-                    };
-                    // Set initial position
-                    newNode.x = width / 2 + radius * Math.cos(angle);
-                    newNode.y = height / 2 + radius * Math.sin(angle);
-                    nodes.push(newNode);
-
-                    // Always connected to registry
-                    links.push({
-                        source: "registry",
-                        target: nodeId,
-                        type: "permanent"
-                    });
-
-                    updateGraph();
-                    document.getElementById("fdo-count").textContent = nodes.length - 1;
-                }
-                addEvent(data);
-            }
-            else if (data.event_type === "discovery_request") {
-                discoveryCount++;
-                document.getElementById("discovery-count").textContent = discoveryCount;
-
-                // Show discovery animation (registry pulses)
-                setNodeActive("registry", 2000);
-                addEvent(data);
-            }
-            else if (data.event_type === "call_made") {
-                callCount++;
-                document.getElementById("call-count").textContent = callCount;
-
-                const caller = data.data.caller_pid;
-                const target = data.data.target_pid;
-
-                // Activate both nodes
-                setNodeActive(caller);
-                setNodeActive(target);
-
-                // Show link
-                showLink(caller, target, "active");
-
-                addEvent(data);
-            }
-        };
-
-        // Initial render
-        updateGraph();
-
-        // ========================================
-        // FDO Detail Modal Functions
-        // ========================================
-
-        // FDO Viewer State
-        let navigationHistory = [];
-
-        // Open FDO detail modal
-        async function viewFDODetails(pid, recordType = 'fdo') {
-            const modal = document.getElementById('fdoModal');
-            const content = document.getElementById('fdoContent');
-            const title = document.getElementById('fdoTitle');
-
-            // Add to navigation history
-            navigationHistory.push({pid, recordType});
-            updateBreadcrumb();
-
-            // Show loading
-            content.innerHTML = '<div style="text-align:center;padding:40px;color:#888;">Loading...</div>';
-            modal.style.display = 'block';
-
-            // Fetch FDO data
-            try {
-                let data;
-                if (recordType === 'fdo') {
-                    const response = await fetch(`/doip/read/fdo/${encodeURIComponent(pid)}`);
-                    data = await response.json();
-                } else if (recordType === 'type') {
-                    const response = await fetch(`/registry/types/${encodeURIComponent(pid)}`);
-                    data = await response.json();
-                } else if (recordType === 'profile') {
-                    const response = await fetch(`/registry/profiles/${encodeURIComponent(pid)}`);
-                    data = await response.json();
-                } else if (recordType === 'metadata') {
-                    const response = await fetch(`/doip/read/metadata/${encodeURIComponent(pid)}`);
-                    data = await response.json();
-                }
-
-                // Update title
-                title.textContent = `${recordType.toUpperCase()}: ${pid.split('/').pop()}`;
-
-                // Render interactive JSON
-                content.innerHTML = renderInteractiveJSON(data, 0);
-
-            } catch (error) {
-                content.innerHTML = `<div style="color: #f44336;">Error loading ${recordType}: ${error.message}</div>`;
-            }
-        }
-
-        // Render JSON with clickable PIDs
-        function renderInteractiveJSON(obj, indent = 0) {
-            const indentStr = '  '.repeat(indent);
-            let html = '';
-
-            if (Array.isArray(obj)) {
-                html += '<span class="json-bracket">[</span>\n';
-                obj.forEach((item, index) => {
-                    html += indentStr + '  ' + renderInteractiveJSON(item, indent + 1);
-                    if (index < obj.length - 1) html += ',';
-                    html += '\n';
-                });
-                html += indentStr + '<span class="json-bracket">]</span>';
-            } else if (typeof obj === 'object' && obj !== null) {
-                html += '<span class="json-bracket">{</span>\n';
-                const keys = Object.keys(obj);
-                keys.forEach((key, index) => {
-                    html += indentStr + '  <span class="json-key">"' + key + '"</span>: ';
-
-                    const value = obj[key];
-
-                    // Check if value is a PID (clickable)
-                    if (typeof value === 'string' && isPID(value)) {
-                        const recordType = inferRecordType(key, value);
-                        html += `<span class="pid-link" onclick="viewFDODetails('${escapeHtml(value)}', '${recordType}')">"${escapeHtml(value)}"</span>`;
-                    } else if (typeof value === 'object' && value !== null && !Array.isArray(value) && Object.keys(value).length > 3) {
-                        // Expandable object (if more than 3 keys)
-                        const expandId = `exp_${Math.random().toString(36).substr(2, 9)}`;
-                        html += `<span class="expandable" id="toggle_${expandId}" onclick="toggleExpand('${expandId}')">...</span>`;
-                        html += `<div id="${expandId}" style="display:none;">`;
-                        html += renderInteractiveJSON(value, indent + 1);
-                        html += '</div>';
-                    } else {
-                        html += renderInteractiveJSON(value, indent + 1);
-                    }
-
-                    if (index < keys.length - 1) html += ',';
-                    html += '\n';
-                });
-                html += indentStr + '<span class="json-bracket">}</span>';
-            } else {
-                html += renderValue(obj);
-            }
-
-            return html;
-        }
-
-        // Check if string is a PID
-        function isPID(str) {
-            return typeof str === 'string' && str.startsWith('21.T11148/');
-        }
-
-        // Infer what type of record a PID points to
-        function inferRecordType(key, pid) {
-            if (key === 'fdo_type_pid' || pid.includes('/type-')) return 'type';
-            if (key === 'fdo_profile_pid' || pid.includes('/profile-')) return 'profile';
-            if (key === 'metadata_pointer' || pid.includes('/metadata-')) return 'metadata';
-            return 'fdo';
-        }
-
-        // Render primitive values
-        function renderValue(value) {
-            if (typeof value === 'string') {
-                return `<span class="json-string">"${escapeHtml(value)}"</span>`;
-            } else if (typeof value === 'number') {
-                return `<span class="json-number">${value}</span>`;
-            } else if (typeof value === 'boolean') {
-                return `<span class="json-boolean">${value}</span>`;
-            } else if (value === null) {
-                return `<span class="json-null">null</span>`;
-            }
-            return String(value);
-        }
-
-        // Toggle expandable sections
-        function toggleExpand(id) {
-            const element = document.getElementById(id);
-            const toggle = document.getElementById('toggle_' + id);
-
-            if (element.style.display === 'none') {
-                element.style.display = 'inline';
-                toggle.classList.add('expanded');
-            } else {
-                element.style.display = 'none';
-                toggle.classList.remove('expanded');
-            }
-        }
-
-        // Update breadcrumb navigation
-        function updateBreadcrumb() {
-            const breadcrumb = document.getElementById('breadcrumb');
-            if (navigationHistory.length === 0) {
-                breadcrumb.style.display = 'none';
-                return;
-            }
-
-            breadcrumb.style.display = 'block';
-            breadcrumb.innerHTML = 'Navigation: ';
-
-            navigationHistory.forEach((item, index) => {
-                const shortPid = item.pid.split('/').pop();
-                breadcrumb.innerHTML += `<a href="#" onclick="navigateToHistory(${index}); return false;">${shortPid}</a>`;
-                if (index < navigationHistory.length - 1) {
-                    breadcrumb.innerHTML += ' → ';
-                }
-            });
-        }
-
-        // Navigate to history item
-        function navigateToHistory(index) {
-            // Remove items after this index
-            navigationHistory = navigationHistory.slice(0, index + 1);
-
-            // Load the selected item
-            const item = navigationHistory[index];
-            navigationHistory.pop(); // Remove it so viewFDODetails will add it back
-            viewFDODetails(item.pid, item.recordType);
-        }
-
-        // Close modal
-        function closeFDOModal() {
-            document.getElementById('fdoModal').style.display = 'none';
-            navigationHistory = [];
-        }
-
-        // Escape HTML for security
-        function escapeHtml(text) {
-            const map = {
-                '&': '&amp;',
-                '<': '&lt;',
-                '>': '&gt;',
-                '"': '&quot;',
-                "'": '&#039;'
-            };
-            return text.replace(/[&<>"']/g, m => map[m]);
-        }
-
-        // Close modal on outside click
-        window.onclick = (event) => {
-            const modal = document.getElementById('fdoModal');
-            if (event.target === modal) {
-                closeFDOModal();
-            }
-        };
-
-        // Close modal on Escape key
-        document.addEventListener('keydown', (event) => {
-            if (event.key === 'Escape') {
-                closeFDOModal();
-            }
-        });
-
-        // ==================== JOB MONITORING ====================
-
-        // Fetch and display active jobs
-        async function fetchActiveJobs() {
-            try {
-                const response = await fetch('/monitor/jobs/active');
-                const data = await response.json();
-
-                const container = document.getElementById('activeJobsList');
-
-                if (!data.data || data.data.length === 0) {
-                    container.innerHTML = '<div class="no-jobs">No active jobs</div>';
-                    return;
-                }
-
-                container.innerHTML = data.data.map(job => renderJobCard(job, true)).join('');
-            } catch (error) {
-                console.error('Failed to fetch active jobs:', error);
-            }
-        }
-
-        // Fetch and display job history
-        async function fetchJobHistory() {
-            try {
-                const response = await fetch('/monitor/jobs/history?limit=10');
-                const data = await response.json();
-
-                const container = document.getElementById('jobHistoryList');
-
-                if (!data.data || data.data.length === 0) {
-                    container.innerHTML = '<div class="no-jobs">No completed jobs</div>';
-                    return;
-                }
-
-                // Show most recent first
-                container.innerHTML = data.data.reverse().map(job => renderJobCard(job, false)).join('');
-            } catch (error) {
-                console.error('Failed to fetch job history:', error);
-            }
-        }
-
-        // Render a job card
-        function renderJobCard(job, isActive) {
-            const statusClass = job.status === 'in_progress' ? 'active' :
-                               job.status === 'failed' ? 'failed' : 'completed';
-
-            const duration = job.duration ? job.duration.toFixed(2) : '0.00';
-            const cost = job.total_cost ? job.total_cost.toFixed(4) : '0.0000';
-
-            const initiatorName = getAgentName(job.initiator_pid);
-
-            // Build call chain
-            let callChainHTML = '';
-            if (job.calls && job.calls.length > 0) {
-                callChainHTML = job.calls.map(call => {
-                    const callerName = getAgentName(call.caller_pid);
-                    const targetName = getAgentName(call.target_pid);
-                    const statusIcon = call.status === 'success' ? '✓' :
-                                      call.status === 'failed' ? '✗' : '◷';
-                    const callDuration = call.duration ? ` (${call.duration.toFixed(2)}s)` : '';
-                    const callCost = call.cost ? ` [$${call.cost.toFixed(4)}]` : '';
-
-                    return `
-                        <div class="call-item ${call.status}">
-                            <span class="status-icon">${statusIcon}</span>
-                            ${callerName}
-                            <span class="arrow">→</span>
-                            ${targetName}
-                            <span class="operation">${call.operation}</span>
-                            ${callDuration}${callCost}
-                        </div>
-                    `;
-                }).join('');
-            }
-
-            return `
-                <div class="job-card ${statusClass}" onclick="toggleJobExpansion('${job.job_id}')">
-                    <div class="job-header">
-                        <span class="job-id">Job ${job.job_id}</span>
-                        <span class="job-status ${job.status}">${job.status}</span>
-                    </div>
-                    <div class="job-info">
-                        <span>Initiated by <span class="job-initiator">${initiatorName}</span></span>
-                    </div>
-                    <div class="job-summary">
-                        <span class="job-metric"><strong>${job.call_count || 0}</strong> calls</span>
-                        <span class="job-metric"><strong>${duration}s</strong></span>
-                        <span class="job-metric"><strong>$${cost}</strong></span>
-                    </div>
-                    <div class="call-chain">
-                        ${callChainHTML || '<div class="no-jobs">No calls yet</div>'}
-                    </div>
-                </div>
+        function addEvent(type, details) {
+            const eventsDiv = document.getElementById('events');
+            const event = document.createElement('div');
+            event.className = `event ${type}`;
+
+            const time = new Date().toLocaleTimeString();
+            event.innerHTML = `
+                <div class="event-time">${time}</div>
+                <div class="event-type">${type.replace('-', ' ').toUpperCase()}</div>
+                <div class="event-details">${details}</div>
             `;
+
+            eventsDiv.insertBefore(event, eventsDiv.firstChild);
+
+            if (eventsDiv.children.length > 50) {
+                eventsDiv.removeChild(eventsDiv.lastChild);
+            }
+
+            const eventCount = document.getElementById('eventCount');
+            eventCount.textContent = parseInt(eventCount.textContent) + 1;
         }
 
-        // Toggle job card expansion
-        function toggleJobExpansion(jobId) {
-            const cards = document.querySelectorAll('.job-card');
-            cards.forEach(card => {
-                if (card.querySelector('.job-id')?.textContent === `Job ${jobId}`) {
-                    card.classList.toggle('expanded');
+        async function fetchAgents() {
+            try {
+                const response = await fetch('http://localhost:8000/fdo');
+                const data = await response.json();
+
+                document.getElementById('fdoCount').textContent = data.length;
+
+                const existingIds = new Set(nodes.map(n => n.id));
+                data.forEach(fdo => {
+                    if (!existingIds.has(fdo.pid)) {
+                        nodes.push({
+                            id: fdo.pid,
+                            name: fdo.self_description?.agent_info?.name || fdo.pid,
+                            fdo_type_pid: fdo.fdo_type_pid,
+                            x: width / 2 + (Math.random() - 0.5) * 200,
+                            y: height / 2 + (Math.random() - 0.5) * 200
+                        });
+                        addEvent('fdo-registered', `New agent: ${fdo.self_description?.agent_info?.name || fdo.pid}`);
+                    }
+                });
+
+                updateGraph();
+
+                const statusDiv = document.getElementById('connectionStatus');
+                statusDiv.className = 'connection-status connected';
+                statusDiv.innerHTML = '<div class="status-dot"></div><span>Connected to Registry</span>';
+
+            } catch (error) {
+                console.error('Failed to fetch agents:', error);
+                const statusDiv = document.getElementById('connectionStatus');
+                statusDiv.className = 'connection-status disconnected';
+                statusDiv.innerHTML = '<div class="status-dot"></div><span>Connection Failed</span>';
+            }
+        }
+
+        async function fetchOperations() {
+            try {
+                const response = await fetch('http://localhost:8000/operation');
+                const data = await response.json();
+                document.getElementById('operationCount').textContent = data.length;
+            } catch (error) {
+                console.error('Failed to fetch operations:', error);
+            }
+        }
+
+        // Initialize
+        fetchAgents();
+        fetchOperations();
+
+        // Refresh every 5 seconds
+        setInterval(() => {
+            fetchAgents();
+            fetchOperations();
+        }, 5000);
+
+        // Simulate some activity for demo
+        setInterval(() => {
+            if (Math.random() > 0.7 && nodes.length > 1) {
+                const from = nodes[Math.floor(Math.random() * nodes.length)];
+                const to = nodes[Math.floor(Math.random() * nodes.length)];
+                if (from !== to) {
+                    addEvent('call-made', `${from.name} → ${to.name}`);
                 }
-            });
-        }
-
-        // Helper: Get short agent name from PID
-        function getAgentName(pid) {
-            if (!pid) return 'Unknown';
-
-            // Try to find in current nodes
-            const node = simulation.nodes().find(n => n.id === pid);
-            if (node && node.name) {
-                return node.name;
             }
-
-            // Extract from PID (e.g., "21.T11148/afdo-chat-ui" → "Chat UI")
-            const parts = pid.split('/');
-            if (parts.length > 1) {
-                const suffix = parts[1];
-                // Convert "afdo-chat-ui" to "Chat UI"
-                return suffix
-                    .replace('afdo-', '')
-                    .split('-')
-                    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-                    .join(' ');
-            }
-
-            return pid;
-        }
-
-        // Refresh jobs periodically
-        function startJobMonitoring() {
-            // Initial fetch
-            fetchActiveJobs();
-            fetchJobHistory();
-
-            // Refresh every 3 seconds
-            setInterval(() => {
-                fetchActiveJobs();
-                fetchJobHistory();
-            }, 3000);
-        }
-
-        // Start monitoring when page loads
-        // (Will be called after initial setup completes)
-
+        }, 8000);
     </script>
 </body>
 </html>

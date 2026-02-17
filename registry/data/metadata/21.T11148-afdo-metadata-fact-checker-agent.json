@@ -34,7 +34,7 @@
     "provenance": {
       "creation_method": "automated_registration",
       "framework": "aFDO_marketplace_v1.0",
-      "registration_timestamp": "2026-02-16T21:58:35.636550Z",
+      "registration_timestamp": "2026-02-17T09:19:35.388542Z",
       "framework_version": "1.0.0"
     },
     "technical_details": {
@@ -77,8 +77,8 @@
       "reputation": 0.85
     }
   },
-  "created_at": "2026-02-16T21:58:35.636563Z",
-  "updated_at": "2026-02-16T21:58:35.636566Z",
+  "created_at": "2026-02-17T09:19:35.388551Z",
+  "updated_at": "2026-02-17T09:19:35.388552Z",
   "schema_version": "1.0.0",
   "created_by": "21.T11148/afdo-fact-checker-agent",
   "provenance": {

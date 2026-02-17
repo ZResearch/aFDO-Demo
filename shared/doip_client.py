@@ -16,7 +16,7 @@ class DOIPClient:
             base_url: Base URL of target service (e.g., "http://localhost:8000")
         """
         self.base_url = base_url.rstrip('/')
-        self.client = httpx.AsyncClient(timeout=30.0)
+        self.client = httpx.AsyncClient(timeout=600.0)
 
     async def create_fdo(self, fdo_data: Dict[str, Any]) -> Dict[str, Any]:
         """

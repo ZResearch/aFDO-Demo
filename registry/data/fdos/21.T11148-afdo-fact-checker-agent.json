@@ -20,7 +20,7 @@
     "capabilities": {
       "receive_query": {
         "operation_type": "assessment",
-        "description": "Verifies factual claims, statements, and assertions by consulting multiple independent sources. Specializes in validating claims from scientific publications, research papers, academic studies, journal articles, and news reports. Answers verification questions like 'is X Y?', 'is it true that X?', 'did X happen?', 'the paper/study/article/research claims X, is this correct?', 'does the scientific evidence support X?', 'verify this claim from the publication', 'are the research findings accurate?'. Uses multi-source triangulation across research databases, encyclopedias, scientific papers, and authoritative sources to provide confidence-scored verification with evidence from multiple independent sources.",
+        "description": "Verifies, validates, and confirms factual claims, statements, and assertions by consulting multiple independent sources. Provides verification, confirmation, and validation of whether claims are true. Provides factual information about claim accuracy, validity, and truthfulness. Specializes in validating claims from scientific publications, research papers, academic studies, journal articles, and news reports. Answers verification questions like 'is X Y?', 'is it true that X?', 'did X happen?', 'provide verification that X', 'provide confirmation whether X', 'provide factual information about whether X is Y', 'the paper/study/article/research claims X, is this correct?', 'does the scientific evidence support X?', 'verify this claim from the publication', 'are the research findings accurate?'. Uses multi-source triangulation across research databases, encyclopedias, scientific papers, and authoritative sources to provide confidence-scored verification with evidence from multiple independent sources.",
         "input_schema": {
           "type": "object",
           "required": [
@@ -252,9 +252,9 @@
     "has_llm": false,
     "specialization": "fact_verification"
   },
-  "created_at": "2026-02-16T21:58:35.660661Z",
-  "updated_at": "2026-02-16T21:58:35.660668Z",
+  "created_at": "2026-02-17T09:19:35.402083Z",
+  "updated_at": "2026-02-17T09:24:06.149651Z",
   "status": "active",
-  "last_heartbeat": null,
+  "last_heartbeat": 1771320246.1492283,
   "inactive_since": null
 }

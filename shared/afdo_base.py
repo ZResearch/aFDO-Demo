@@ -2416,7 +2416,13 @@ class aFDOBase(ABC):
                 # Extract the relevant data from result
                 if isinstance(result, dict):
                     if 'data' in result:
-                        variables[output_var] = result['data']
+                        data = result['data']
+                        # BUGFIX: If output_var is 'capability_description' and data is a dict with that field,
+                        # extract just that field value (not the whole dict)
+                        if output_var == 'capability_description' and isinstance(data, dict) and 'capability_description' in data:
+                            variables[output_var] = data['capability_description']
+                        else:
+                            variables[output_var] = data
                     elif 'result' in result:
                         variables[output_var] = result['result']
                     else:
@@ -2620,13 +2626,17 @@ class aFDOBase(ABC):
 
         else:
             # NEW BEHAVIOR: Multi-agent delegation (when policy says collect_all_results=true)
+
+            # CRITICAL FIX: Filter out self to prevent circular calls
+            filtered_results = [r for r in discovery_results if r.get('agent_pid') != self.pid]
+
             self.logger.info(
                 self.name,
-                f"      📊 Multi-source delegation: calling {min(top_k, len(discovery_results))} agents "
+                f"      📊 Multi-source delegation: calling {min(top_k, len(filtered_results))} agents "
                 f"({'parallel' if parallel_execution else 'sequential'})"
             )
 
-            agents_to_call = discovery_results[:top_k]
+            agents_to_call = filtered_results[:top_k]
             successful_results = []
             failed_count = 0
             total_cost = 0.0

@@ -228,9 +228,9 @@
     "has_llm": false,
     "specialization": "general_knowledge"
   },
-  "created_at": "2026-02-16T21:58:35.568522Z",
-  "updated_at": "2026-02-16T21:58:35.568529Z",
+  "created_at": "2026-02-17T09:19:14.651003Z",
+  "updated_at": "2026-02-17T09:24:15.403803Z",
   "status": "active",
-  "last_heartbeat": null,
+  "last_heartbeat": 1771320255.4034739,
   "inactive_since": null
 }

@@ -125,9 +125,9 @@
     "llm_model": "mistral:7b",
     "selection_policy": "balanced"
   },
-  "created_at": "2026-02-16T21:58:35.654123Z",
-  "updated_at": "2026-02-16T21:58:35.654128Z",
+  "created_at": "2026-02-17T09:19:55.981395Z",
+  "updated_at": "2026-02-17T09:24:26.570626Z",
   "status": "active",
-  "last_heartbeat": null,
+  "last_heartbeat": 1771320266.570311,
   "inactive_since": null
 }

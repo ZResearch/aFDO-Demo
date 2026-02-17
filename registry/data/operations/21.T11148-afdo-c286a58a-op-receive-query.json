@@ -1,7 +1,7 @@
 {
   "pid": "21.T11148/afdo-c286a58a-op-receive-query",
   "name": "receive_query",
-  "description": "Verifies factual claims, statements, and assertions by consulting multiple independent sources. Specializes in validating claims from scientific publications, research papers, academic studies, journal articles, and news reports. Answers verification questions like 'is X Y?', 'is it true that X?', 'did X happen?', 'the paper/study/article/research claims X, is this correct?', 'does the scientific evidence support X?', 'verify this claim from the publication', 'are the research findings accurate?'. Uses multi-source triangulation across research databases, encyclopedias, scientific papers, and authoritative sources to provide confidence-scored verification with evidence from multiple independent sources.",
+  "description": "ONLY for complex synthesis, comparison, and interpretation tasks when you already possess the required data. Exclusively use for: comparing multiple perspectives side-by-side, synthesizing information from multiple sources you already gathered, generating insights from existing data, interpreting complex relationships between concepts. NEVER use for: factual questions, information retrieval, database searches, data lookup, verifying claims or facts, fact-checking, checking if statements are true, finding definitions, answering who/what/where/when/is questions, searching for current information, or validation tasks. This is a cognitive processing and synthesis tool only, not an information retrieval, search, verification, or fact-checking tool.",
   "input_schema": {
     "type": "object",
     "required": [
@@ -10,25 +10,18 @@
     "properties": {
       "query": {
         "type": "string",
-        "description": "Natural language query requiring fact verification"
+        "description": "Query or request for synthesis/analysis/explanation"
       }
     }
   },
   "output_schema": {
     "type": "object",
     "properties": {
-      "answer": {
-        "type": "string",
-        "description": "Synthesized answer with verification status"
+      "response": {
+        "type": "string"
       },
-      "verified": {
-        "type": "boolean"
-      },
-      "confidence": {
-        "type": "number"
-      },
-      "sources": {
-        "type": "array"
+      "source": {
+        "type": "string"
       }
     }
   },

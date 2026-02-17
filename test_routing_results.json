@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-02-16T21:19:49.203144",
+  "timestamp": "2026-02-16T22:23:49.400049",
   "total_tests": 15,
   "correct_routes": 0,
   "results": [
@@ -12,7 +12,7 @@
       "match": false,
       "reason": "Verification of claim from research paper",
       "status": "error",
-      "error": "Server error '500 Internal Server Error' for url 'http://localhost:8001/doip/extend/receive_user_input'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500"
+      "error": ""
     },
     {
       "id": "test_002",
@@ -23,7 +23,7 @@
       "match": false,
       "reason": "Simple factual retrieval about current leader",
       "status": "error",
-      "error": "Server error '500 Internal Server Error' for url 'http://localhost:8001/doip/extend/receive_user_input'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500"
+      "error": ""
     },
     {
       "id": "test_003",
@@ -34,7 +34,7 @@
       "match": false,
       "reason": "Verification query ('is X Y?')",
       "status": "error",
-      "error": "Server error '500 Internal Server Error' for url 'http://localhost:8001/doip/extend/receive_user_input'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500"
+      "error": ""
     },
     {
       "id": "test_004",
@@ -45,7 +45,7 @@
       "match": false,
       "reason": "Direct paper search request",
       "status": "error",
-      "error": "Server error '500 Internal Server Error' for url 'http://localhost:8001/doip/extend/receive_user_input'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500"
+      "error": ""
     },
     {
       "id": "test_005",
@@ -56,7 +56,7 @@
       "match": false,
       "reason": "Verification of study claim with evidence assessment",
       "status": "error",
-      "error": "Server error '500 Internal Server Error' for url 'http://localhost:8001/doip/extend/receive_user_input'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500"
+      "error": ""
     },
     {
       "id": "test_006",
@@ -67,7 +67,7 @@
       "match": false,
       "reason": "Definition/explanation request",
       "status": "error",
-      "error": "Server error '500 Internal Server Error' for url 'http://localhost:8001/doip/extend/receive_user_input'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500"
+      "error": ""
     },
     {
       "id": "test_007",
@@ -78,7 +78,7 @@
       "match": false,
       "reason": "Comparison and synthesis task",
       "status": "error",
-      "error": "Server error '500 Internal Server Error' for url 'http://localhost:8001/doip/extend/receive_user_input'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500"
+      "error": ""
     },
     {
       "id": "test_008",
@@ -89,7 +89,7 @@
       "match": false,
       "reason": "Historical fact verification",
       "status": "error",
-      "error": "Server error '500 Internal Server Error' for url 'http://localhost:8001/doip/extend/receive_user_input'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500"
+      "error": ""
     },
     {
       "id": "test_009",
@@ -100,7 +100,7 @@
       "match": false,
       "reason": "Medical information retrieval",
       "status": "error",
-      "error": "Server error '500 Internal Server Error' for url 'http://localhost:8001/doip/extend/receive_user_input'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500"
+      "error": ""
     },
     {
       "id": "test_010",
@@ -111,7 +111,7 @@
       "match": false,
       "reason": "Explicit verification request about article claim",
       "status": "error",
-      "error": "Server error '500 Internal Server Error' for url 'http://localhost:8001/doip/extend/receive_user_input'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500"
+      "error": ""
     },
     {
       "id": "test_011",
@@ -122,7 +122,7 @@
       "match": false,
       "reason": "Specific paper search with date constraint",
       "status": "error",
-      "error": "Server error '500 Internal Server Error' for url 'http://localhost:8001/doip/extend/receive_user_input'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500"
+      "error": ""
     },
     {
       "id": "test_012",
@@ -133,7 +133,7 @@
       "match": false,
       "reason": "Verification of common claim/myth",
       "status": "error",
-      "error": "Server error '500 Internal Server Error' for url 'http://localhost:8001/doip/extend/receive_user_input'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500"
+      "error": ""
     },
     {
       "id": "test_013",
@@ -144,7 +144,7 @@
       "match": false,
       "reason": "Statistical fact retrieval",
       "status": "error",
-      "error": "Server error '500 Internal Server Error' for url 'http://localhost:8001/doip/extend/receive_user_input'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500"
+      "error": ""
     },
     {
       "id": "test_014",
@@ -155,7 +155,7 @@
       "match": false,
       "reason": "Verification of specific research finding",
       "status": "error",
-      "error": "Server error '500 Internal Server Error' for url 'http://localhost:8001/doip/extend/receive_user_input'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500"
+      "error": ""
     },
     {
       "id": "test_015",
@@ -166,7 +166,7 @@
       "match": false,
       "reason": "Explanation/teaching task requiring synthesis",
       "status": "error",
-      "error": "Server error '500 Internal Server Error' for url 'http://localhost:8001/doip/extend/receive_user_input'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500"
+      "error": ""
     }
   ]
 }

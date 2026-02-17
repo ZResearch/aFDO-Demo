@@ -43,12 +43,10 @@
               "call_best_match": true,
               "parameters": {
                 "top_k": 1,
-                "operation_to_call": "receive_query",
+                "operation_to_call": "cross_validate",
                 "pass_parameters": {
-                  "message": "Verify the query: '${query}' based on evidence from multiple sources. Evidence gathered: ${evidence}. Analyze consistency across sources. Determine if the claim is verified. Provide a clear answer with confidence assessment.",
-                  "task": "verify_and_synthesize",
-                  "query": "${query}",
-                  "evidence": "${evidence}"
+                  "claim": "${query}",
+                  "sources": "${evidence}"
                 }
               }
             }

@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>aFDO Chat Interface</title>
+    <title>aFDO Research Assistant</title>
     <style>
         * {
             margin: 0;
@@ -15,8 +15,8 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: #f5f7fa;
             height: 100vh;
             display: flex;
             justify-content: center;
@@ -24,189 +24,283 @@
         }
 
         .container {
-            width: 90%;
-            max-width: 800px;
-            height: 90vh;
+            width: 95%;
+            max-width: 1200px;
+            height: 92vh;
             background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            border-radius: 8px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
             display: flex;
             flex-direction: column;
             overflow: hidden;
+            border: 1px solid #e1e8ed;
         }
 
         .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
             color: white;
-            padding: 20px;
-            text-align: center;
+            padding: 24px 32px;
+            border-bottom: 1px solid #1e40af;
         }
 
         .header h1 {
-            font-size: 24px;
-            margin-bottom: 5px;
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 6px;
+            letter-spacing: -0.025em;
         }
 
         .header p {
-            font-size: 14px;
+            font-size: 13px;
             opacity: 0.9;
+            font-weight: 400;
         }
 
-        .status {
-            padding: 10px 20px;
-            background: #f8f9fa;
-            border-bottom: 1px solid #dee2e6;
+        .status-bar {
+            padding: 12px 32px;
+            background: #fafbfc;
+            border-bottom: 1px solid #e1e8ed;
             font-size: 12px;
-            color: #6c757d;
+            color: #64748b;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        .status.connected {
-            color: #28a745;
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #10b981;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .status-bar.connected .status-indicator {
+            background: #10b981;
+        }
+
+        .status-bar.error .status-indicator {
+            background: #ef4444;
         }
 
         .chat-area {
             flex: 1;
-            padding: 20px;
+            padding: 24px 32px;
             overflow-y: auto;
-            background: #f8f9fa;
+            background: #ffffff;
         }
 
         .message {
-            margin-bottom: 20px;
+            margin-bottom: 24px;
             display: flex;
-            gap: 10px;
+            gap: 12px;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .message.user {
             flex-direction: row-reverse;
         }
 
+        .message-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .message.user .message-avatar {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+        }
+
+        .message.assistant .message-avatar {
+            background: #f1f5f9;
+            color: #475569;
+        }
+
+        .message.system .message-avatar {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
         .message-content {
-            max-width: 70%;
-            padding: 12px 16px;
-            border-radius: 12px;
-            line-height: 1.5;
+            max-width: 65%;
+            padding: 14px 18px;
+            border-radius: 8px;
+            line-height: 1.6;
+            font-size: 14px;
         }
 
         .message.user .message-content {
-            background: #667eea;
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
             color: white;
         }
 
         .message.assistant .message-content {
-            background: white;
-            color: #333;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            background: #f8fafc;
+            color: #1e293b;
+            border: 1px solid #e2e8f0;
         }
 
         .message.system .message-content {
-            background: #fff3cd;
-            color: #856404;
+            background: #fffbeb;
+            color: #78350f;
             max-width: 100%;
             font-size: 13px;
-        }
-
-        .input-area {
-            padding: 20px;
-            background: white;
-            border-top: 1px solid #dee2e6;
-        }
-
-        .input-form {
-            display: flex;
-            gap: 10px;
-        }
-
-        #user-input {
-            flex: 1;
-            padding: 12px 16px;
-            border: 2px solid #dee2e6;
-            border-radius: 25px;
-            font-size: 14px;
-            outline: none;
-            transition: border-color 0.3s;
-        }
-
-        #user-input:focus {
-            border-color: #667eea;
-        }
-
-        #send-btn {
-            padding: 12px 30px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 25px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-
-        #send-btn:hover {
-            transform: scale(1.05);
-        }
-
-        #send-btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-
-        .loading {
-            display: none;
-            text-align: center;
-            padding: 10px;
-            color: #6c757d;
-        }
-
-        .loading.active {
-            display: block;
+            border: 1px solid #fde68a;
         }
 
         .agent-info {
             font-size: 11px;
-            color: #6c757d;
-            margin-top: 5px;
-            font-style: italic;
+            color: #64748b;
+            margin-top: 6px;
+            font-style: normal;
         }
 
         .trace-info {
-            margin-top: 10px;
-            padding: 10px;
-            background: #f8f9fa;
-            border-left: 3px solid #667eea;
-            border-radius: 5px;
+            margin-top: 12px;
+            padding: 12px 14px;
+            background: #f8fafc;
+            border-left: 3px solid #3b82f6;
+            border-radius: 4px;
             font-size: 12px;
         }
 
         .trace-info .trace-header {
             font-weight: 600;
-            color: #667eea;
-            margin-bottom: 5px;
+            color: #1e293b;
+            margin-bottom: 6px;
         }
 
         .trace-info .trace-detail {
-            color: #6c757d;
-            margin: 3px 0;
+            color: #64748b;
+            margin: 4px 0;
         }
 
         .trace-info .trace-agents {
-            color: #28a745;
+            color: #059669;
             font-weight: 500;
         }
 
         .trace-link {
             display: inline-block;
-            margin-top: 5px;
-            color: #667eea;
+            margin-top: 6px;
+            color: #3b82f6;
             text-decoration: none;
             font-size: 11px;
+            font-weight: 500;
         }
 
         .trace-link:hover {
             text-decoration: underline;
         }
 
+        .input-area {
+            padding: 20px 32px 24px;
+            background: white;
+            border-top: 1px solid #e1e8ed;
+        }
+
+        .input-form {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        #user-input {
+            flex: 1;
+            padding: 12px 18px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        #user-input:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        #send-btn {
+            padding: 12px 28px;
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        #send-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+
+        #send-btn:active {
+            transform: translateY(0);
+        }
+
+        #send-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .loading {
+            display: none;
+            padding: 12px 32px;
+            color: #64748b;
+            font-size: 13px;
+            background: #fafbfc;
+            border-top: 1px solid #e1e8ed;
+        }
+
+        .loading.active {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .loading-spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid #e1e8ed;
+            border-top-color: #3b82f6;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Modal Styles */
         .modal {
             display: none;
             position: fixed;
@@ -215,35 +309,40 @@
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0,0,0,0.5);
+            background-color: rgba(0, 0, 0, 0.5);
             overflow: auto;
         }
 
         .modal-content {
             background-color: white;
-            margin: 5% auto;
+            margin: 3% auto;
             padding: 0;
-            border-radius: 10px;
-            width: 90%;
-            max-width: 900px;
-            max-height: 80vh;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            border-radius: 8px;
+            width: 92%;
+            max-width: 1000px;
+            max-height: 85vh;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             display: flex;
             flex-direction: column;
         }
 
         .modal-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
             color: white;
-            padding: 20px;
-            border-radius: 10px 10px 0 0;
+            padding: 24px 32px;
+            border-radius: 8px 8px 0 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
+        .modal-header h2 {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
         .modal-body {
-            padding: 20px;
+            padding: 24px 32px;
             overflow-y: auto;
             flex: 1;
         }
@@ -251,75 +350,111 @@
         .close-btn {
             color: white;
             font-size: 28px;
-            font-weight: bold;
+            font-weight: 300;
             cursor: pointer;
             background: none;
             border: none;
             padding: 0;
             line-height: 1;
+            opacity: 0.9;
         }
 
         .close-btn:hover {
-            opacity: 0.8;
+            opacity: 1;
         }
 
         .trace-step {
-            margin: 15px 0;
-            padding: 12px;
-            background: #f8f9fa;
-            border-left: 4px solid #667eea;
-            border-radius: 5px;
+            margin: 16px 0;
+            padding: 14px 16px;
+            background: #f8fafc;
+            border-left: 4px solid #3b82f6;
+            border-radius: 4px;
             font-size: 13px;
         }
 
         .trace-step-header {
             font-weight: 600;
-            color: #667eea;
-            margin-bottom: 5px;
+            color: #1e293b;
+            margin-bottom: 6px;
         }
 
         .trace-step-detail {
-            color: #6c757d;
-            margin: 3px 0;
-            font-family: 'Courier New', monospace;
+            color: #64748b;
+            margin: 4px 0;
+            font-family: 'SF Mono', 'Consolas', 'Monaco', monospace;
             font-size: 12px;
         }
 
         .trace-summary {
-            background: #e7f3ff;
-            padding: 15px;
-            border-radius: 5px;
-            margin-bottom: 20px;
+            background: #eff6ff;
+            padding: 18px 20px;
+            border-radius: 8px;
+            margin-bottom: 24px;
+            border: 1px solid #bfdbfe;
         }
 
         .trace-summary h3 {
-            margin: 0 0 10px 0;
-            color: #667eea;
+            margin: 0 0 12px 0;
+            color: #1e40af;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .trace-summary p {
+            margin: 6px 0;
+            font-size: 13px;
+            color: #1e293b;
+        }
+
+        .trace-summary strong {
+            color: #475569;
+        }
+
+        /* Scrollbar Styles */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>🤖 Autonomous FAIR Digital Objects</h1>
-            <p>IJCAI 2026 Demo - Multi-Agent Research Assistant</p>
+            <h1>Autonomous FAIR Digital Objects Research Assistant</h1>
+            <p>IJCAI 2026 Demonstration • Multi-Agent Collaborative System</p>
         </div>
 
-        <div class="status" id="status">
-            Connecting...
+        <div class="status-bar" id="status">
+            <div class="status-indicator"></div>
+            <span>Initializing connection...</span>
         </div>
 
         <div class="chat-area" id="chat-area">
             <div class="message system">
+                <div class="message-avatar">i</div>
                 <div class="message-content">
-                    <strong>✓ Connected to Chat UI (v2.0)</strong><br><br>
-                    Welcome to the autonomous aFDO marketplace! Type your message below and check the browser console (F12) for debug info.
+                    <strong>Connected to aFDO Marketplace (v2.0)</strong><br><br>
+                    This interface connects to multiple autonomous FAIR Digital Object agents that collaborate to answer your research queries. Enter your question below to begin.
                 </div>
             </div>
         </div>
 
         <div class="loading" id="loading">
-            <div>🔄 Processing your request...</div>
+            <div class="loading-spinner"></div>
+            <span>Processing request...</span>
         </div>
 
         <div class="input-area">
@@ -327,10 +462,10 @@
                 <input
                     type="text"
                     id="user-input"
-                    placeholder="Type your message here..."
+                    placeholder="Enter your research query..."
                     autocomplete="off"
                 >
-                <button type="submit" id="send-btn">Send</button>
+                <button type="submit" id="send-btn">Send Query</button>
             </form>
         </div>
     </div>
@@ -339,7 +474,7 @@
     <div id="traceModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2>🔍 Execution Trace</h2>
+                <h2>Execution Trace</h2>
                 <button class="close-btn" onclick="closeTraceModal()">&times;</button>
             </div>
             <div class="modal-body" id="traceModalBody">
@@ -362,7 +497,7 @@
         function openTraceModal(traceFile) {
             const fileName = traceFile.split('/').pop();
             traceModal.style.display = 'block';
-            traceModalBody.innerHTML = '<p style="text-align:center; color:#6c757d;">Loading trace...</p>';
+            traceModalBody.innerHTML = '<p style="text-align:center; color:#64748b;">Loading trace data...</p>';
 
             fetch(`http://localhost:8001/trace/${fileName}`)
                 .then(res => res.json())
@@ -370,7 +505,7 @@
                     displayTrace(trace);
                 })
                 .catch(err => {
-                    traceModalBody.innerHTML = `<p style="color:#dc3545;">Failed to load trace: ${err.message}</p>`;
+                    traceModalBody.innerHTML = `<p style="color:#dc2626;">Failed to load trace: ${err.message}</p>`;
                 });
         }
 
@@ -379,26 +514,20 @@
         }
 
         function renderEvents(events, childTraces, indentLevel = 0) {
-            /**
-             * Recursively render events with nested child traces.
-             * When a DELEGATE event is found, inject the child trace events after it.
-             */
             let html = '';
-            const indent = indentLevel * 30; // 30px per level
+            const indent = indentLevel * 30;
 
             events.forEach((event, index) => {
                 const duration = event.duration_ms ? `${event.duration_ms}ms` : '';
                 const cost = event.cost ? `$${event.cost.toFixed(4)}` : '';
                 const timing = (duration || cost) ? ` (${[duration, cost].filter(x => x).join(' | ')})` : '';
 
-                // Format input data summary
                 let inputSummary = '';
                 if (event.input_data && Object.keys(event.input_data).length > 0) {
                     const inputStr = JSON.stringify(event.input_data, null, 0);
                     inputSummary = inputStr.length > 100 ? inputStr.substring(0, 100) + '...' : inputStr;
                 }
 
-                // Format output data summary
                 let outputSummary = '';
                 if (event.output_data && Object.keys(event.output_data).length > 0) {
                     const outputStr = JSON.stringify(event.output_data, null, 0);
@@ -412,23 +541,19 @@
                         </div>
                         <div class="trace-step-detail">Operation: ${event.operation}</div>
                         ${event.notes ? `<div class="trace-step-detail">Notes: ${event.notes}</div>` : ''}
-                        ${inputSummary ? `<div class="trace-step-detail" style="color: #666;">Input: ${inputSummary}</div>` : ''}
-                        ${outputSummary ? `<div class="trace-step-detail" style="color: #666;">Output: ${outputSummary}</div>` : ''}
+                        ${inputSummary ? `<div class="trace-step-detail" style="color: #64748b;">Input: ${inputSummary}</div>` : ''}
+                        ${outputSummary ? `<div class="trace-step-detail" style="color: #64748b;">Output: ${outputSummary}</div>` : ''}
                     </div>
                 `;
 
-                // If this is a DELEGATE event, check if we have a child trace for it
                 if (event.action_type === 'delegate' && event.delegated_to && childTraces) {
-                    // Find child trace where the first event matches this delegation
                     const childTrace = childTraces.find(ct => {
                         const childSummary = ct.summary || {};
-                        // Match by checking if the delegated agent is in the child's agents
                         const childAgents = childSummary.agents_involved || [];
                         return childAgents.includes(event.delegated_to);
                     });
 
                     if (childTrace) {
-                        // Render child trace events with increased indentation
                         const childEvents = childTrace.events || [];
                         const grandchildTraces = childTrace.child_traces || [];
                         html += renderEvents(childEvents, grandchildTraces, indentLevel + 1);
@@ -446,24 +571,22 @@
 
             let html = `
                 <div class="trace-summary">
-                    <h3>Summary</h3>
+                    <h3>Execution Summary</h3>
                     <p><strong>Query:</strong> ${summary.user_query || 'N/A'}</p>
                     <p><strong>Request ID:</strong> ${summary.request_id || 'N/A'}</p>
                     <p><strong>Status:</strong> ${summary.status || 'N/A'}</p>
                     <p><strong>Duration:</strong> ${summary.total_duration_ms || 0}ms</p>
                     <p><strong>Cost:</strong> $${(summary.total_cost || 0).toFixed(4)}</p>
-                    <p><strong>Agents:</strong> ${(summary.agents_involved || []).join(', ')}</p>
+                    <p><strong>Agents Involved:</strong> ${(summary.agents_involved || []).join(', ')}</p>
                 </div>
-                <h3 style="margin-bottom: 15px;">Execution Steps</h3>
+                <h3 style="margin-bottom: 16px; color: #1e293b; font-size: 16px; font-weight: 600;">Execution Steps</h3>
             `;
 
-            // Render all events with nested child traces
             html += renderEvents(events, childTraces, 0);
 
             traceModalBody.innerHTML = html;
         }
 
-        // Close modal when clicking outside
         window.onclick = function(event) {
             if (event.target === traceModal) {
                 closeTraceModal();
@@ -474,16 +597,21 @@
         fetch('http://localhost:8001/')
             .then(res => res.json())
             .then(data => {
-                status.textContent = `✓ Connected to ${data.name}`;
+                status.innerHTML = '<div class="status-indicator"></div><span>Connected to ' + data.name + '</span>';
                 status.classList.add('connected');
             })
             .catch(err => {
-                status.textContent = '✗ Connection failed';
+                status.innerHTML = '<div class="status-indicator"></div><span>Connection failed</span>';
+                status.classList.add('error');
             });
 
         function addMessage(content, type = 'user', agentInfo = null, traceData = null) {
             const messageDiv = document.createElement('div');
             messageDiv.className = `message ${type}`;
+
+            const avatarDiv = document.createElement('div');
+            avatarDiv.className = 'message-avatar';
+            avatarDiv.textContent = type === 'user' ? 'U' : (type === 'assistant' ? 'A' : 'i');
 
             const contentDiv = document.createElement('div');
             contentDiv.className = 'message-content';
@@ -496,7 +624,6 @@
                 contentDiv.appendChild(infoDiv);
             }
 
-            // Add trace information if available
             if (traceData && traceData.summary) {
                 const traceDiv = document.createElement('div');
                 traceDiv.className = 'trace-info';
@@ -507,7 +634,7 @@
                 const cost = summary.total_cost || 0;
 
                 traceDiv.innerHTML = `
-                    <div class="trace-header">🔍 Execution Trace</div>
+                    <div class="trace-header">Execution Trace</div>
                     <div class="trace-detail">
                         <span class="trace-agents">Agents: ${agents.join(' → ')}</span>
                     </div>
@@ -516,7 +643,7 @@
                     </div>
                     ${traceData.trace_file ? `
                         <a href="#" class="trace-link" onclick="openTraceModal('${traceData.trace_file}'); return false;">
-                            📄 View full trace
+                            View detailed trace
                         </a>
                     ` : ''}
                 `;
@@ -524,6 +651,7 @@
                 contentDiv.appendChild(traceDiv);
             }
 
+            messageDiv.appendChild(avatarDiv);
             messageDiv.appendChild(contentDiv);
             chatArea.appendChild(messageDiv);
             chatArea.scrollTop = chatArea.scrollHeight;
@@ -535,14 +663,12 @@
             const message = userInput.value.trim();
             if (!message) return;
 
-            // Display user message
             addMessage(message, 'user');
             userInput.value = '';
             sendBtn.disabled = true;
             loading.classList.add('active');
 
             try {
-                // Send to Chat UI agent
                 const response = await fetch('http://localhost:8001/doip/extend/receive_user_input', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -557,24 +683,18 @@
 
                 if (result.status === 'success') {
                     const data = result.data;
-                    console.log('Received data:', data);
-                    console.log('data.message:', data.message);
-                    console.log('data.response:', data.response);
-                    console.log('data._trace:', data._trace);
-
                     const reply = data.response || data.message || data.final_result || 'Processing complete.';
-                    console.log('Final reply:', reply);
                     const agentInfo = data.handler ? `via ${data.handler}` : null;
                     const traceData = data._trace || null;
 
                     addMessage(reply, 'assistant', agentInfo, traceData);
                 } else {
-                    addMessage('Sorry, I encountered an error processing your request.', 'system');
+                    addMessage('An error occurred while processing your request. Please try again.', 'system');
                 }
 
             } catch (error) {
                 console.error('Error:', error);
-                addMessage('Connection error. Please check if all agents are running.', 'system');
+                addMessage('Connection error. Please verify that all required agents are running.', 'system');
             } finally {
                 loading.classList.remove('active');
                 sendBtn.disabled = false;
@@ -582,7 +702,6 @@
             }
         });
 
-        // Auto-focus input
         userInput.focus();
     </script>
 </body>
