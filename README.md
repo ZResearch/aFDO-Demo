@@ -1,3 +1,6 @@
+[![Video](https://img.shields.io/badge/video-watch-red)](VIDEO_URL)
+
+
 # aFDO System - Complete User Guide
 
 **Version:** 2.0.0
