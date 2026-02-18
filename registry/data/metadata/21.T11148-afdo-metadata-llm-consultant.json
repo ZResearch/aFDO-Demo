@@ -10,7 +10,7 @@
     "provenance": {
       "creation_method": "automated_registration",
       "framework": "aFDO_marketplace_v1.0",
-      "registration_timestamp": "2026-02-17T09:20:03.032852Z",
+      "registration_timestamp": "2026-02-17T09:28:20.858160Z",
       "framework_version": "1.0.0"
     },
     "technical_details": {
@@ -54,8 +54,8 @@
       "reputation": 0.85
     }
   },
-  "created_at": "2026-02-17T09:20:03.032860Z",
-  "updated_at": "2026-02-17T09:20:03.032861Z",
+  "created_at": "2026-02-17T09:28:20.858169Z",
+  "updated_at": "2026-02-17T09:28:20.858171Z",
   "schema_version": "1.0.0",
   "created_by": "21.T11148/afdo-llm-consultant",
   "provenance": {

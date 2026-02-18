@@ -282,9 +282,9 @@
     "has_llm": false,
     "specialization": "FAIR_compliance"
   },
-  "created_at": "2026-02-17T09:19:07.815586Z",
-  "updated_at": "2026-02-17T09:24:08.539788Z",
+  "created_at": "2026-02-17T09:27:30.016967Z",
+  "updated_at": "2026-02-17T23:19:36.452501Z",
   "status": "active",
-  "last_heartbeat": 1771320248.5393927,
+  "last_heartbeat": 1771370376.4513068,
   "inactive_since": null
 }

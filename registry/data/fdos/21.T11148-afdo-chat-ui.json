@@ -112,8 +112,40 @@
     }
   },
   "activity_log": {
-    "calls_made": [],
-    "calls_received": []
+    "calls_made": [
+      {
+        "timestamp": "2026-02-17T23:19:43.936624Z",
+        "target_pid": "21.T11148/afdo-llm-consultant",
+        "operation": "analyze_query_intent",
+        "status": "success",
+        "duration": 0.73,
+        "cost": 0.0
+      },
+      {
+        "timestamp": "2026-02-17T23:19:44.925350Z",
+        "target_pid": "21.T11148/afdo-wikipedia-agent",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.6,
+        "cost": 0.0
+      }
+    ],
+    "calls_received": [
+      {
+        "timestamp": "2026-02-17T23:18:55.582190Z",
+        "caller_pid": "web-user",
+        "operation": "receive_user_input",
+        "status": "success",
+        "duration": 6.85
+      },
+      {
+        "timestamp": "2026-02-17T23:19:45.005239Z",
+        "caller_pid": "web-user",
+        "operation": "receive_user_input",
+        "status": "success",
+        "duration": 2.18
+      }
+    ]
   },
   "kernel_attributes": {
     "name": "Chat UI",
@@ -125,9 +157,9 @@
     "llm_model": "mistral:7b",
     "selection_policy": "balanced"
   },
-  "created_at": "2026-02-17T09:19:55.981395Z",
-  "updated_at": "2026-02-17T09:24:26.570626Z",
+  "created_at": "2026-02-17T09:28:14.017117Z",
+  "updated_at": "2026-02-17T23:19:48.984979Z",
   "status": "active",
-  "last_heartbeat": 1771320266.570311,
+  "last_heartbeat": 1771370383.20892,
   "inactive_since": null
 }

@@ -217,7 +217,15 @@
   },
   "activity_log": {
     "calls_made": [],
-    "calls_received": []
+    "calls_received": [
+      {
+        "timestamp": "2026-02-17T23:19:44.922111Z",
+        "caller_pid": "21.T11148/afdo-chat-ui",
+        "operation": "receive_query",
+        "status": "success",
+        "duration": 0.55
+      }
+    ]
   },
   "kernel_attributes": {
     "name": "Wikipedia Agent",
@@ -228,9 +236,9 @@
     "has_llm": false,
     "specialization": "general_knowledge"
   },
-  "created_at": "2026-02-17T09:19:14.651003Z",
-  "updated_at": "2026-02-17T09:24:15.403803Z",
+  "created_at": "2026-02-17T09:27:36.977004Z",
+  "updated_at": "2026-02-17T23:19:49.975939Z",
   "status": "active",
-  "last_heartbeat": 1771320255.4034739,
+  "last_heartbeat": 1771370381.3502557,
   "inactive_since": null
 }

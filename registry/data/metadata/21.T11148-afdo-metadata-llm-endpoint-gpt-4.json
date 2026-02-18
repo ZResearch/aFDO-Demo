@@ -78,7 +78,7 @@
     "provenance": {
       "creation_method": "automated_registration",
       "framework": "aFDO_marketplace_v1.0",
-      "registration_timestamp": "2026-02-17T09:18:47.067057Z",
+      "registration_timestamp": "2026-02-17T09:27:09.515537Z",
       "framework_version": "1.0.0"
     },
     "technical_details": {
@@ -121,8 +121,8 @@
       "reputation": 0.85
     }
   },
-  "created_at": "2026-02-17T09:18:47.067069Z",
-  "updated_at": "2026-02-17T09:18:47.067071Z",
+  "created_at": "2026-02-17T09:27:09.515547Z",
+  "updated_at": "2026-02-17T09:27:09.515548Z",
   "schema_version": "1.0.0",
   "created_by": "21.T11148/afdo-llm-endpoint-gpt-4",
   "provenance": {

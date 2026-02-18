@@ -77,7 +77,7 @@
     "provenance": {
       "creation_method": "automated_registration",
       "framework": "aFDO_marketplace_v1.0",
-      "registration_timestamp": "2026-02-17T09:19:00.586921Z",
+      "registration_timestamp": "2026-02-17T09:27:23.189289Z",
       "framework_version": "1.0.0"
     },
     "technical_details": {
@@ -120,8 +120,8 @@
       "reputation": 0.85
     }
   },
-  "created_at": "2026-02-17T09:19:00.586929Z",
-  "updated_at": "2026-02-17T09:19:00.586930Z",
+  "created_at": "2026-02-17T09:27:23.189298Z",
+  "updated_at": "2026-02-17T09:27:23.189300Z",
   "schema_version": "1.0.0",
   "created_by": "21.T11148/afdo-pdf-parser",
   "provenance": {

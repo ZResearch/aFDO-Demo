@@ -139,9 +139,9 @@
     "has_llm": true,
     "llm_model": "mistral:7b"
   },
-  "created_at": "2026-02-17T09:18:47.090017Z",
-  "updated_at": "2026-02-17T09:24:18.041994Z",
+  "created_at": "2026-02-17T09:27:09.531696Z",
+  "updated_at": "2026-02-17T23:19:44.319687Z",
   "status": "active",
-  "last_heartbeat": 1771320258.0416632,
+  "last_heartbeat": 1771370384.3194158,
   "inactive_since": null
 }

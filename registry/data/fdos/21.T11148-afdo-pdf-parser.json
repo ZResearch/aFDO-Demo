@@ -259,9 +259,9 @@
     "status": "active",
     "has_llm": false
   },
-  "created_at": "2026-02-17T09:19:00.600788Z",
-  "updated_at": "2026-02-17T09:24:01.217366Z",
+  "created_at": "2026-02-17T09:27:23.203847Z",
+  "updated_at": "2026-02-17T23:19:56.978932Z",
   "status": "active",
-  "last_heartbeat": 1771320241.2170284,
+  "last_heartbeat": 1771370396.978536,
   "inactive_since": null
 }

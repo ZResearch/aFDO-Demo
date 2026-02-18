@@ -184,9 +184,9 @@
     "has_llm": false,
     "specialization": "scientific_research"
   },
-  "created_at": "2026-02-17T09:19:21.442370Z",
-  "updated_at": "2026-02-17T09:24:22.222678Z",
+  "created_at": "2026-02-17T09:27:43.934251Z",
+  "updated_at": "2026-02-17T23:19:48.576328Z",
   "status": "active",
-  "last_heartbeat": 1771320262.222316,
+  "last_heartbeat": 1771370388.5760067,
   "inactive_since": null
 }
