@@ -100,6 +100,6 @@ Each agent is an independent FastAPI service. Discovery uses multi-objective sco
 
 ---
 
-## Acknowledgement
+## Implementation Notes
 
 This implementation was developed with assistance from AI coding tools for (partial) code generation, debugging, and documentation. All architectural decisions, algorithm design, and system evaluation were performed by the authors.
