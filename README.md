@@ -1,4 +1,4 @@
-[![Video](https://img.shields.io/badge/video-watch-red)](VIDEO_URL)
+[![Video](https://img.shields.io/badge/video-watch-red)](https://drive.google.com/file/d/1HZdJNuU3lCHozUR9ZOVj381BI4fMop6Q/view?usp=sharing)
 
 
 # aFDO System - Complete User Guide
