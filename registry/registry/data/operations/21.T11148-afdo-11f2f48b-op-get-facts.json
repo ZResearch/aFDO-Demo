@@ -1,9 +1,0 @@
-{
-  "pid": "21.T11148/afdo-11f2f48b-op-get-facts",
-  "name": "get_facts",
-  "description": "Operation: get_facts",
-  "input_schema": {},
-  "output_schema": {},
-  "semantics": null,
-  "created_at": "2026-02-16T21:24:23.359997Z"
-}

@@ -1,9 +1,0 @@
-{
-  "pid": "21.T11148/afdo-5437d42c-op-find-references",
-  "name": "find_references",
-  "description": "Operation: find_references",
-  "input_schema": {},
-  "output_schema": {},
-  "semantics": null,
-  "created_at": "2026-02-16T21:16:19.347611Z"
-}

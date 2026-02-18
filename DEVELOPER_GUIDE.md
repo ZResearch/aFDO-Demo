@@ -211,8 +211,8 @@ IJCAI_DEMO/
 │       └── workflow_protocol.json
 │
 ├── scripts/                        # Helper scripts
-│   ├── initialize_types.py        # Initialize type system
-│   └── migrate_to_self_describing.py
+│   ├── __initialize_types.py      # Initialize type system
+│   └── verify_agent_registration.py
 │
 ├── tests/                          # Test suite
 │   ├── __init__.py
@@ -225,18 +225,15 @@ IJCAI_DEMO/
 │       └── README.md
 │
 ├── logs/                           # Log files (runtime)
-├── docs/                           # Documentation
 │
 ├── requirements.txt                # Python dependencies
-├── README.md                       # User guide
+├── README.md                       # Project overview
 ├── ARCHITECTURE.md                 # Technical architecture
 ├── DEVELOPER_GUIDE.md              # This file
-├── AGENTS.md                       # Agent documentation
 │
 ├── start_system.sh                 # System startup
 ├── stop_system.sh                  # System shutdown
-├── check_status.sh                 # Status checker
-└── view_logs.sh                    # Log viewer
+└── check_status.sh                 # Status checker
 ```
 
 ### Key Files by Importance
@@ -2047,7 +2044,7 @@ def test_policy_complex_operation():
    └─ Include in start_system.sh
 
 8. Document
-   └─ Update AGENTS.md with agent details
+   └─ Update DEVELOPER_GUIDE.md agent reference section
 
 9. Commit
    └─ Version control changes
