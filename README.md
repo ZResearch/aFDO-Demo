@@ -4,7 +4,7 @@
 
 **aFDO** is a multi-agent marketplace for scientific knowledge processing built on [FAIR Digital Object](https://fairdo.org/) principles. Agents register themselves in a central registry, discover each other at runtime via semantic capability matching, and delegate tasks autonomously based on configurable JSON policies — with no hardcoded workflows.
 
-Presented at **IJCAI 2026**.
+Submitted to **CIKM 2026**.
 
 ---
 
