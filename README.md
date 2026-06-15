@@ -1,5 +1,7 @@
 [![Video](https://drive.google.com/file/d/1CFsLKV1g70uRuYUNbtoDB9ncQYIyCgcO/view?usp=sharing)]
 
+<video src="https://raw.githubusercontent.com/ZResearch/aFDO-Demo/master/CIKM_Demo.mp4" width="600" controls></video>
+
 # aFDO — Autonomous FAIR Digital Objects
 
 **aFDO** is a multi-agent marketplace for scientific knowledge processing built on [FAIR Digital Object](https://fairdo.org/) principles. Agents register themselves in a central registry, discover each other at runtime via semantic capability matching, and delegate tasks autonomously based on configurable JSON policies — with no hardcoded workflows.
