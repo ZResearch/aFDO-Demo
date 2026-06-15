@@ -1,4 +1,4 @@
-[![Video](https://drive.google.com/file/d/1CFsLKV1g70uRuYUNbtoDB9ncQYIyCgcO/view?usp=sharing)
+[![Video](https://drive.google.com/file/d/1CFsLKV1g70uRuYUNbtoDB9ncQYIyCgcO/view?usp=sharing)]
 
 # aFDO — Autonomous FAIR Digital Objects
 
