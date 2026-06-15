@@ -1,6 +1,6 @@
-[![Video](https://drive.google.com/file/d/1CFsLKV1g70uRuYUNbtoDB9ncQYIyCgcO/view?usp=sharing)]
+[![Video](https://github.com/user-attachments/assets/3db44408-517a-4200-bd1e-65657cf14743)]
 
-<video src="https://raw.githubusercontent.com/ZResearch/aFDO-Demo/master/CIKM_Demo.mp4" width="600" controls></video>
+https://github.com/user-attachments/assets/3db44408-517a-4200-bd1e-65657cf14743
 
 # aFDO — Autonomous FAIR Digital Objects
 
