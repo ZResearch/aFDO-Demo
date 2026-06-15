@@ -1,4 +1,4 @@
-[![Video](https://img.shields.io/badge/demo-video-red)](https://drive.google.com/file/d/1HZdJNuU3lCHozUR9ZOVj381BI4fMop6Q/view?usp=sharing)
+[![Video](https://drive.google.com/file/d/1CFsLKV1g70uRuYUNbtoDB9ncQYIyCgcO/view?usp=sharing)
 
 # aFDO — Autonomous FAIR Digital Objects
 
